@@ -1,0 +1,30 @@
+{
+  "name": "generator-kata-net-core",
+  "version": "0.0.0",
+  "description": "Yeoman generator for empty C# code kata using .NET Core",
+  "private": "true",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wonderbird/generator-kata-net-core.git"
+  },
+  "keywords": [
+    "yeoman-generator",
+    "C#",
+    ".NET",
+    "Core"
+  ],
+  "author": "Stefan Boos",
+  "email": "kontakt@boos.systems",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wonderbird/generator-kata-net-core/issues"
+  },
+  "homepage": "https://github.com/wonderbird/generator-kata-net-core#readme",
+  "dependencies": {
+    "yeoman-generator": "^4.11.0"
+  }
+}
