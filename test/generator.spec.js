@@ -9,7 +9,7 @@ chai.should();
 chai.use(sinonChai);
 
 describe('install', function () {
-    it('should invoke _createClassLibrary()',
+    it('should invoke ClassLibraryGenerator.generate()',
         function () {
             var classLibraryGenerator = new ClassLibraryGenerator();
             var classLibraryGeneratorMock = sinon.mock(classLibraryGenerator);
