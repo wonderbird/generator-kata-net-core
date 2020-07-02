@@ -20,6 +20,6 @@ describe('install', function () {
 
             generator.install();
 
-            classLibraryGeneratorMock.verify();;
+            classLibraryGeneratorMock.verify();
         });
 });
