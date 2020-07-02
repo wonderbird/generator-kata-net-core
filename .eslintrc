@@ -1,0 +1,25 @@
+// Remember to adapt your ~/.eslintrc such that it is in sync with this
+// file. Otherwise your IDE will highlight different static analysis findings.
+{
+  // Prevent including the Visual Studio 2019 eslint configuration file from ~/.eslintrc
+  "root": true,
+  "parserOptions": {
+    "ecmaVersion": 2015,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "node"
+  ],
+  "env": {
+    "browser": false,
+    "node": true,
+    "commonjs": true,
+    "es2020": false,
+    "mocha": true
+  },
+  "extends": "eslint:recommended",
+  "rules": {
+  },
+  "overrides": [
+  ]
+}
