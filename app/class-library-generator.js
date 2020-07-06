@@ -6,7 +6,7 @@ module.exports = class ClassLibraryGenerator {
 
     generate() {
         this.yeoman.log('Creating .NET Core class library ...');
-        this.yeoman.spawnCommand('dotnet',
-            ['new', 'classlib', '--dry-run', '--language', 'C#', '--name', 'SampleKata.Lib']);
+        this.yeoman.spawnCommandSync('dotnet',
+            ['new', 'classlib', '--language', 'C#', '--name', 'SampleKata.Lib']);
     }
 }
