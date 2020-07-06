@@ -6,7 +6,7 @@ var helpers = require('yeoman-test');
 describe('yo kata-net-core',
     function () {
         beforeEach(function () {
-            this.timeout(10000);
+            this.timeout(20000);
 
             var _self = this;
 
