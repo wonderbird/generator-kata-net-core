@@ -1,7 +1,6 @@
 module.exports = class ClassLibraryGenerator {
     constructor(yeoman) {
         this.yeoman = yeoman;
-
     }
 
     generate() {

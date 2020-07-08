@@ -21,14 +21,24 @@ describe('yo kata-net-core',
         }
 
         function enumerateExpectedFiles() {
-            const visualStudioProjectExtension = '.csproj';
-            const visualStudioProjectName = 'SampleKata.Lib';
-            const classFileName = 'Class1.cs';
-            const projectFileName = visualStudioProjectName + visualStudioProjectExtension;
+            // TODO (wip) Generate a solution containing this project
+            // TODO Generate a unit test project and add it to the solution -- see https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-dotnet-test
+
+            const solutionExtension = '.sln';
+            const projectExtension = '.csproj';
+            const librarySuffix = '.Lib';
+
+            const solutionName = 'SampleKata';
+
+            const solutionDirectory = solutionName;
+            const solutionFileName = solutionName + solutionExtension;
+
+            const projectDirectory = solutionName + librarySuffix;
+            const projectFileName = solutionName + librarySuffix + projectExtension;
 
             return [
-                path.join(visualStudioProjectName, classFileName),
-                path.join(visualStudioProjectName, projectFileName)
+                path.join(solutionDirectory, solutionFileName),
+                path.join(solutionDirectory, projectDirectory, projectFileName)
             ];
         }
 
