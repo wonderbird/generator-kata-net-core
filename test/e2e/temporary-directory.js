@@ -31,7 +31,7 @@ TemporaryDirectory.prototype.collectDirectoryEntriesWithRelativePath = function 
 }
 
 TemporaryDirectory.prototype.convertDirectoryEntriesToFullPath = function () {
-    self = this;
+    var self = this;
     this.directoryEntriesWithRelativePath.forEach(function (relativePath) {
         const fullPath = path.join(self.path, relativePath);
         self.directoryEntriesWithFullPath.push(fullPath);
@@ -39,7 +39,7 @@ TemporaryDirectory.prototype.convertDirectoryEntriesToFullPath = function () {
 }
 
 TemporaryDirectory.prototype.deleteDirectoryEntries = function () {
-    self = this;
+    var self = this;
     this.directoryEntriesWithFullPath.forEach(function (fullPath) {
         self.deleteFileOrDirectoryRecursively(fullPath);
     });

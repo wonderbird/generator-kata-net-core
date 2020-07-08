@@ -14,11 +14,11 @@ describe('yo kata-net-core',
                 averageTestExecutionDurationOnGithubInMilliseconds + safetyTimeoutMarginInMilliseconds;
 
             mochaContext.timeout(testExecutionTimeoutInMilliseconds);
-        };
+        }
 
         function runGeneratorUnderTest() {
             return helpers.run(path.join(__dirname, '../../app'));
-        };
+        }
 
         function enumerateExpectedFiles() {
             const visualStudioProjectExtension = '.csproj';
