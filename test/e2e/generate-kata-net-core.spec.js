@@ -8,10 +8,10 @@ describe('yo kata-net-core',
     function () {
 
         function configureTestExecutionTimeout(mochaContext) {
-            const averageTestExecutionDurationOnGithubInMilliseconds = 13000;
+            const maxTestExecutionDurationOnGithubInMilliseconds = 15000;
             const safetyTimeoutMarginInMilliseconds = 5000;
             const testExecutionTimeoutInMilliseconds =
-                averageTestExecutionDurationOnGithubInMilliseconds + safetyTimeoutMarginInMilliseconds;
+                maxTestExecutionDurationOnGithubInMilliseconds + safetyTimeoutMarginInMilliseconds;
 
             mochaContext.timeout(testExecutionTimeoutInMilliseconds);
         }
