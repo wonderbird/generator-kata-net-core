@@ -1,13 +1,13 @@
 var Generator = require('yeoman-generator');
-var ClassLibraryGenerator = require('./class-library-generator');
+var SolutionGenerator = require('./solution-generator');
 
 module.exports = class GeneratorKataNetCore extends Generator {
     constructor(args, opts) {
         super(args, opts);
-        this.classLibraryGenerator = new ClassLibraryGenerator(this);
+        this.solutionGenerator = new SolutionGenerator(this);
     }
 
     install() {
-        this.classLibraryGenerator.generate();
+        this.solutionGenerator.generate();
     }
 }

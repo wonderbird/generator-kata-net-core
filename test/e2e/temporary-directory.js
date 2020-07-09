@@ -1,4 +1,5 @@
 var fs = require('fs');
+var rimraf = require('rimraf');
 var path = require('path');
 
 class TemporaryDirectory {
@@ -47,10 +48,10 @@ TemporaryDirectory.prototype.deleteDirectoryEntries = function () {
 
 TemporaryDirectory.prototype.deleteFileOrDirectoryRecursively = function (pathToDelete) {
     try {
-        fs.rmdirSync(pathToDelete, { recursive: true });
+        rimraf.sync(pathToDelete);
         console.log('Successfully deleted ' + pathToDelete);
     } catch (err) {
-        console.error('Error while deleting ' + pathToDelete);
+        console.error('Error while deleting ' + pathToDelete + ": " + err);
     }
 };
 
