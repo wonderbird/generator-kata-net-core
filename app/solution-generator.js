@@ -33,5 +33,11 @@ module.exports = class SolutionGenerator {
         this.generateSolution();
         this.generateClassLibrary();
         this.addClassLibraryToSolution();
+
+        // TODO (finish the following wip:)
+        // https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-dotnet-test
+        // dotnet new xunit --name SampleKata.Lib.Tests
+        // dotnet sln add ./SampleKata.Lib.Tests/SampleKata.Lib.Tests.csproj
+        // dotnet add ./SampleKata.Lib.Tests/SampleKata.Lib.Tests.csproj reference ./SampleKata.Lib/SampleKata.Lib.csproj
     }
 }

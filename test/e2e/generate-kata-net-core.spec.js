@@ -81,7 +81,7 @@ describe('yo kata-net-core',
 
         it('should create required files and directories',
             function () {
-                // TODO Generate a unit test project and add it to the solution -- see https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-dotnet-test
+                // TODO Add unit test project - see https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-dotnet-test
                 configureTestExecutionTimeout(this);
 
                 return runGeneratorUnderTest()
