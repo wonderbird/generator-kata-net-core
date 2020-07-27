@@ -50,7 +50,7 @@ describe('yo kata-net-core',
         function addProjectBuildOutputToExpectedFiles() {
             const dllExtension = '.dll';
             const buildOutputDirectory = 'bin';
-            const debugOutputDirectory = 'debug';
+            const debugOutputDirectory = 'Debug';
             const netStandardDirectory = 'netstandard2.0';
 
             const projectBuildDirectory = path.join(projectDirectory, buildOutputDirectory, debugOutputDirectory, netStandardDirectory);
