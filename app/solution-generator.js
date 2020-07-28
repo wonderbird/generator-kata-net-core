@@ -1,43 +1,82 @@
+var path = require('path');
+
 module.exports = class SolutionGenerator {
     constructor(yeoman) {
         this.yeoman = yeoman;
+
+        this.solutionName = 'SampleKata';
+
+        const projectExtension = '.csproj';
+
+        const librarySuffix = '.Lib';
+        this.libraryProjectName = this.solutionName + librarySuffix;
+        const libraryProjectFileName = this.libraryProjectName + projectExtension;
+        this.libraryProjectPath = path.join(this.libraryProjectName, libraryProjectFileName);
+
+        const testSuffix = '.Tests';
+        this.testProjectName = this.libraryProjectName + testSuffix;
+        const testProjectFileName = this.testProjectName + projectExtension;
+        this.testProjectPath = path.join(this.testProjectName, testProjectFileName);
     }
 
     generateSolution() {
         this.yeoman.log('Creating .NET Core solution ...');
-        this.yeoman.spawnCommandSync('dotnet',
-            ['new', 'sln', '--output', 'SampleKata']);
+        this.yeoman.spawnCommandSync('dotnet', ['new', 'sln', '--output', this.solutionName]);
     }
 
     generateClassLibrary() {
-        process.chdir('SampleKata');
+        process.chdir(this.solutionName);
 
         this.yeoman.log('Creating .NET Core class library ...');
-        this.yeoman.spawnCommandSync('dotnet',
-            ['new', 'classlib', '--language', 'C#', '--name', 'SampleKata.Lib']);
+        this.yeoman.spawnCommandSync('dotnet', ['new', 'classlib', '--language', 'C#', '--name', this.libraryProjectName]);
 
         process.chdir('..');
     }
 
     addClassLibraryToSolution() {
-        process.chdir('SampleKata');
+        process.chdir(this.solutionName);
 
         this.yeoman.log('Adding .NET Core class library to solution ...');
-        this.yeoman.spawnCommandSync('dotnet',
-            ['sln', 'add', 'SampleKata.Lib/SampleKata.Lib.csproj']);
+        this.yeoman.spawnCommandSync('dotnet', ['sln', 'add', this.libraryProjectPath]);
+
+        process.chdir('..');
+    }
+
+    generateTestProject() {
+        process.chdir(this.solutionName);
+
+        this.yeoman.log('Creating unit test project ...');
+        this.yeoman.spawnCommandSync('dotnet', ['new', 'xunit', '--name', this.testProjectName]);
+
+        process.chdir('..');
+    }
+
+    addClassLibraryReferenceToTestProject() {
+        process.chdir(this.solutionName);
+
+        this.yeoman.log('Adding library reference to unit test project ...');
+        this.yeoman.spawnCommandSync('dotnet', ['add', this.testProjectPath, 'reference', this.libraryProjectPath]);
+
+        process.chdir('..');
+    }
+
+    addTestProjectToSolution() {
+        process.chdir(this.solutionName);
+
+        this.yeoman.log('Adding unit test project to solution ...');
+        this.yeoman.spawnCommandSync('dotnet', ['sln', 'add', this.testProjectPath]);
 
         process.chdir('..');
     }
 
     generate() {
         this.generateSolution();
+
         this.generateClassLibrary();
         this.addClassLibraryToSolution();
 
-        // TODO (finish the following wip:)
-        // https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-dotnet-test
-        // dotnet new xunit --name SampleKata.Lib.Tests
-        // dotnet sln add ./SampleKata.Lib.Tests/SampleKata.Lib.Tests.csproj
-        // dotnet add ./SampleKata.Lib.Tests/SampleKata.Lib.Tests.csproj reference ./SampleKata.Lib/SampleKata.Lib.csproj
+        this.generateTestProject();
+        this.addClassLibraryReferenceToTestProject();
+        this.addTestProjectToSolution();
     }
 }

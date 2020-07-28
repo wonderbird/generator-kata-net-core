@@ -9,14 +9,24 @@ describe('yo kata-net-core',
     function () {
 
         const solutionExtension = '.sln';
-        const projectExtension = '.csproj';
+        const dllExtension = '.dll';
+
         const librarySuffix = '.Lib';
+        const testSuffix = '.Tests';
+
+        const buildOutputDirectory = 'bin';
+        const debugOutputDirectory = 'Debug';
+        const netStandardDirectory = 'netstandard2.0';
+        const netCoreAppDirectory = 'netcoreapp3.1';
 
         const solutionName = 'SampleKata';
 
         const solutionDirectory = solutionName;
-        const projectName = solutionName + librarySuffix;
-        const projectDirectory = projectName;
+        const libraryProjectName = solutionName + librarySuffix;
+        const libraryProjectDirectory = libraryProjectName;
+
+        const testName = libraryProjectName + testSuffix;
+        const testDirectory = testName;
 
         var expectedFiles = [];
 
@@ -40,36 +50,34 @@ describe('yo kata-net-core',
             expectedFiles.push(fullPathToSolutionFile);
         }
 
-        function addProjectFileToExpectedFiles() {
-            const projectFileName = projectName + projectExtension;
-            const fullPathToProjectFile = path.join(solutionDirectory, projectDirectory, projectFileName);
-
-            expectedFiles.push(fullPathToProjectFile);
-        }
-
-        function addProjectBuildOutputToExpectedFiles() {
-            const dllExtension = '.dll';
-            const buildOutputDirectory = 'bin';
-            const debugOutputDirectory = 'Debug';
-            const netStandardDirectory = 'netstandard2.0';
-
-            const projectBuildDirectory = path.join(projectDirectory, buildOutputDirectory, debugOutputDirectory, netStandardDirectory);
-            const projectBuildArtifact = projectName + dllExtension;
+        function addLibraryProjectBuildOutputToExpectedFiles() {
+            const libraryProjectBuildDirectory = path.join(libraryProjectDirectory, buildOutputDirectory, debugOutputDirectory, netStandardDirectory);
+            const libraryProjectBuildArtifact = libraryProjectName + dllExtension;
 
             const fullPathToProjectBuildArtifact =
-                path.join(solutionDirectory, projectBuildDirectory, projectBuildArtifact);
+                path.join(solutionDirectory, libraryProjectBuildDirectory, libraryProjectBuildArtifact);
 
             expectedFiles.push(fullPathToProjectBuildArtifact);
         }
 
+        function addTestBuildOutputToExpectedFiles() {
+            const testBuildDirectory = path.join(testDirectory, buildOutputDirectory, debugOutputDirectory, netCoreAppDirectory);
+            const testBuildArtifact = testName + dllExtension;
+
+            const fullPathToTestBuildArtifact =
+                path.join(solutionDirectory, testBuildDirectory, testBuildArtifact);
+
+            expectedFiles.push(fullPathToTestBuildArtifact);
+        }
+
         function defineExpectedFiles() {
             addSolutionFileToExpectedFiles();
-            addProjectFileToExpectedFiles();
-            addProjectBuildOutputToExpectedFiles();
+            addLibraryProjectBuildOutputToExpectedFiles();
+            addTestBuildOutputToExpectedFiles();
         }
 
         function compileGeneratedSolution() {
-            process.chdir("SampleKata");
+            process.chdir(solutionName);
             spawnSync('dotnet', ['build']);
             process.chdir("..");
         }
