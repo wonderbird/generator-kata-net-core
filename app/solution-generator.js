@@ -1,4 +1,5 @@
 var path = require('path');
+var ClassLibraryGenerator = require('./class-library-generator');
 
 module.exports = class SolutionGenerator {
     constructor(yeoman) {
@@ -17,6 +18,8 @@ module.exports = class SolutionGenerator {
         this.testProjectName = this.libraryProjectName + testSuffix;
         const testProjectFileName = this.testProjectName + projectExtension;
         this.testProjectPath = path.join(this.testProjectName, testProjectFileName);
+
+        this.classLibraryGenerator = new ClassLibraryGenerator(yeoman, this.solutionName, this.libraryProjectName);
     }
 
     generateSolution() {
@@ -72,7 +75,8 @@ module.exports = class SolutionGenerator {
     generate() {
         this.generateSolution();
 
-        this.generateClassLibrary();
+        // TOODO continue refactoring: Move code to ClassLibraryGenerator
+        this.classLibraryGenerator.generateClassLibrary();
         this.addClassLibraryToSolution();
 
         this.generateTestProject();
