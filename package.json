@@ -6,6 +6,8 @@
   "main": "index.js",
   "scripts": {
     "test": "nyc --reporter=text mocha --recursive",
+    "test:unit": "mocha --recursive test/app",
+    "test:watch": "mocha \"test/app/**/*.js\" --watch --watch-extensions js",
     "lint": "eslint .",
     "lint:fix": "eslint --fix --ext .js,.jex ."
   },

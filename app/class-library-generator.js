@@ -1,16 +1,28 @@
+var path = require('path');
+var YeomanDotnetCli = require('./yeoman-dotnet-cli');
+
 module.exports = class ClassLibraryGenerator {
-    constructor(yeoman, solutionName, libraryProjectName) {
-        this.yeoman = yeoman;
+    constructor(yeoman, solutionName) {
+
+        this.yeomanDotnetCli = new YeomanDotnetCli(yeoman);
         this.solutionName = solutionName;
-        this.libraryProjectName = libraryProjectName;
+
+        // TODO refactor: consolidate the constants below and in SolutionGenerator into a single constants data struct
+        const librarySuffix = '.Lib';
+        const projectExtension = '.csproj';
+
+        this.libraryProjectName = this.solutionName + librarySuffix;
+        const libraryProjectFileName = this.libraryProjectName + projectExtension;
+        this.libraryProjectPath = path.join(this.libraryProjectName, libraryProjectFileName);
+
     }
 
     generateClassLibrary() {
-        process.chdir(this.solutionName);
-
-        this.yeoman.log('Creating .NET Core class library ...');
-        this.yeoman.spawnCommandSync('dotnet', ['new', 'classlib', '--language', 'C#', '--name', this.libraryProjectName]);
-
-        process.chdir('..');
+        this.yeomanDotnetCli.createNewClassLibrary(this.solutionName, this.libraryProjectName);
     }
+
+    addClassLibraryToSolution() {
+        this.yeomanDotnetCli.addClassLibraryToSolution(this.solutionName, this.libraryProjectPath);
+    }
+
 }
