@@ -4,9 +4,11 @@ var YeomanDotnetCli = require('./yeoman-dotnet-cli');
 
 module.exports = class SolutionGenerator {
     constructor(yeoman) {
+        // TODO refactor: move this.yeoman into the classLibraryGenerator and into the testProjectGenerator
         this.yeoman = yeoman;
         this.yeomanDotnetCli = new YeomanDotnetCli(yeoman);
 
+        // TODO refactor: extract value type SolutionConfiguration
         this.solutionName = 'SampleKata';
 
         // TODO refactor: consolidate the constants below and in SolutionGenerator into a single constants data struct
@@ -19,6 +21,8 @@ module.exports = class SolutionGenerator {
         this.testProjectName = this.libraryProjectName + testSuffix;
         const testProjectFileName = this.testProjectName + projectExtension;
         this.testProjectPath = path.join(this.testProjectName, testProjectFileName);
+
+        this.classLibraryGenerator = new ClassLibraryGenerator(this.yeoman, this.solutionName);
     }
 
     generateSolution() {
@@ -55,9 +59,8 @@ module.exports = class SolutionGenerator {
     generate() {
         this.generateSolution();
 
-        const classLibraryGenerator = new ClassLibraryGenerator(this.yeoman, this.solutionName);
-        classLibraryGenerator.generateClassLibrary();
-        classLibraryGenerator.addClassLibraryToSolution();
+        this.classLibraryGenerator.generateClassLibrary();
+        this.classLibraryGenerator.addClassLibraryToSolution();
 
         // TODO refactor: Move code to TestProjectGenerator
         this.generateTestProject();
