@@ -31,7 +31,7 @@ describe('yo kata-net-core',
         var expectedFiles = [];
 
         function configureTestExecutionTimeout(mochaContext) {
-            const maxTestExecutionDurationOnGithubInMilliseconds = 37000;
+            const maxTestExecutionDurationOnGithubInMilliseconds = 45000;
             const safetyTimeoutMarginInMilliseconds = 5000;
             const testExecutionTimeoutInMilliseconds =
                 maxTestExecutionDurationOnGithubInMilliseconds + safetyTimeoutMarginInMilliseconds;
