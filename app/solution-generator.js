@@ -1,12 +1,9 @@
 var path = require('path');
 var ClassLibraryGenerator = require('./class-library-generator');
-var YeomanDotnetCli = require('./yeoman-dotnet-cli');
 
 module.exports = class SolutionGenerator {
-    constructor(yeoman) {
-        // TODO refactor: move this.yeoman into the classLibraryGenerator and into the testProjectGenerator
-        this.yeoman = yeoman;
-        this.yeomanDotnetCli = new YeomanDotnetCli(yeoman);
+    constructor(yeomanDotnetCli) {
+        this.yeomanDotnetCli = yeomanDotnetCli;
 
         // TODO refactor: extract value type SolutionConfiguration
         this.solutionName = 'SampleKata';
@@ -16,13 +13,15 @@ module.exports = class SolutionGenerator {
         const projectExtension = '.csproj';
 
         this.libraryProjectName = this.solutionName + librarySuffix;
+        const libraryProjectFileName = this.libraryProjectName + projectExtension;
+        this.libraryProjectPath = path.join(this.libraryProjectName, libraryProjectFileName);
 
         const testSuffix = '.Tests';
         this.testProjectName = this.libraryProjectName + testSuffix;
         const testProjectFileName = this.testProjectName + projectExtension;
         this.testProjectPath = path.join(this.testProjectName, testProjectFileName);
 
-        this.classLibraryGenerator = new ClassLibraryGenerator(this.yeoman, this.solutionName);
+        this.classLibraryGenerator = new ClassLibraryGenerator(yeomanDotnetCli, this.solutionName);
     }
 
     generateSolution() {
@@ -30,30 +29,17 @@ module.exports = class SolutionGenerator {
     }
 
     generateTestProject() {
-        process.chdir(this.solutionName);
-
-        this.yeoman.log('Creating unit test project ...');
-        this.yeoman.spawnCommandSync('dotnet', ['new', 'xunit', '--name', this.testProjectName]);
-
-        process.chdir('..');
+        this.yeomanDotnetCli.createNewTestProject(this.solutionName, this.testProjectName);
     }
 
     addClassLibraryReferenceToTestProject() {
-        process.chdir(this.solutionName);
-
-        this.yeoman.log('Adding library reference to unit test project ...');
-        this.yeoman.spawnCommandSync('dotnet', ['add', this.testProjectPath, 'reference', this.libraryProjectPath]);
-
-        process.chdir('..');
+        this.yeomanDotnetCli.addProjectReference(this.solutionName,
+            this.testProjectPath,
+            this.libraryProjectPath);
     }
 
     addTestProjectToSolution() {
-        process.chdir(this.solutionName);
-
-        this.yeoman.log('Adding unit test project to solution ...');
-        this.yeoman.spawnCommandSync('dotnet', ['sln', 'add', this.testProjectPath]);
-
-        process.chdir('..');
+        this.yeomanDotnetCli.addProjectToSolution(this.solutionName, this.testProjectPath);
     }
 
     generate() {
