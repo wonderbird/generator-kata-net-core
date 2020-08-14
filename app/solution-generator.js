@@ -2,8 +2,9 @@ var path = require('path');
 var ClassLibraryGenerator = require('./class-library-generator');
 
 module.exports = class SolutionGenerator {
-    constructor(dotnetCli) {
+    constructor(dotnetCli, configuration) {
         this.dotnetCli = dotnetCli;
+        this.configuration = configuration;
 
         // TODO refactor: extract value type SolutionConfiguration
         this.solutionName = 'SampleKata';
