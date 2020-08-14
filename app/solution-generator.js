@@ -2,8 +2,8 @@ var path = require('path');
 var ClassLibraryGenerator = require('./class-library-generator');
 
 module.exports = class SolutionGenerator {
-    constructor(yeomanDotnetCli) {
-        this.yeomanDotnetCli = yeomanDotnetCli;
+    constructor(dotnetCli) {
+        this.dotnetCli = dotnetCli;
 
         // TODO refactor: extract value type SolutionConfiguration
         this.solutionName = 'SampleKata';
@@ -21,25 +21,25 @@ module.exports = class SolutionGenerator {
         const testProjectFileName = this.testProjectName + projectExtension;
         this.testProjectPath = path.join(this.testProjectName, testProjectFileName);
 
-        this.classLibraryGenerator = new ClassLibraryGenerator(yeomanDotnetCli, this.solutionName);
+        this.classLibraryGenerator = new ClassLibraryGenerator(dotnetCli, this.solutionName);
     }
 
     generateSolution() {
-        this.yeomanDotnetCli.createNewSolution(this.solutionName);
+        this.dotnetCli.createNewSolution(this.solutionName);
     }
 
     generateTestProject() {
-        this.yeomanDotnetCli.createNewTestProject(this.solutionName, this.testProjectName);
+        this.dotnetCli.createNewTestProject(this.solutionName, this.testProjectName);
     }
 
     addClassLibraryReferenceToTestProject() {
-        this.yeomanDotnetCli.addProjectReference(this.solutionName,
+        this.dotnetCli.addProjectReference(this.solutionName,
             this.testProjectPath,
             this.libraryProjectPath);
     }
 
     addTestProjectToSolution() {
-        this.yeomanDotnetCli.addProjectToSolution(this.solutionName, this.testProjectPath);
+        this.dotnetCli.addProjectToSolution(this.solutionName, this.testProjectPath);
     }
 
     generate() {

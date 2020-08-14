@@ -1,9 +1,9 @@
 var path = require('path');
 
 module.exports = class ClassLibraryGenerator {
-    constructor(yeomanDotnetCli, solutionName) {
+    constructor(dotnetCli, solutionName) {
 
-        this.yeomanDotnetCli = yeomanDotnetCli;
+        this.dotnetCli = dotnetCli;
         this.solutionName = solutionName;
 
         // TODO refactor: consolidate the constants below and in SolutionGenerator into a single constants data struct
@@ -17,11 +17,11 @@ module.exports = class ClassLibraryGenerator {
     }
 
     generateClassLibrary() {
-        this.yeomanDotnetCli.createNewClassLibrary(this.solutionName, this.libraryProjectName);
+        this.dotnetCli.createNewClassLibrary(this.solutionName, this.libraryProjectName);
     }
 
     addClassLibraryToSolution() {
-        this.yeomanDotnetCli.addProjectToSolution(this.solutionName, this.libraryProjectPath);
+        this.dotnetCli.addProjectToSolution(this.solutionName, this.libraryProjectPath);
     }
 
 }
