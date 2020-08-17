@@ -24,7 +24,7 @@ describe('SolutionGenerator',
 
                 beforeEach(function() {
                     dotnetCliStub = sinon.createStubInstance(DotnetCli);
-                    configuration = new Configuration();
+                    configuration = new Configuration(expectedSolutionName);
 
                     solutionGenerator = new SolutionGenerator(dotnetCliStub, configuration);
                 });

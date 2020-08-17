@@ -4,6 +4,7 @@ var sinonChai = require('sinon-chai');
 var path = require('path');
 
 var DotnetCli = require('../../app/yeoman-dotnet-cli');
+var Configuration = require('../../app/configuration');
 var ClassLibraryGenerator = require('../../app/class-library-generator');
 
 chai.should();
@@ -20,8 +21,9 @@ describe('ClassLibraryGenerator',
 
         beforeEach(function () {
             dotnetCliStub = sinon.createStubInstance(DotnetCli);
+            configuration = new Configuration(configuredSolutionName);
 
-            classLibraryGenerator = new ClassLibraryGenerator(dotnetCliStub, expectedSolutionName);
+            classLibraryGenerator = new ClassLibraryGenerator(dotnetCliStub, configuration);
         });
 
         describe('generateClassLibrary',

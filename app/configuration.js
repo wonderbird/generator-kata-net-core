@@ -1,4 +1,5 @@
 module.exports = class Configuration {
-    constructor() {
+    constructor(solutionName) {
+      this.solutionName = solutionName;
     }
 }

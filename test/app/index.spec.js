@@ -3,7 +3,7 @@ var sinon = require('sinon');
 var sinonChai = require('sinon-chai');
 
 var SolutionGenerator = require('../../app/solution-generator');
-var KataNetCoreGenerator = require('../../app/index');
+var GeneratorKataNetCore = require('../../app/index');
 
 chai.should();
 chai.use(sinonChai);
@@ -16,16 +16,14 @@ describe('GeneratorKataNetCore',
 
                 it('should invoke SolutionGenerator.generate()',
                     function() {
-                        const solutionGenerator = new SolutionGenerator();
-                        const solutionGeneratorMock = sinon.mock(solutionGenerator);
-                        solutionGeneratorMock.expects('generate').once();
+                        const solutionGeneratorMock = sinon.createStubInstance(SolutionGenerator);
 
-                        const generator = new KataNetCoreGenerator();
-                        generator.solutionGenerator = solutionGenerator;
+                        const generator = new GeneratorKataNetCore();
+                        generator.solutionGenerator = solutionGeneratorMock;
 
                         generator.install();
 
-                        solutionGeneratorMock.verify();
+                        solutionGeneratorMock.generate.should.have.been.calledOnce;
                     });
             });
     });

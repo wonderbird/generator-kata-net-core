@@ -6,14 +6,11 @@ module.exports = class SolutionGenerator {
         this.dotnetCli = dotnetCli;
         this.configuration = configuration;
 
-        // TODO refactor: extract value type SolutionConfiguration
-        this.solutionName = 'SampleKata';
-
         // TODO refactor: consolidate the constants below and in SolutionGenerator into a single constants data struct
         const librarySuffix = '.Lib';
         const projectExtension = '.csproj';
 
-        this.libraryProjectName = this.solutionName + librarySuffix;
+        this.libraryProjectName = this.configuration.solutionName + librarySuffix;
         const libraryProjectFileName = this.libraryProjectName + projectExtension;
         this.libraryProjectPath = path.join(this.libraryProjectName, libraryProjectFileName);
 
@@ -22,25 +19,25 @@ module.exports = class SolutionGenerator {
         const testProjectFileName = this.testProjectName + projectExtension;
         this.testProjectPath = path.join(this.testProjectName, testProjectFileName);
 
-        this.classLibraryGenerator = new ClassLibraryGenerator(dotnetCli, this.solutionName);
+        this.classLibraryGenerator = new ClassLibraryGenerator(dotnetCli, configuration);
     }
 
     generateSolution() {
-        this.dotnetCli.createNewSolution(this.solutionName);
+        this.dotnetCli.createNewSolution(this.configuration.solutionName);
     }
 
     generateTestProject() {
-        this.dotnetCli.createNewTestProject(this.solutionName, this.testProjectName);
+        this.dotnetCli.createNewTestProject(this.configuration.solutionName, this.testProjectName);
     }
 
     addClassLibraryReferenceToTestProject() {
-        this.dotnetCli.addProjectReference(this.solutionName,
+        this.dotnetCli.addProjectReference(this.configuration.solutionName,
             this.testProjectPath,
             this.libraryProjectPath);
     }
 
     addTestProjectToSolution() {
-        this.dotnetCli.addProjectToSolution(this.solutionName, this.testProjectPath);
+        this.dotnetCli.addProjectToSolution(this.configuration.solutionName, this.testProjectPath);
     }
 
     generate() {

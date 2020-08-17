@@ -8,7 +8,7 @@ module.exports = class GeneratorKataNetCore extends Generator {
         super(args, opts);
 
         const yeomanDotnetCli = new YeomanDotnetCli(this);
-        const configuration = new Configuration();
+        const configuration = new Configuration('SampleKata');
 
         this.solutionGenerator = new SolutionGenerator(yeomanDotnetCli, configuration);
     }
