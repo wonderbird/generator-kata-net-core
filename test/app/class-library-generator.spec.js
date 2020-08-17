@@ -21,7 +21,7 @@ describe('ClassLibraryGenerator',
 
         beforeEach(function () {
             dotnetCliStub = sinon.createStubInstance(DotnetCli);
-            configuration = new Configuration(configuredSolutionName);
+            const configuration = new Configuration(configuredSolutionName);
 
             classLibraryGenerator = new ClassLibraryGenerator(dotnetCliStub, configuration);
         });
