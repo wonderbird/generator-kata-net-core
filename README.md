@@ -26,10 +26,17 @@ npm run test
 npm run lint
 ```
 
-To continuously monitor the tests while developing
+To continuously monitor the fast running unit tests while developing
 
 ```sh
-npm run test -- --watch
+npm run test:watch
+```
+
+Before pushing to github, please run all tests including the long running end-to-end tests and the linter
+
+```sh
+npm run test
+npm run lint
 ```
 
 ## References
