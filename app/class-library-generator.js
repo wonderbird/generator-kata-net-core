@@ -13,6 +13,6 @@ module.exports = class ClassLibraryGenerator {
     }
 
     generate() {
-        
+        // TODO call the class functions from here
     }
 }

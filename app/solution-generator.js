@@ -23,6 +23,7 @@ module.exports = class SolutionGenerator {
     generate() {
         this.generateSolution();
 
+        // TODO Refactor: Move the *generators up to the index.js install method
         this.classLibraryGenerator.generateClassLibrary();
         this.classLibraryGenerator.addClassLibraryToSolution();
 

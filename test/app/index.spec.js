@@ -14,14 +14,22 @@ describe('GeneratorKataNetCore',
 
         describe('install',
             function () {
+                let solutionGeneratorMock;
+                let classLibraryGeneratorMock;
+                let generator;
 
+                beforeEach(
+                    function() {
+                        solutionGeneratorMock = sinon.createStubInstance(SolutionGenerator);
+                        classLibraryGeneratorMock = sinon.createStubInstance(ClassLibraryGenerator);
+
+                        generator = new GeneratorKataNetCore();
+                        generator.solutionGenerator = solutionGeneratorMock;
+                        generator.classLibraryGenerator = classLibraryGeneratorMock;
+                    });
+    
                 it('should invoke SolutionGenerator.generate()',
                     function() {
-                        const solutionGeneratorMock = sinon.createStubInstance(SolutionGenerator);
-
-                        const generator = new GeneratorKataNetCore();
-                        generator.solutionGenerator = solutionGeneratorMock;
-
                         generator.install();
 
                         solutionGeneratorMock.generate.should.have.been.calledOnce;
@@ -29,13 +37,6 @@ describe('GeneratorKataNetCore',
 
                 it('should invoke ClassLibraryGenerator.generate()',
                     function() {
-                        const solutionGeneratorMock = sinon.createStubInstance(SolutionGenerator);
-                        const classLibraryGeneratorMock = sinon.createStubInstance(ClassLibraryGenerator);
-
-                        const generator = new GeneratorKataNetCore();
-                        generator.solutionGenerator = solutionGeneratorMock;
-                        generator.classLibraryGenerator = classLibraryGeneratorMock;
-
                         generator.install();
 
                         classLibraryGeneratorMock.generate.should.have.been.calledOnce;
