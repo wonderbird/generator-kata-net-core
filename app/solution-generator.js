@@ -1,5 +1,6 @@
 var path = require('path');
 var ClassLibraryGenerator = require('./class-library-generator');
+var TestProjectGenerator = require('./test-project-generator');
 
 module.exports = class SolutionGenerator {
     constructor(dotnetCli, configuration) {
@@ -12,24 +13,11 @@ module.exports = class SolutionGenerator {
         this.testProjectPath = path.join(this.testProjectName, testProjectFileName);
 
         this.classLibraryGenerator = new ClassLibraryGenerator(dotnetCli, configuration);
+        this.testProjectGenerator = new TestProjectGenerator(dotnetCli, configuration);
     }
 
     generateSolution() {
         this.dotnetCli.createNewSolution(this.configuration.solutionName);
-    }
-
-    generateTestProject() {
-        this.dotnetCli.createNewTestProject(this.configuration.solutionName, this.testProjectName);
-    }
-
-    addClassLibraryReferenceToTestProject() {
-        this.dotnetCli.addProjectReference(this.configuration.solutionName,
-            this.testProjectPath,
-            this.libraryProjectPath);
-    }
-
-    addTestProjectToSolution() {
-        this.dotnetCli.addProjectToSolution(this.configuration.solutionName, this.testProjectPath);
     }
 
     generate() {
@@ -38,9 +26,8 @@ module.exports = class SolutionGenerator {
         this.classLibraryGenerator.generateClassLibrary();
         this.classLibraryGenerator.addClassLibraryToSolution();
 
-        // TODO refactor: Move code to TestProjectGenerator
-        this.generateTestProject();
-        this.addClassLibraryReferenceToTestProject();
-        this.addTestProjectToSolution();
+        this.testProjectGenerator.generateTestProject();
+        this.testProjectGenerator.addClassLibraryReferenceToTestProject();
+        this.testProjectGenerator.addTestProjectToSolution();
     }
 }
