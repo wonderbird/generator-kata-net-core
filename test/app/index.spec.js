@@ -4,6 +4,7 @@ var sinonChai = require('sinon-chai');
 
 var SolutionGenerator = require('../../app/solution-generator');
 var GeneratorKataNetCore = require('../../app/index');
+const ClassLibraryGenerator = require('../../app/class-library-generator');
 
 chai.should();
 chai.use(sinonChai);
@@ -24,6 +25,20 @@ describe('GeneratorKataNetCore',
                         generator.install();
 
                         solutionGeneratorMock.generate.should.have.been.calledOnce;
+                    });
+
+                it('should invoke ClassLibraryGenerator.generate()',
+                    function() {
+                        const solutionGeneratorMock = sinon.createStubInstance(SolutionGenerator);
+                        const classLibraryGeneratorMock = sinon.createStubInstance(ClassLibraryGenerator);
+
+                        const generator = new GeneratorKataNetCore();
+                        generator.solutionGenerator = solutionGeneratorMock;
+                        generator.classLibraryGenerator = classLibraryGeneratorMock;
+
+                        generator.install();
+
+                        classLibraryGeneratorMock.generate.should.have.been.calledOnce;
                     });
             });
     });

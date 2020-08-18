@@ -3,7 +3,7 @@ var sinon = require('sinon');
 var sinonChai = require('sinon-chai');
 var path = require('path');
 
-var DotnetCli = require('../../app/yeoman-dotnet-cli');
+var DotnetCli = require('../../app/dotnet-cli');
 var Configuration = require('../../app/configuration');
 var TestProjectGenerator = require('../../app/test-project-generator');
 

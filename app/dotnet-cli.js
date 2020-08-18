@@ -1,4 +1,4 @@
-module.exports = class YeomanDotnetCli {
+module.exports = class DotnetCli {
     constructor(yeoman) {
         this.yeoman = yeoman;
     }

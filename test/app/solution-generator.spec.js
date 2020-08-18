@@ -3,7 +3,7 @@ var sinon = require('sinon');
 var sinonChai = require('sinon-chai');
 
 var Configuration = require('../../app/configuration');
-var DotnetCli = require('../../app/yeoman-dotnet-cli');
+var DotnetCli = require('../../app/dotnet-cli');
 var SolutionGenerator = require('../../app/solution-generator');
 
 chai.should();

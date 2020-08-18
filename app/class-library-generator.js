@@ -12,4 +12,7 @@ module.exports = class ClassLibraryGenerator {
         this.dotnetCli.addProjectToSolution(this.configuration.solutionName, this.configuration.libraryProjectPath);
     }
 
+    generate() {
+        
+    }
 }
