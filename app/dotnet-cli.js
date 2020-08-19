@@ -15,7 +15,12 @@ module.exports = class DotnetCli {
 
     createNewSolution(solutionName) {
         this.yeoman.log('Creating .NET Core solution ...');
-        this.yeoman.spawnCommandSync('dotnet', ['new', 'sln', '--output', solutionName]);
+        const spawnResult = this.yeoman.spawnCommandSync('dotnet', ['new', 'sln', '--output', solutionName]);
+    
+        if (spawnResult.status != 0) {
+            throw Error('dotnet command failed with return code ' + spawnResult.status);
+        }
+        this.yeoman.log(spawnResult);
     }
 
     createNewClassLibrary(directory, libraryProjectName) {
