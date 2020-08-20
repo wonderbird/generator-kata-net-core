@@ -57,28 +57,35 @@ describe('DotnetCli',
         describe('createNewClasLibrary',
             function () {
                 const configuredLibraryProjectName = configuredSolutionName + '.Lib';
-                const expectedDotnetArgs = ['new', 'classlib', '--language', 'C#', '--name', configuredLibraryProjectName];
+                let processMock;
+                let dotnetCli;
 
-                xit('should invoke dotnet cli with correct parameters',
+                beforeEach(function() {
+                        processMock = {
+                            chdir: sinon.stub()
+                        };
+
+                        dotnetCli = new DotnetCli(yeomanMock);
+                        dotnetCli.process = processMock;
+                    });
+
+                it('should invoke dotnet cli with correct parameters',
                     function() {
-                        const dotnetCli = new DotnetCli(yeomanMock);
-                        dotnetCli.createNewClassLibrary(configuredLibraryProjectName);
+                        dotnetCli.createNewClassLibrary(configuredSolutionName, configuredLibraryProjectName);
 
+                        const expectedDotnetArgs = ['new', 'classlib', '--language', 'C#', '--name', configuredLibraryProjectName];
                         yeomanMock.spawnCommandSync.should.have.been.calledOnceWithExactly('dotnet', expectedDotnetArgs);
                     });
 
-                xit('should throw exception if changing the working directory fails',
+                it('should throw exception if changing the working directory fails',
                     function() {
-                        // Arrange
-                        stubbedSpawnCommandSyncResult.status = 1;
+                        processMock.chdir.throws()
 
-                        // Act and assert exception
-                        const dotnetCli = new DotnetCli(yeomanMock);
-                        expect(dotnetCli.createNewClassLibrary.bind(dotnetCli, configuredLibraryProjectName))
-                            .to.throw('changing the working directory failed');
+                        const expectedExceptionMessage = 'changing the working directory failed';
+                        expect(dotnetCli.createNewClassLibrary.bind(dotnetCli, configuredSolutionName, configuredLibraryProjectName))
+                            .to.throw(expectedExceptionMessage);
 
-                        // Assert mocked method call
-                        yeomanMock.spawnCommandSync.should.have.been.calledOnceWithExactly('dotnet', expectedDotnetArgs);
+                        processMock.chdir.should.have.been.calledOnceWithExactly(configuredSolutionName);
                     });
             });
     });

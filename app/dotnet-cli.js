@@ -4,24 +4,35 @@ module.exports = class DotnetCli {
         this.process = process;
     }
 
+    changeDirectoryOrThrow(directory) {
+        try {
+            this.process.chdir(directory);
+        } catch(e) {
+            throw Error('changing the working directory failed');
+        }
+    }
+
     // TODO Ensure that the return code of spawnCommandSync is considered properly. Example: If adding the library reference fails, then dotnet shows an error but the tests are still green.
     runInDirectoryAndReturnAfterwards(directory, delegateFunction) {
         const previousWorkingDirectory = process.cwd();
-        this.process.chdir(directory);
+
+        this.changeDirectoryOrThrow(directory);
 
         delegateFunction();
 
-        process.chdir(previousWorkingDirectory);
+        this.changeDirectoryOrThrow(previousWorkingDirectory);
     }
 
-    createNewSolution(solutionName) {
-        this.yeoman.log('Creating .NET Core solution ...');
-        const spawnResult = this.yeoman.spawnCommandSync('dotnet', ['new', 'sln', '--output', solutionName]);
+    runDotnetWithArgumentsOrThrow(/* parameters are processed via arguments */) {
+        const spawnResult = this.yeoman.spawnCommandSync('dotnet', arguments);
     
         if (spawnResult.status != 0) {
             throw Error('dotnet command failed');
         }
-        this.yeoman.log(spawnResult);
+    }
+
+    createNewSolution(solutionName) {
+        this.runDotnetWithArgumentsOrThrow('new', 'sln', '--output', solutionName);
     }
 
     createNewClassLibrary(directory, libraryProjectName) {
