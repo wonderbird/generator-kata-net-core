@@ -1,12 +1,13 @@
 module.exports = class DotnetCli {
     constructor(yeoman) {
         this.yeoman = yeoman;
+        this.process = process;
     }
 
     // TODO Ensure that the return code of spawnCommandSync is considered properly. Example: If adding the library reference fails, then dotnet shows an error but the tests are still green.
     runInDirectoryAndReturnAfterwards(directory, delegateFunction) {
         const previousWorkingDirectory = process.cwd();
-        process.chdir(directory);
+        this.process.chdir(directory);
 
         delegateFunction();
 
@@ -18,7 +19,7 @@ module.exports = class DotnetCli {
         const spawnResult = this.yeoman.spawnCommandSync('dotnet', ['new', 'sln', '--output', solutionName]);
     
         if (spawnResult.status != 0) {
-            throw Error('dotnet command failed with return code ' + spawnResult.status);
+            throw Error('dotnet command failed');
         }
         this.yeoman.log(spawnResult);
     }
