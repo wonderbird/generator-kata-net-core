@@ -18,6 +18,7 @@ describe('DotnetCli',
         beforeEach(
             function() {
                 stubbedSpawnCommandSyncResult = {
+                    output: ["characters received on stdin", "characters received on stdout", "characters received on stderr"],
                     status: 0
                 };
 

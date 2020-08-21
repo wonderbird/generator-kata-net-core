@@ -23,16 +23,18 @@ module.exports = class DotnetCli {
         this.changeDirectoryOrThrow(previousWorkingDirectory);
     }
 
-    runDotnetWithArgumentsOrThrow(/* parameters are processed via arguments */) {
-        const spawnResult = this.yeoman.spawnCommandSync('dotnet', arguments);
+    runDotnetWithArgumentsOrThrow(parameters) {
+        const spawnResult = this.yeoman.spawnCommandSync('dotnet', parameters);
     
         if (spawnResult.status != 0) {
-            throw Error('dotnet command failed');
+            const stdoutString = spawnResult.output[1];
+            const stderrString = spawnResult.output[2];
+            throw Error('dotnet command failed with stdout = "' + stdoutString + '", stderr = "' + stderrString + '"');
         }
     }
 
     createNewSolution(solutionName) {
-        this.runDotnetWithArgumentsOrThrow('new', 'sln', '--output', solutionName);
+        this.runDotnetWithArgumentsOrThrow(['new', 'sln', '--output', solutionName]);
     }
 
     createNewClassLibrary(directory, libraryProjectName) {
