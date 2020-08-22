@@ -10,10 +10,11 @@ class TemporaryDirectory {
     }
 }
 
-TemporaryDirectory.prototype.deleteContents = function () {
+TemporaryDirectory.prototype.delete = function () {
     this.validatePath();
     this.collectDirectoryEntries();
     this.deleteDirectoryEntries();
+    this.deleteFileOrDirectoryRecursively(this.path);
 }
 
 TemporaryDirectory.prototype.validatePath = function () {

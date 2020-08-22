@@ -84,7 +84,7 @@ describe('yo kata-net-core',
 
         function cleanupTestExecutionDirectory(testExecutionDirectoryPath) {
             const testExecutionDirectory = new TemporaryDirectory(testExecutionDirectoryPath);
-            testExecutionDirectory.deleteContents();
+            testExecutionDirectory.delete();
         }
 
         it('should create required files and directories',
