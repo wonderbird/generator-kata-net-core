@@ -18,9 +18,21 @@ module.exports = class DotnetCli {
 
         this.changeDirectoryOrThrow(directory);
 
-        delegateFunction();
+        let hasThrownException = false;
+        let caughtException;
+
+        try {
+            delegateFunction();
+        } catch (e) {
+            hasThrownException = true;
+            caughtException = e;
+        }
 
         this.changeDirectoryOrThrow(previousWorkingDirectory);
+
+        if (hasThrownException) {
+            throw caughtException;
+        }
     }
 
     runDotnetWithArgumentsOrThrow(/* parameters to the dotnet command are consumed from the arguments object */) {
@@ -40,16 +52,12 @@ module.exports = class DotnetCli {
 
     createNewClassLibrary(directory, libraryProjectName) {
         this.runInDirectoryAndReturnAfterwards(directory,
-            () => {
-                this.yeoman.log('Creating .NET Core class library ...');
-                this.yeoman.spawnCommandSync('dotnet', ['new', 'classlib', '--language', 'C#', '--name', libraryProjectName]);
-            });
+            () => this.runDotnetWithArgumentsOrThrow('new', 'classlib', '--language', 'C#', '--name', libraryProjectName));
     }
 
     addProjectToSolution(solutionName, projectPath) {
         this.runInDirectoryAndReturnAfterwards(solutionName,
             () => {
-                this.yeoman.log('Adding .NET Core class library to solution ...');
                 this.yeoman.spawnCommandSync('dotnet', ['sln', 'add', projectPath]);
             });
     }
@@ -57,7 +65,6 @@ module.exports = class DotnetCli {
     createNewTestProject(directory, testProjectName) {
         this.runInDirectoryAndReturnAfterwards(directory,
             () => {
-                this.yeoman.log('Creating unit test project ...');
                 this.yeoman.spawnCommandSync('dotnet', ['new', 'xunit', '--name', testProjectName]);
             });
     }
@@ -65,7 +72,6 @@ module.exports = class DotnetCli {
     addProjectReference(directory, targetProjectPath, referenceProjectPath) {
         this.runInDirectoryAndReturnAfterwards(directory,
             () => {
-                this.yeoman.log('Adding library reference to unit test project ...');
                 this.yeoman.spawnCommandSync('dotnet',
                     ['add', targetProjectPath, 'reference', referenceProjectPath]);
             });
