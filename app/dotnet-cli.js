@@ -14,7 +14,7 @@ module.exports = class DotnetCli {
 
     // TODO Ensure that the return code of spawnCommandSync is considered properly. Example: If adding the library reference fails, then dotnet shows an error but the tests are still green.
     runInDirectoryAndReturnAfterwards(directory, delegateFunction) {
-        const previousWorkingDirectory = process.cwd();
+        const previousWorkingDirectory = this.process.cwd();
 
         this.changeDirectoryOrThrow(directory);
 
