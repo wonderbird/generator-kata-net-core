@@ -12,26 +12,15 @@ module.exports = class DotnetCli {
         }
     }
 
-    // TODO Ensure that the return code of spawnCommandSync is considered properly. Example: If adding the library reference fails, then dotnet shows an error but the tests are still green.
     runInDirectoryAndReturnAfterwards(directory, delegateFunction) {
         const previousWorkingDirectory = this.process.cwd();
 
         this.changeDirectoryOrThrow(directory);
 
-        let hasThrownException = false;
-        let caughtException;
-
         try {
             delegateFunction();
-        } catch (e) {
-            hasThrownException = true;
-            caughtException = e;
-        }
-
-        this.changeDirectoryOrThrow(previousWorkingDirectory);
-
-        if (hasThrownException) {
-            throw caughtException;
+        } finally {
+            this.process.chdir(previousWorkingDirectory);
         }
     }
 
@@ -57,24 +46,16 @@ module.exports = class DotnetCli {
 
     addProjectToSolution(solutionName, projectPath) {
         this.runInDirectoryAndReturnAfterwards(solutionName,
-            () => {
-                this.yeoman.spawnCommandSync('dotnet', ['sln', 'add', projectPath]);
-            });
+            () => this.runDotnetWithArgumentsOrThrow('sln', 'add', projectPath));
     }
 
     createNewTestProject(directory, testProjectName) {
         this.runInDirectoryAndReturnAfterwards(directory,
-            () => {
-                this.yeoman.spawnCommandSync('dotnet', ['new', 'xunit', '--name', testProjectName]);
-            });
+            () => this.runDotnetWithArgumentsOrThrow('new', 'xunit', '--name', testProjectName));
     }
 
     addProjectReference(directory, targetProjectPath, referenceProjectPath) {
         this.runInDirectoryAndReturnAfterwards(directory,
-            () => {
-                this.yeoman.spawnCommandSync('dotnet',
-                    ['add', targetProjectPath, 'reference', referenceProjectPath]);
-            });
+            () => this.runDotnetWithArgumentsOrThrow('add', targetProjectPath, 'reference', referenceProjectPath));
     }
-
 }
