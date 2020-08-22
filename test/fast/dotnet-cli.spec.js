@@ -12,6 +12,8 @@ describe('DotnetCli',
     function () {
         const configuredSolutionName = 'SampleKata';
 
+        const expectedDotnetCommandFailedMessage = 'dotnet command failed';
+
         let yeomanMock;
         let stubbedSpawnCommandSyncResult;
 
@@ -28,7 +30,7 @@ describe('DotnetCli',
                 };
             });
 
-        describe('createNewSolution',
+        describe('createNewSolution',         
             function () {
                 it('should invoke dotnet cli with correct parameters',
                     function() {
@@ -47,7 +49,7 @@ describe('DotnetCli',
                         // Act and assert exception
                         const dotnetCli = new DotnetCli(yeomanMock);
                         expect(dotnetCli.createNewSolution.bind(dotnetCli, configuredSolutionName))
-                            .to.throw('dotnet command failed');
+                            .to.throw(expectedDotnetCommandFailedMessage);
 
                         // Assert mocked method call
                         const expectedDotnetArgs = ['new', 'sln', '--output', configuredSolutionName];
@@ -58,16 +60,17 @@ describe('DotnetCli',
         describe('createNewClasLibrary',
             function () {
                 const configuredLibraryProjectName = configuredSolutionName + '.Lib';
-                let processMock;
+                let processStub;
                 let dotnetCli;
 
                 beforeEach(function() {
-                        processMock = {
-                            chdir: sinon.stub()
+                        processStub = {
+                            chdir: sinon.stub(),
+                            cwd: sinon.stub().returns("current working directory")
                         };
 
                         dotnetCli = new DotnetCli(yeomanMock);
-                        dotnetCli.process = processMock;
+                        dotnetCli.process = processStub;
                     });
 
                 it('should invoke dotnet cli with correct parameters',
@@ -80,13 +83,42 @@ describe('DotnetCli',
 
                 it('should throw exception if changing the working directory fails',
                     function() {
-                        processMock.chdir.throws()
+                        processStub.chdir.throws()
 
                         const expectedExceptionMessage = 'changing the working directory failed';
                         expect(dotnetCli.createNewClassLibrary.bind(dotnetCli, configuredSolutionName, configuredLibraryProjectName))
                             .to.throw(expectedExceptionMessage);
 
-                        processMock.chdir.should.have.been.calledOnceWithExactly(configuredSolutionName);
+                        processStub.chdir.should.have.been.calledOnceWithExactly(configuredSolutionName);
+                    });
+
+                it('should throw exception if dotnet command failed',
+                    function() {
+                        var configuredCurrentDirectory = "configured current directory";
+                        processStub.cwd.returns(configuredCurrentDirectory);
+
+                        stubbedSpawnCommandSyncResult.status = 1;
+
+                        expect(dotnetCli.createNewClassLibrary.bind(dotnetCli, configuredSolutionName, configuredLibraryProjectName))
+                            .to.throw(expectedDotnetCommandFailedMessage);
+                    });
+
+                it('should change back to previous directory if dotnet command failed',
+                    function() {
+                        var configuredCurrentDirectory = "configured current directory";
+                        processStub.cwd.returns(configuredCurrentDirectory);
+
+                        stubbedSpawnCommandSyncResult.status = 1;
+
+                        try {
+                            dotnetCli.createNewClassLibrary(configuredSolutionName, configuredLibraryProjectName);
+                        } catch(e) {
+                            // explicitly ignore the expected exception for this particular test
+                        }
+
+                        processStub.chdir.should.have.been.calledTwice;
+                        const directoryOnSecondCall = processStub.chdir.getCall(1).args[0];
+                        directoryOnSecondCall.should.equal(configuredCurrentDirectory);
                     });
             });
     });
