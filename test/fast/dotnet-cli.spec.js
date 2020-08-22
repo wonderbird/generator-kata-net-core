@@ -112,7 +112,7 @@ describe('DotnetCli',
 
                         try {
                             dotnetCli.createNewClassLibrary(configuredSolutionName, configuredLibraryProjectName);
-                        } catch {
+                        } catch(e) {
                             // explicitly ignore the expected exception for this particular test
                         }
 
