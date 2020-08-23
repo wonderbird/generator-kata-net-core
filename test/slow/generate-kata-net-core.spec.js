@@ -40,7 +40,8 @@ describe('yo kata-net-core',
         }
 
         function runGeneratorUnderTest() {
-            return helpers.run(path.join(__dirname, '../../app'));
+            return helpers.run(path.join(__dirname, '../../app'))
+                .withPrompts({ solutionName: 'SampleKata' });
         }
 
         function addSolutionFileToExpectedFiles() {
