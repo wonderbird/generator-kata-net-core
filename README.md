@@ -23,7 +23,7 @@ After you have cloned this repository, execute the following steps once in a com
 * Clone this repository and navigate into the cloned folder
   * Install the required npm packages: `npm install`
   * Check whether everything works: `npm run test`
-* Link this the cloned directory to your node modules: `npm link` (see [Yeoman: Creating a generator](https://yeoman.io/authoring/index.html))
+  * Link the cloned directory to your node modules: `npm link` (see [Yeoman: Creating a generator](https://yeoman.io/authoring/index.html))
 
 ### Usage
 
