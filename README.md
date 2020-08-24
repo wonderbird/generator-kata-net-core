@@ -2,23 +2,59 @@
 
 ![Build Status Badge](https://github.com/wonderbird/generator-kata-net-core/workflows/Node.js%20CI/badge.svg)
 
-Yeoman generator for empty C# code kata using .NET Core
+[Yeoman](https://yeoman.io) generator for empty C# code kata using .NET Core
 
-## Status
+This generator creates a C# .NET Core solution with the following projects:
 
-This is a work in progress started on July 1, 2020.
-Considering the current holiday season in Germany and my development speed I suggest you come back by end of August.
+* a library project (DLL),
+* an associated [xUnit](https://xunit.github.io) test project.
+
+The generator asks for the solution name interactively. From that name it derives the names of the generated projects.
+
+## Installation and Usage
+
+### Installation
+
+You need Node.js (LTS or current version) to run the generator.
+
+After you have cloned this repository, execute the following steps once in a command terminal:
+
+* Install the [Yeoman scaffolding tool](https://yeoman.io/) according to the instructions: `npm install -g yo`
+* Clone this repository and navigate into the cloned folder
+  * Install the required npm packages: `npm install`
+  * Check whether everything works: `npm run test`
+* Link this the cloned directory to your node modules: `npm link` (see [Yeoman: Creating a generator](https://yeoman.io/authoring/index.html))
+
+### Usage
+
+From any directory execute
+
+```sh
+yo kata-net-core
+```
+
+Yeoman will prompt for the solution name. Then the generator will create a folder with the specified name. Inside it will create the solution and the projects mentioned above.
+
+To build and test your project
+
+```sh
+cd <solution folder>
+dotnet build
+dotnet test
+```
+
+### Updating the Generator
+
+```sh
+cd <cloned generator folder>
+git pull
+npm install
+npm run test
+```
 
 ## Development
 
-### Prerequisite
-
-The following steps only need to be executed once:
-
-* Install the [Yeoman scaffolding tool](https://yeoman.io/) according to the instructions: `npm install -g yo`
-* Link this project's base directory to your node modules as described in the [Yeoman: Creating a generator](https://yeoman.io/authoring/index.html) page: `npm link`
-
-### Building the project
+### Building this Project
 
 ```sh
 npm install
@@ -41,5 +77,8 @@ npm run lint
 
 ## References
 
-- https://yeoman.io/authoring/index.html
-- https://github.com/yeoman
+- Yeoman: "Homepage", https://yeoman.io, last visited on Aug. 24, 2020.
+- Yeoman: "Writing your own yeoman generator", https://yeoman.io/authoring/index.html, last visited on Aug. 24, 2020.
+- Yeoman: "Yeoman Github repository", https://github.com/yeoman, last visited on Aug. 24, 2020.
+- xUnit.net: "xUnit Github repository", https://xunit.github.io, last visited on Aug. 24, 2020.
+- Microsoft Corporation: "Unit testing C# in .NET Core using dotnet test and xUnit", https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-dotnet-test, last visited on Aug. 24, 2020.
