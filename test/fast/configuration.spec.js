@@ -1,5 +1,4 @@
 var chai = require('chai');
-var path = require('path');
 
 var Configuration = require('../../app/configuration');
 
