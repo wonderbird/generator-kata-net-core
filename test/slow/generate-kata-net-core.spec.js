@@ -19,7 +19,7 @@ describe('yo kata-net-core',
         const netStandardDirectory = 'netstandard2.0';
         const netCoreAppDirectory = 'netcoreapp3.1';
 
-        const solutionName = 'SampleKata';
+        const solutionName = 'GeneratedSolutionCanBeDeleted';
 
         const solutionDirectory = solutionName;
         const libraryProjectName = solutionName + librarySuffix;
@@ -41,7 +41,7 @@ describe('yo kata-net-core',
 
         function runGeneratorUnderTest() {
             return helpers.run(path.join(__dirname, '../../app'))
-                .withPrompts({ solutionName: 'SampleKata' });
+                .withPrompts({ solutionName: solutionName });
         }
 
         function addSolutionFileToExpectedFiles() {

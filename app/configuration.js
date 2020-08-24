@@ -6,14 +6,18 @@ module.exports = class Configuration {
       this.projectExtension = '.csproj';
       this.testSuffix = '.Tests';
 
-      this.solutionName = solutionName;
+      this.setSolutionNameAndUpdateConfiguration(solutionName);
+    }
 
-      this.libraryProjectName = this.solutionName + this.librarySuffix;
-      const libraryProjectFileName = this.libraryProjectName + this.projectExtension;
-      this.libraryProjectPath = path.join(this.libraryProjectName, libraryProjectFileName);
+    setSolutionNameAndUpdateConfiguration(solutionName) {
+        this.solutionName = solutionName;
 
-      this.testProjectName = this.libraryProjectName + this.testSuffix;
-      const testProjectFileName = this.testProjectName + this.projectExtension;
-      this.testProjectPath = path.join(this.testProjectName, testProjectFileName);
+        this.libraryProjectName = this.solutionName + this.librarySuffix;
+        const libraryProjectFileName = this.libraryProjectName + this.projectExtension;
+        this.libraryProjectPath = path.join(this.libraryProjectName, libraryProjectFileName);
+  
+        this.testProjectName = this.libraryProjectName + this.testSuffix;
+        const testProjectFileName = this.testProjectName + this.projectExtension;
+        this.testProjectPath = path.join(this.testProjectName, testProjectFileName);
     }
 }

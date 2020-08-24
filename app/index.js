@@ -24,7 +24,7 @@ module.exports = class GeneratorKataNetCore extends Generator {
     }
 
     configuring() {
-        // this.configuration.solutionName = this.answers.solutionName;
+        this.configuration.setSolutionNameAndUpdateConfiguration(this.answers.solutionName);
     }
 
     install() {
