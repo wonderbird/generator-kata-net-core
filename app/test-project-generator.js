@@ -17,4 +17,10 @@ module.exports = class ClassLibraryGenerator {
     addTestProjectToSolution() {
         this.dotnetCli.addProjectToSolution(this.configuration.solutionName, this.configuration.testProjectPath);
     }
+
+    generate() {
+        this.generateTestProject();
+        this.addClassLibraryReferenceToTestProject();
+        this.addTestProjectToSolution();
+    }
 }

@@ -3,6 +3,7 @@ var DotnetCli = require('./dotnet-cli');
 var Configuration = require('./configuration');
 var SolutionGenerator = require('./solution-generator');
 const ClassLibraryGenerator = require('./class-library-generator');
+const TestProjectGenerator = require('./test-project-generator');
 
 module.exports = class GeneratorKataNetCore extends Generator {
     constructor(args, opts) {
@@ -13,6 +14,7 @@ module.exports = class GeneratorKataNetCore extends Generator {
 
         this.solutionGenerator = new SolutionGenerator(dotnetCli, this.configuration);
         this.classLibraryGenerator = new ClassLibraryGenerator(dotnetCli, this.configuration);
+        this.testProjectGenerator = new TestProjectGenerator(dotnetCli, this.configuration);
     }
 
     async prompting() {
@@ -32,6 +34,7 @@ module.exports = class GeneratorKataNetCore extends Generator {
         this.solutionGenerator.generate();
         
         // TODO Refactor: Move the *generators up to the index.js install method
-        //this.classLibraryGenerator.generate();
+        this.classLibraryGenerator.generate();
+        this.testProjectGenerator.generate();
     }
 }

@@ -16,18 +16,7 @@ module.exports = class SolutionGenerator {
         this.testProjectGenerator = new TestProjectGenerator(dotnetCli, configuration);
     }
 
-    generateSolution() {
-        this.dotnetCli.createNewSolution(this.configuration.solutionName);
-    }
-
     generate() {
-        this.generateSolution();
-
-        // TODO Refactor: Move the *generators up to the index.js install method
-        this.classLibraryGenerator.generate();
-
-        this.testProjectGenerator.generateTestProject();
-        this.testProjectGenerator.addClassLibraryReferenceToTestProject();
-        this.testProjectGenerator.addTestProjectToSolution();
+        this.dotnetCli.createNewSolution(this.configuration.solutionName);
     }
 }

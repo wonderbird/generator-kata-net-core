@@ -35,13 +35,5 @@ describe('SolutionGenerator',
 
                         dotnetCliStub.createNewSolution.should.have.been.calledOnceWithExactly(expectedSolutionName);
                     });
-
-                it('should create the correct test project',
-                    function() {
-                        solutionGenerator.generate();
-
-                        dotnetCliStub.createNewTestProject.should.have.been.calledOnceWithExactly(expectedSolutionName,
-                            expectedTestProjectName);
-                    });
             });
     });
