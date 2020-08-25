@@ -31,21 +31,21 @@ describe('TestProjectGenerator',
             testProjectGenerator = new TestProjectGenerator(dotnetCliStub, configuration);
         });
 
-        describe('generateTestProject',
+        describe('generate',
             function () {
                 it('should create the correct test project',
                     function () {
-                        testProjectGenerator.generateTestProject();
+                        testProjectGenerator.generate();
 
                         dotnetCliStub.createNewTestProject.should.have.been.calledOnceWithExactly(expectedSolutionName, expectedTestProjectName);
                     });
             });
 
-        describe('addClassLibraryReferenceToTestProject',
+        describe('generate',
             function () {
                 it('should add the correct class library reference to the test project',
                     function () {
-                        testProjectGenerator.addClassLibraryReferenceToTestProject();
+                        testProjectGenerator.generate();
 
                         dotnetCliStub.addProjectReference.should.have.been.calledOnceWithExactly(expectedSolutionName,
                             expectedTestProjectPath,
@@ -53,11 +53,11 @@ describe('TestProjectGenerator',
                     });
             });
 
-        describe('addTestProjectToSolution',
+        describe('generate',
             function () {
                 it('should add the correct test project to the correct solution',
                     function () {
-                        testProjectGenerator.addTestProjectToSolution();
+                        testProjectGenerator.generate();
 
                         dotnetCliStub.addProjectToSolution.should.have.been.calledOnceWithExactly(expectedSolutionName, expectedTestProjectPath);
                     });

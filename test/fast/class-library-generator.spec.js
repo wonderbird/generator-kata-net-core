@@ -26,24 +26,24 @@ describe('ClassLibraryGenerator',
             classLibraryGenerator = new ClassLibraryGenerator(dotnetCliStub, configuration);
         });
 
-        describe('generateClassLibrary',
+        describe('generate',
             function () {
                 it('should create the correct class library',
                     function () {
-                        classLibraryGenerator.generateClassLibrary();
+                        classLibraryGenerator.generate();
 
                         dotnetCliStub.createNewClassLibrary.should.have.been.calledOnceWithExactly(expectedSolutionName, expectedProjectName);
                     });
             });
 
-        describe('addClassLibraryToSolution',
+        describe('generate',
             function () {
                 it('should add the correct class library to the correct solution',
                     function () {
                         const expectedProjectFileName = expectedProjectName + ".csproj";
                         const expectedProjectPath = path.join(expectedProjectName, expectedProjectFileName);
 
-                        classLibraryGenerator.addClassLibraryToSolution();
+                        classLibraryGenerator.generate();
 
                         dotnetCliStub.addProjectToSolution.should.have.been.calledOnceWithExactly(expectedSolutionName, expectedProjectPath);
                     });

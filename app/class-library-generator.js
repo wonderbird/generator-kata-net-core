@@ -4,16 +4,16 @@ module.exports = class ClassLibraryGenerator {
         this.configuration = configuration;
     }
 
-    generateClassLibrary() {
+    _generateClassLibrary() {
         this.dotnetCli.createNewClassLibrary(this.configuration.solutionName, this.configuration.libraryProjectName);
     }
 
-    addClassLibraryToSolution() {
+    _addClassLibraryToSolution() {
         this.dotnetCli.addProjectToSolution(this.configuration.solutionName, this.configuration.libraryProjectPath);
     }
 
     generate() {
-        this.generateClassLibrary();
-        this.addClassLibraryToSolution();
+        this._generateClassLibrary();
+        this._addClassLibraryToSolution();
     }
 }

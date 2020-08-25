@@ -17,6 +17,7 @@ describe('GeneratorKataNetCore',
             function () {
                 let solutionGeneratorMock;
                 let classLibraryGeneratorMock;
+                let testProjectGeneratorMock;
                 let generator;
 
                 beforeEach(

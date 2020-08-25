@@ -15,7 +15,6 @@ describe('SolutionGenerator',
         describe('generate',
             function() {
                 const expectedSolutionName = "SampleKata";
-                const expectedTestProjectName = "SampleKata.Lib.Tests";
                 
                 let dotnetCliStub;
                 let configuration;

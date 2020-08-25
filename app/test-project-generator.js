@@ -4,23 +4,23 @@ module.exports = class ClassLibraryGenerator {
         this.configuration = configuration;
     }
 
-    generateTestProject() {
+    _generateTestProject() {
         this.dotnetCli.createNewTestProject(this.configuration.solutionName, this.configuration.testProjectName);
     }
 
-    addClassLibraryReferenceToTestProject() {
+    _addClassLibraryReferenceToTestProject() {
         this.dotnetCli.addProjectReference(this.configuration.solutionName,
             this.configuration.testProjectPath,
             this.configuration.libraryProjectPath);
     }
 
-    addTestProjectToSolution() {
+    _addTestProjectToSolution() {
         this.dotnetCli.addProjectToSolution(this.configuration.solutionName, this.configuration.testProjectPath);
     }
 
     generate() {
-        this.generateTestProject();
-        this.addClassLibraryReferenceToTestProject();
-        this.addTestProjectToSolution();
+        this._generateTestProject();
+        this._addClassLibraryReferenceToTestProject();
+        this._addTestProjectToSolution();
     }
 }
