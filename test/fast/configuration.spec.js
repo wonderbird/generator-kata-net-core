@@ -6,7 +6,7 @@ chai.should();
 
 describe('Configuration',
     function () {
-        function performTest(actualConfiguration, solutionName) {
+        function assertCorrectConfigurationProperties(actualConfiguration, solutionName) {
             const expectedSolutionName = solutionName;
             const expectedLibraryProjectName = solutionName + '.Lib';
             const expectedLibraryProjectPath = solutionName + '.Lib/' + solutionName + '.Lib.csproj';
@@ -34,7 +34,7 @@ describe('Configuration',
 
                         let actualConfiguration = new Configuration(solutionName);
                         
-                        performTest(actualConfiguration, solutionName);
+                        assertCorrectConfigurationProperties(actualConfiguration, solutionName);
                     });
             });
 
@@ -42,12 +42,12 @@ describe('Configuration',
             function () {
                 it('should set correct configuration by solution name',
                     function () {
-                        const solutionName = 'ChangedSolutionName';
+                        const changedSolutionName = 'ChangedSolutionName';
 
-                        let actualConfiguration = new Configuration('OldSolutionName');
-                        actualConfiguration.setSolutionNameAndUpdateConfiguration(solutionName);
+                        let actualConfiguration = new Configuration('AnyInitialSolutionName');
+                        actualConfiguration.setSolutionNameAndUpdateConfiguration(changedSolutionName);
                         
-                        performTest(actualConfiguration, solutionName);
+                        assertCorrectConfigurationProperties(actualConfiguration, changedSolutionName);
                     });
             });
     });

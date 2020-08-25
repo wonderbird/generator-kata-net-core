@@ -30,6 +30,15 @@ describe('DotnetCli',
                 };
             });
 
+        function assertDotnetArgs(/* parameters are taken from the "arguments" variable */) {
+            let expectedDotnetArgs = Array.from(arguments);
+            yeomanMock.spawnCommandSync.should.have.been.calledOnceWithExactly('dotnet', expectedDotnetArgs);
+        }
+
+        function whenDotnetCliFails() {
+            stubbedSpawnCommandSyncResult.status = 1;
+        }
+
         describe('createNewSolution',         
             function () {
                 it('should invoke dotnet cli with correct parameters',
@@ -37,78 +46,75 @@ describe('DotnetCli',
                         const dotnetCli = new DotnetCli(yeomanMock);
                         dotnetCli.createNewSolution(configuredSolutionName);
 
-                        const expectedDotnetArgs = ['new', 'sln', '--output', configuredSolutionName];
-                        yeomanMock.spawnCommandSync.should.have.been.calledOnceWithExactly('dotnet', expectedDotnetArgs);
+                        assertDotnetArgs('new', 'sln', '--output', configuredSolutionName);
                     });
 
-                it('should throw exception if dotnet cli fails',
+                it('WHEN dotnet cli fails THEN throw exception',
                     function() {
-                        // Arrange
-                        stubbedSpawnCommandSyncResult.status = 1;
+                        whenDotnetCliFails();
 
-                        // Act and assert exception
                         const dotnetCli = new DotnetCli(yeomanMock);
                         expect(dotnetCli.createNewSolution.bind(dotnetCli, configuredSolutionName))
                             .to.throw(expectedDotnetCommandFailedMessage);
 
-                        // Assert mocked method call
-                        const expectedDotnetArgs = ['new', 'sln', '--output', configuredSolutionName];
-                        yeomanMock.spawnCommandSync.should.have.been.calledOnceWithExactly('dotnet', expectedDotnetArgs);
+                        assertDotnetArgs('new', 'sln', '--output', configuredSolutionName);
                     });
             });
 
         describe('createNewClasLibrary',
             function () {
                 const configuredLibraryProjectName = configuredSolutionName + '.Lib';
+                const configuredCurrentDirectory = 'current working directory';
                 let processStub;
                 let dotnetCli;
 
                 beforeEach(function() {
                         processStub = {
                             chdir: sinon.stub(),
-                            cwd: sinon.stub().returns("current working directory")
+                            cwd: sinon.stub().returns(configuredCurrentDirectory)
                         };
 
                         dotnetCli = new DotnetCli(yeomanMock);
                         dotnetCli.process = processStub;
                     });
 
+                function whenChdirFails() {
+                    processStub.chdir.throws();
+                }
+
+                function assertChdirCalledWith(directory) {
+                    processStub.chdir.should.have.been.calledOnceWithExactly(directory);
+                }
+
                 it('should invoke dotnet cli with correct parameters',
                     function() {
                         dotnetCli.createNewClassLibrary(configuredSolutionName, configuredLibraryProjectName);
 
-                        const expectedDotnetArgs = ['new', 'classlib', '--language', 'C#', '--name', configuredLibraryProjectName];
-                        yeomanMock.spawnCommandSync.should.have.been.calledOnceWithExactly('dotnet', expectedDotnetArgs);
+                        assertDotnetArgs('new', 'classlib', '--language', 'C#', '--name', configuredLibraryProjectName);
                     });
 
-                it('should throw exception if changing the working directory fails',
+                it('WHEN changing working directory fails THEN throw exception',
                     function() {
-                        processStub.chdir.throws()
+                        whenChdirFails();
 
                         const expectedExceptionMessage = 'changing the working directory failed';
                         expect(dotnetCli.createNewClassLibrary.bind(dotnetCli, configuredSolutionName, configuredLibraryProjectName))
                             .to.throw(expectedExceptionMessage);
 
-                        processStub.chdir.should.have.been.calledOnceWithExactly(configuredSolutionName);
+                        assertChdirCalledWith(configuredSolutionName);
                     });
 
-                it('should throw exception if dotnet command failed',
+                it('WHEN dotnet cli fails THEN throw exception',
                     function() {
-                        var configuredCurrentDirectory = "configured current directory";
-                        processStub.cwd.returns(configuredCurrentDirectory);
-
-                        stubbedSpawnCommandSyncResult.status = 1;
+                        whenDotnetCliFails();
 
                         expect(dotnetCli.createNewClassLibrary.bind(dotnetCli, configuredSolutionName, configuredLibraryProjectName))
                             .to.throw(expectedDotnetCommandFailedMessage);
                     });
 
-                it('should change back to previous directory if dotnet command failed',
+                it('WHEN dotnet cli fails THEN change back to previous directory',
                     function() {
-                        var configuredCurrentDirectory = "configured current directory";
-                        processStub.cwd.returns(configuredCurrentDirectory);
-
-                        stubbedSpawnCommandSyncResult.status = 1;
+                        whenDotnetCliFails();
 
                         try {
                             dotnetCli.createNewClassLibrary(configuredSolutionName, configuredLibraryProjectName);
