@@ -30,6 +30,8 @@ module.exports = class GeneratorKataNetCore extends Generator {
     install() {
         this.log('Creating new solution "' + this.configuration.solutionName + '"')
         this.solutionGenerator.generate();
-        this.classLibraryGenerator.generate();
+        
+        // TODO Refactor: Move the *generators up to the index.js install method
+        //this.classLibraryGenerator.generate();
     }
 }
