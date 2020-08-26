@@ -2,11 +2,12 @@ var path = require('path');
 
 module.exports = class Configuration {
     constructor(solutionName) {
-      this.librarySuffix = '.Lib';
-      this.projectExtension = '.csproj';
-      this.testSuffix = '.Tests';
+        this.projectExtension = '.csproj';
+        this.librarySuffix = '.Lib';
+        this.testSuffix = '.Tests';
+        this.applicationSuffix = '.App';
 
-      this.setSolutionNameAndUpdateConfiguration(solutionName);
+        this.setSolutionNameAndUpdateConfiguration(solutionName);
     }
 
     setSolutionNameAndUpdateConfiguration(solutionName) {
@@ -19,5 +20,7 @@ module.exports = class Configuration {
         this.testProjectName = this.libraryProjectName + this.testSuffix;
         const testProjectFileName = this.testProjectName + this.projectExtension;
         this.testProjectPath = path.join(this.testProjectName, testProjectFileName);
+
+        this.applicationProjectName = this.solutionName + this.applicationSuffix;
     }
 }

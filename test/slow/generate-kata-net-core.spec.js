@@ -10,9 +10,11 @@ describe('yo kata-net-core',
 
         const solutionExtension = '.sln';
         const dllExtension = '.dll';
+        const exeExtension = '.exe';
 
         const librarySuffix = '.Lib';
         const testSuffix = '.Tests';
+        const applicationSuffix = '.App';
 
         const buildOutputDirectory = 'bin';
         const debugOutputDirectory = 'Debug';
@@ -27,6 +29,9 @@ describe('yo kata-net-core',
 
         const testName = libraryProjectName + testSuffix;
         const testDirectory = testName;
+
+        const applicationProjectName = solutionName + applicationSuffix;
+        const applicationProjectDirectory = applicationProjectName;
 
         var expectedFiles = [];
 
@@ -71,10 +76,21 @@ describe('yo kata-net-core',
             expectedFiles.push(fullPathToTestBuildArtifact);
         }
 
+        function addApplicationBuildOutputToExpectedFiles() {
+            const applicationBuildDirectory = path.join(applicationProjectDirectory, buildOutputDirectory, debugOutputDirectory, netCoreAppDirectory);
+            const applicationBuildArtifact = applicationProjectName + exeExtension;
+
+            const fullPathToApplicationBuildArtifact =
+                path.join(solutionDirectory, applicationBuildDirectory, applicationBuildArtifact);
+
+            expectedFiles.push(fullPathToApplicationBuildArtifact);
+        }
+
         function defineExpectedFiles() {
             addSolutionFileToExpectedFiles();
             addLibraryProjectBuildOutputToExpectedFiles();
             addTestBuildOutputToExpectedFiles();
+            addApplicationBuildOutputToExpectedFiles();
         }
 
         function compileGeneratedSolution() {

@@ -34,10 +34,7 @@ describe('ClassLibraryGenerator',
 
                         dotnetCliStub.createNewClassLibrary.should.have.been.calledOnceWithExactly(expectedSolutionName, expectedProjectName);
                     });
-            });
-
-        describe('generate',
-            function () {
+                    
                 it('should add the correct class library to the correct solution',
                     function () {
                         const expectedProjectFileName = expectedProjectName + ".csproj";
