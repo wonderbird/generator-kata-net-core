@@ -12,9 +12,11 @@ module.exports = class GeneratorKataNetCore extends Generator {
         const dotnetCli = new DotnetCli(this);
         this.configuration = new Configuration('SampleKata');
 
-        this.solutionGenerator = new SolutionGenerator(dotnetCli, this.configuration);
-        this.classLibraryGenerator = new ClassLibraryGenerator(dotnetCli, this.configuration);
-        this.testProjectGenerator = new TestProjectGenerator(dotnetCli, this.configuration);
+        this.generators = [
+            new SolutionGenerator(dotnetCli, this.configuration),
+            new ClassLibraryGenerator(dotnetCli, this.configuration),
+            new TestProjectGenerator(dotnetCli, this.configuration),
+        ];
     }
 
     async prompting() {
@@ -31,8 +33,7 @@ module.exports = class GeneratorKataNetCore extends Generator {
 
     install() {
         this.log('Creating new solution "' + this.configuration.solutionName + '"')
-        this.solutionGenerator.generate();
-        this.classLibraryGenerator.generate();
-        this.testProjectGenerator.generate();
+
+        this.generators.forEach(generator => generator.generate());
     }
 }

@@ -15,42 +15,28 @@ describe('GeneratorKataNetCore',
 
         describe('install',
             function () {
-                let solutionGeneratorMock;
-                let classLibraryGeneratorMock;
-                let testProjectGeneratorMock;
                 let generator;
+                let generatorMocks;
 
                 beforeEach(
                     function() {
-                        solutionGeneratorMock = sinon.createStubInstance(SolutionGenerator);
-                        classLibraryGeneratorMock = sinon.createStubInstance(ClassLibraryGenerator);
-                        testProjectGeneratorMock = sinon.createStubInstance(TestProjectGenerator);
+                        generatorMocks = [
+                            sinon.createStubInstance(SolutionGenerator),
+                            sinon.createStubInstance(ClassLibraryGenerator),
+                            sinon.createStubInstance(TestProjectGenerator)                               
+                        ];
 
                         generator = new GeneratorKataNetCore();
-                        generator.solutionGenerator = solutionGeneratorMock;
-                        generator.classLibraryGenerator = classLibraryGeneratorMock;
-                        generator.testProjectGenerator = testProjectGeneratorMock;
+                        generator.generators = generatorMocks;
                     });
     
-                it('should invoke SolutionGenerator.generate()',
+                it('should invoke all generators',
                     function() {
                         generator.install();
 
-                        solutionGeneratorMock.generate.should.have.been.calledOnce;
-                    });
-
-                    it('should invoke ClassLibraryGenerator.generate()',
-                    function() {
-                        generator.install();
-
-                        classLibraryGeneratorMock.generate.should.have.been.calledOnce;
-                    });
-
-                    it('should invoke TestProjectGenerator.generate()',
-                    function() {
-                        generator.install();
-
-                        testProjectGeneratorMock.generate.should.have.been.calledOnce;
+                        generatorMocks.forEach(
+                            generatorMock => generatorMock.generate.should.have.been.calledOnce
+                        );
                     });
             });
     });
