@@ -49,11 +49,11 @@ describe('ApplicationProjectGenerator',
                             expectedLibraryProjectPath);
                     });
 
-                xit('should add the correct test project to the correct solution',
+                it('should add the correct application project to the correct solution',
                     function () {
-                        testProjectGenerator.generate();
+                        applicationProjectGenerator.generate();
 
-                        dotnetCliStub.addProjectToSolution.should.have.been.calledOnceWithExactly(expectedSolutionName, expectedTestProjectPath);
+                        dotnetCliStub.addProjectToSolution.should.have.been.calledOnceWithExactly(expectedSolutionName, expectedApplicationProjectPath);
                     });
             });
     });

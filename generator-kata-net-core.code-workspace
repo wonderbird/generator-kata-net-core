@@ -14,7 +14,7 @@
             "runWithInterval": false,
             "autoUpdateInterval": 20000,
             "activeOnStart": true,
-            "runAfterTest": true,
+            "runAfterTest": false,
             "reporters": []
         }
     }

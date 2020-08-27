@@ -13,6 +13,7 @@ describe('Configuration',
             const expectedTestProjectName = solutionName + '.Lib.Tests';
             const expectedTestProjectPath = solutionName + '.Lib.Tests/' + solutionName + '.Lib.Tests.csproj';
             const expectedApplicationProjectName = solutionName + '.App';
+            const expectedApplicationProjectPath = solutionName + '.App/' + solutionName + '.App.csproj';
 
             actualConfiguration.librarySuffix.should.equal('.Lib');
             actualConfiguration.projectExtension.should.equal('.csproj');
@@ -27,6 +28,7 @@ describe('Configuration',
             actualConfiguration.testProjectPath.should.equal(expectedTestProjectPath);
 
             actualConfiguration.applicationProjectName.should.equal(expectedApplicationProjectName);
+            actualConfiguration.applicationProjectPath.should.equal(expectedApplicationProjectPath);
         }
 
         describe('constructor',

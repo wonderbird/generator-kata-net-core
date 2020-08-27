@@ -10,7 +10,7 @@ describe('yo kata-net-core',
 
         const solutionExtension = '.sln';
         const dllExtension = '.dll';
-        const exeExtension = '.exe';
+        const exeExtension = '.dll';
 
         const librarySuffix = '.Lib';
         const testSuffix = '.Tests';

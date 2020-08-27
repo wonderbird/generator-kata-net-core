@@ -22,5 +22,7 @@ module.exports = class Configuration {
         this.testProjectPath = path.join(this.testProjectName, testProjectFileName);
 
         this.applicationProjectName = this.solutionName + this.applicationSuffix;
+        const applicationProjectFileName = this.applicationProjectName + this.projectExtension;
+        this.applicationProjectPath = path.join(this.applicationProjectName, applicationProjectFileName);
     }
 }
