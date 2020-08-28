@@ -8,15 +8,19 @@ module.exports = class ApplicationProjectGenerator {
         this.dotnetCli.createNewApplication(this.configuration.solutionName, this.configuration.applicationProjectName);
     }
 
+    _addClassLibraryReferenceToApplicationProject() {
+        this.dotnetCli.addProjectReference(this.configuration.solutionName,
+            this.configuration.applicationProjectPath,
+            this.configuration.libraryProjectPath);
+    }
+
     _addApplicationProjectToSolution() {
         this.dotnetCli.addProjectToSolution(this.configuration.solutionName, this.configuration.applicationProjectPath);
     }
 
     generate() {
         this._generateApplicationProject();
-
-        // TODO add projec reference to library project into the application
-
+        this._addClassLibraryReferenceToApplicationProject();
         this._addApplicationProjectToSolution();
     }
 }

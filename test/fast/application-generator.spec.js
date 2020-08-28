@@ -40,7 +40,7 @@ describe('ApplicationProjectGenerator',
                         dotnetCliStub.createNewApplication.should.have.been.calledOnceWithExactly(expectedSolutionName, expectedApplicationProjectName);
                     });
 
-                xit('should add the correct class library reference to the test project',
+                it('should add the correct class library reference to the test project',
                     function () {
                         applicationProjectGenerator.generate();
 
