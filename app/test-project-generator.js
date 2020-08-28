@@ -1,4 +1,4 @@
-module.exports = class ClassLibraryGenerator {
+module.exports = class TestProjectGenerator {
     constructor(dotnetCli, configuration) {
         this.dotnetCli = dotnetCli;
         this.configuration = configuration;

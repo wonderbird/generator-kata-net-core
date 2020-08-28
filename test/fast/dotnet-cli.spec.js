@@ -11,11 +11,14 @@ chai.use(sinonChai);
 describe('DotnetCli',
     function () {
         const configuredSolutionName = 'SampleKata';
+        const configuredCurrentDirectory = 'current working directory';
 
         const expectedDotnetCommandFailedMessage = 'dotnet command failed';
 
         let yeomanMock;
         let stubbedSpawnCommandSyncResult;
+        let processStub;
+        let dotnetCli;
 
         beforeEach(
             function() {
@@ -28,6 +31,14 @@ describe('DotnetCli',
                     log: sinon.stub(),
                     spawnCommandSync: sinon.stub().returns(stubbedSpawnCommandSyncResult)
                 };
+
+                processStub = {
+                    chdir: sinon.stub(),
+                    cwd: sinon.stub().returns(configuredCurrentDirectory)
+                };
+
+                dotnetCli = new DotnetCli(yeomanMock);
+                dotnetCli.process = processStub;
             });
 
         function assertDotnetArgs(/* parameters are taken from the "arguments" variable */) {
@@ -43,7 +54,6 @@ describe('DotnetCli',
             function () {
                 it('should invoke dotnet cli with correct parameters',
                     function() {
-                        const dotnetCli = new DotnetCli(yeomanMock);
                         dotnetCli.createNewSolution(configuredSolutionName);
 
                         assertDotnetArgs('new', 'sln', '--output', configuredSolutionName);
@@ -64,19 +74,6 @@ describe('DotnetCli',
         describe('createNewClasLibrary',
             function () {
                 const configuredLibraryProjectName = configuredSolutionName + '.Lib';
-                const configuredCurrentDirectory = 'current working directory';
-                let processStub;
-                let dotnetCli;
-
-                beforeEach(function() {
-                        processStub = {
-                            chdir: sinon.stub(),
-                            cwd: sinon.stub().returns(configuredCurrentDirectory)
-                        };
-
-                        dotnetCli = new DotnetCli(yeomanMock);
-                        dotnetCli.process = processStub;
-                    });
 
                 function whenChdirFails() {
                     processStub.chdir.throws();
@@ -125,6 +122,18 @@ describe('DotnetCli',
                         processStub.chdir.should.have.been.calledTwice;
                         const directoryOnSecondCall = processStub.chdir.getCall(1).args[0];
                         directoryOnSecondCall.should.equal(configuredCurrentDirectory);
+                    });
+            });
+
+        describe('createNewApplication',
+            function () {
+                const configuredApplicationProjectName = configuredSolutionName + '.App';
+
+                it('should invoke dotnet cli with correct parameters',
+                    function() {
+                        dotnetCli.createNewApplication(configuredSolutionName, configuredApplicationProjectName);
+
+                        assertDotnetArgs('new', 'console', '--language', 'C#', '--name', configuredApplicationProjectName);
                     });
             });
     });

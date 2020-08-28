@@ -1,0 +1,21 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+    ],
+    "settings": {
+        "nodeTdd.testScript": "test:fast",
+        "mocha.runTestsOnSave": "true",
+        "mocha.files.ignore": "**/generate-kata-net-core.spec.js",
+        "mocha.coverage": {
+            "enable": true,
+            "decoration": true,
+            "runWithInterval": false,
+            "autoUpdateInterval": 20000,
+            "activeOnStart": true,
+            "runAfterTest": false,
+            "reporters": []
+        }
+    }
+}

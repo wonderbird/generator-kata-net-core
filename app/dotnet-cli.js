@@ -58,4 +58,9 @@ module.exports = class DotnetCli {
         this.runInDirectoryAndReturnAfterwards(directory,
             () => this.runDotnetWithArgumentsOrThrow('add', targetProjectPath, 'reference', referenceProjectPath));
     }
+
+    createNewApplication(directory, applicationProjectName) {
+        this.runInDirectoryAndReturnAfterwards(directory,
+            () => this.runDotnetWithArgumentsOrThrow('new', 'console', '--language', 'C#', '--name', applicationProjectName));
+    }
 }
