@@ -87,18 +87,18 @@ describe('yo kata-net-core',
         }
 
         function addReadmeToExpectedFiles() {
-            const fullPathToReadme = path.join(solutionDirectory, 'README.md');
-            expectedFiles.push(fullPathToReadme);
+            // TODO uncomment the README check in slow tests
+
+            //const fullPathToReadme = path.join(solutionDirectory, 'README.md');
+            //expectedFiles.push(fullPathToReadme);
         }
 
         function defineExpectedFiles() {
             addSolutionFileToExpectedFiles();
             addLibraryProjectBuildOutputToExpectedFiles();
             addTestBuildOutputToExpectedFiles();
-            addApplicationBuildOutputToExpectedFiles();
-            
-            // TODO uncomment the README check in slow tests
-            // addReadmeToExpectedFiles();
+            addApplicationBuildOutputToExpectedFiles();            
+            addReadmeToExpectedFiles();
         }
 
         function compileGeneratedSolution() {
