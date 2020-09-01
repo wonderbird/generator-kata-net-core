@@ -1,6 +1,7 @@
 const chai = require('chai');
 const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
+const path = require('path');
 
 const Configuration = require('../../app/configuration');
 const FileSystem = require('../../app/file-system');
@@ -29,7 +30,8 @@ describe('ReadmeGenerator',
                     function () {
                         readmeGenerator.generate();
 
-                        fileSystemStub.copyTemplate.should.have.been.calledWithExactly('README.md');
+                        expectedTargetPath = path.join(expectedSolutionName, 'README.md');
+                        fileSystemStub.copyTemplate.should.have.been.calledWithExactly('README.md', expectedTargetPath);
                     });
 
                 // TODO create tests for error handling and boundary conditions

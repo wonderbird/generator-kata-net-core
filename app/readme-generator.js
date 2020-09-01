@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = class ReadmeGenerator {
     constructor(fileSystem, configuration) {
         this.fileSystem = fileSystem;
@@ -6,6 +8,7 @@ module.exports = class ReadmeGenerator {
 
     generate() {
         // TODO make the README more beatuiful; add developer instructions
-        this.fileSystem.copyTemplate('README.md');
+        const destinationPath = path.join(this.configuration.solutionName, 'README.md');
+        this.fileSystem.copyTemplate('README.md', destinationPath);
     }
 }

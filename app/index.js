@@ -21,7 +21,7 @@ module.exports = class GeneratorKataNetCore extends Generator {
             new ClassLibraryGenerator(dotnetCli, this.configuration),
             new TestProjectGenerator(dotnetCli, this.configuration),
             new ApplicationProjectGenerator(dotnetCli, this.configuration),
-            new ReadmeGenerator(fileSystem)
+            new ReadmeGenerator(fileSystem, this.configuration)
         ];
     }
 

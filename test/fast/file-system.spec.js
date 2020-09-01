@@ -30,9 +30,9 @@ describe('FileSystem',
 
                         const fileSystem = new FileSystem(yeomanStub);
                         
-                        fileSystem.copyTemplate('README.md');
+                        fileSystem.copyTemplate('README.md', 'target/README.md');
 
-                        fsStub.copyTpl.should.have.been.calledWithExactly('./templates/README.md', 'README.md');
+                        fsStub.copyTpl.should.have.been.calledWithExactly('./templates/README.md', 'target/README.md');
                     });
             });
     });

@@ -3,9 +3,9 @@ module.exports = class FileSystem {
         this.yeoman = yeoman;
     }
 
-    copyTemplate(templateFileRelativePath) {
-        const sourcePath = this.yeoman.templatePath(templateFileRelativePath);
-        const destinationPath = this.yeoman.destinationPath(templateFileRelativePath);
-        this.yeoman.fs.copyTpl(sourcePath, destinationPath);
+    copyTemplate(relativeSourcePath, relativeDestinationPath) {
+        const fullSourcePath = this.yeoman.templatePath(relativeSourcePath);
+        const fullDestinationPath = this.yeoman.destinationPath(relativeDestinationPath);
+        this.yeoman.fs.copyTpl(fullSourcePath, fullDestinationPath);
     }
 }
