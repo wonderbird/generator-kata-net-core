@@ -1,16 +1,19 @@
-var Generator = require('yeoman-generator');
-var DotnetCli = require('./dotnet-cli');
-var Configuration = require('./configuration');
-var SolutionGenerator = require('./solution-generator');
+const Generator = require('yeoman-generator');
+const DotnetCli = require('./dotnet-cli');
+const FileSystem = require('./file-system');
+const Configuration = require('./configuration');
+const SolutionGenerator = require('./solution-generator');
 const ClassLibraryGenerator = require('./class-library-generator');
 const TestProjectGenerator = require('./test-project-generator');
 const ApplicationProjectGenerator = require('./application-project-generator');
+const ReadmeGenerator = require('./readme-generator');
 
 module.exports = class GeneratorKataNetCore extends Generator {
     constructor(args, opts) {
         super(args, opts);
 
         const dotnetCli = new DotnetCli(this);
+        const fileSystem = new FileSystem(this);
         this.configuration = new Configuration('SampleKata');
 
         this.generators = [
@@ -18,6 +21,7 @@ module.exports = class GeneratorKataNetCore extends Generator {
             new ClassLibraryGenerator(dotnetCli, this.configuration),
             new TestProjectGenerator(dotnetCli, this.configuration),
             new ApplicationProjectGenerator(dotnetCli, this.configuration),
+            new ReadmeGenerator(fileSystem, this.configuration)
         ];
     }
 
