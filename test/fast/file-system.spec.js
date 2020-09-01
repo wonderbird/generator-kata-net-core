@@ -24,11 +24,13 @@ describe('FileSystem',
 
                         const yeomanStub = {
                             fs: fsStub,
+                            templatePath(relativePath) { return './templates/' + relativePath; },
+                            destinationPath(relativePath) { return relativePath }
                         };
 
                         const fileSystem = new FileSystem(yeomanStub);
                         
-                        fileSystem.copyTemplate('arbitrary-filename');
+                        fileSystem.copyTemplate('README.md');
 
                         fsStub.copyTpl.should.have.been.calledWithExactly('./templates/README.md', 'README.md');
                     });

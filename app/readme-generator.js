@@ -5,6 +5,7 @@ module.exports = class ReadmeGenerator {
     }
 
     generate() {
+        // TODO make the README more beatuiful; add developer instructions
         this.fileSystem.copyTemplate('README.md');
     }
 }

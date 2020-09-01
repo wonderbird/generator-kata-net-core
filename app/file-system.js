@@ -4,8 +4,8 @@ module.exports = class FileSystem {
     }
 
     copyTemplate(templateFileRelativePath) {
-        // TODO process the argument
-        // TODO use yeoman.templatePath and yeoman.destinationPath
-        this.yeoman.fs.copyTpl('./templates/README.md', 'README.md');
+        const sourcePath = this.yeoman.templatePath(templateFileRelativePath);
+        const destinationPath = this.yeoman.destinationPath(templateFileRelativePath);
+        this.yeoman.fs.copyTpl(sourcePath, destinationPath);
     }
 }
