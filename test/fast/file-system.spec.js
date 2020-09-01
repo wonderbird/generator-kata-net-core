@@ -1,37 +1,40 @@
-var chai = require('chai');
-var sinon = require('sinon');
-var sinonChai = require('sinon-chai');
+const chai = require('chai');
+const sinon = require('sinon');
+const sinonChai = require('sinon-chai');
+const path = require('path');
 
-var FileSystem = require('../../app/file-system');
+const FileSystem = require('../../app/file-system');
 
 chai.should();
 chai.use(sinonChai);
 
 describe('FileSystem',
     function () {
-        beforeEach(
-            function() {
-            });
-
         describe('copyTemplate',         
             function () {
                 it('should copy a file from template to project',
                     function() {
+                        const fileName = 'testFileName';
+
+                        const expectedSourcePath = path.join('sourceDir', fileName);
+                        const expectedDestinationPath = path.join('destinationDir', fileName);
+
                         const fsStub = {
                             copyTpl: sinon.stub()
                         };
 
                         const yeomanStub = {
                             fs: fsStub,
-                            templatePath(relativePath) { return './templates/' + relativePath; },
-                            destinationPath(relativePath) { return relativePath }
+                            templatePath: sinon.stub().returns(expectedSourcePath),
+                            destinationPath: sinon.stub().returns(expectedDestinationPath)
                         };
 
                         const fileSystem = new FileSystem(yeomanStub);
                         
-                        fileSystem.copyTemplate('README.md', 'target/README.md');
+                        fileSystem.copyTemplate(fileName, fileName);
 
-                        fsStub.copyTpl.should.have.been.calledWithExactly('./templates/README.md', 'target/README.md');
+                        fsStub.copyTpl.should.have.been.calledWithExactly(expectedSourcePath, expectedDestinationPath);
+                        yeomanStub.templatePath.should.have.been.calledWithExactly(fileName);
                     });
             });
     });

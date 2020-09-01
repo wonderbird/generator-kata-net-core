@@ -31,8 +31,9 @@ describe('ReadmeGenerator',
                     function () {
                         readmeGenerator.generate();
 
-                        const expectedTargetPath = path.join(expectedSolutionName, 'README.md');
-                        fileSystemStub.copyTemplate.should.have.been.calledWithExactly('README.md', expectedTargetPath);
+                        const expectedFileName = 'README.md';
+                        const expectedTargetPath = path.join(expectedSolutionName, expectedFileName);
+                        fileSystemStub.copyTemplate.should.have.been.calledWithExactly(expectedFileName, expectedTargetPath);
                     });
 
                 // TODO create tests for error handling and boundary conditions
