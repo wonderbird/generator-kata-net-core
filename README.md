@@ -8,7 +8,8 @@ This generator creates a C# .NET Core solution with the following projects:
 
 * a library project (DLL),
 * an associated [xUnit](https://xunit.github.io) test project,
-* a console application with a reference to the library project.
+* a console application with a reference to the library project,
+* a README.md file
 
 The generator asks for the solution name interactively. From that name it derives the names of the generated projects.
 
