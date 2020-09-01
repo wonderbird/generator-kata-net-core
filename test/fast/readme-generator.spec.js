@@ -1,9 +1,13 @@
 const chai = require('chai');
+const sinon = require('sinon');
+const sinonChai = require('sinon-chai');
 
 const Configuration = require('../../app/configuration');
+const YeomanFileSystem = require('../../app/yeoman-file-system');
 const ReadmeGenerator = require('../../app/readme-generator');
 
 chai.should();
+chai.use(sinonChai);
 
 describe('ReadmeGenerator',
     function () {
@@ -13,8 +17,10 @@ describe('ReadmeGenerator',
         let readmeGenerator;
 
         beforeEach(function () {
+            fileSystemStub = sinon.createStubInstance(YeomanFileSystem);
+
             configuration = new Configuration(expectedSolutionName);
-            readmeGenerator = new ReadmeGenerator(configuration);
+            readmeGenerator = new ReadmeGenerator(fileSystemStub, configuration);
         });
 
         describe('generate',
@@ -23,7 +29,9 @@ describe('ReadmeGenerator',
                     function () {
                         readmeGenerator.generate();
 
-                        // TODO add an assertion in the ReadmeGenerator.generate... Test
+                        fileSystemStub.copyTemplate.should.have.been.calledWithExactly('README.md');
                     });
+
+                // TODO create tests for error handling and boundary conditions
             });
     });
