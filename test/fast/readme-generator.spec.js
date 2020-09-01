@@ -14,6 +14,7 @@ describe('ReadmeGenerator',
     function () {
         const expectedSolutionName = "SampleKata";
 
+        let fileSystemStub;
         let configuration;
         let readmeGenerator;
 
@@ -30,7 +31,7 @@ describe('ReadmeGenerator',
                     function () {
                         readmeGenerator.generate();
 
-                        expectedTargetPath = path.join(expectedSolutionName, 'README.md');
+                        const expectedTargetPath = path.join(expectedSolutionName, 'README.md');
                         fileSystemStub.copyTemplate.should.have.been.calledWithExactly('README.md', expectedTargetPath);
                     });
 
