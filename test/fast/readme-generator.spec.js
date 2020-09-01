@@ -3,7 +3,7 @@ const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
 
 const Configuration = require('../../app/configuration');
-const YeomanFileSystem = require('../../app/yeoman-file-system');
+const FileSystem = require('../../app/file-system');
 const ReadmeGenerator = require('../../app/readme-generator');
 
 chai.should();
@@ -17,7 +17,7 @@ describe('ReadmeGenerator',
         let readmeGenerator;
 
         beforeEach(function () {
-            fileSystemStub = sinon.createStubInstance(YeomanFileSystem);
+            fileSystemStub = sinon.createStubInstance(FileSystem);
 
             configuration = new Configuration(expectedSolutionName);
             readmeGenerator = new ReadmeGenerator(fileSystemStub, configuration);

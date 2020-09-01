@@ -1,10 +1,10 @@
 module.exports = class ReadmeGenerator {
-    constructor(yeomanFileSystem, configuration) {
-        this.yeomanFileSystem = yeomanFileSystem;
+    constructor(fileSystem, configuration) {
+        this.fileSystem = fileSystem;
         this.configuration = configuration;
     }
 
     generate() {
-        this.yeomanFileSystem.copyTemplate('README.md');
+        this.fileSystem.copyTemplate('README.md');
     }
 }
