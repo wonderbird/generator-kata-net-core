@@ -29,7 +29,7 @@
   },
   "homepage": "https://github.com/wonderbird/generator-kata-net-core#readme",
   "dependencies": {
-    "yeoman-generator": "^4.11.0"
+    "yeoman-generator": "^4.12.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",
