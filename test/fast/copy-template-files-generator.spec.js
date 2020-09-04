@@ -41,7 +41,8 @@ describe('CopyTemplateFilesGenerator',
                         readmeGenerator.generate();
 
                         const expectedSourcePath = 'gitignore';
-                        const expectedDestinationPath = '.gitignore';
+                        const expectedDestinationFile = '.gitignore'
+                        const expectedDestinationPath = path.join(expectedSolutionName, expectedDestinationFile);
                         fileSystemStub.copyTemplate.should.have.been.calledWithExactly(expectedSourcePath, expectedDestinationPath);
                     });
                 // TODO create tests for error handling and boundary conditions
