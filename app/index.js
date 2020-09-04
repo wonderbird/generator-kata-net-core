@@ -6,7 +6,7 @@ const SolutionGenerator = require('./solution-generator');
 const ClassLibraryGenerator = require('./class-library-generator');
 const TestProjectGenerator = require('./test-project-generator');
 const ApplicationProjectGenerator = require('./application-project-generator');
-const ReadmeGenerator = require('./readme-generator');
+const CopyTemplateFilesGenerator = require('./copy-template-files-generator');
 
 module.exports = class GeneratorKataNetCore extends Generator {
     constructor(args, opts) {
@@ -21,7 +21,7 @@ module.exports = class GeneratorKataNetCore extends Generator {
             new ClassLibraryGenerator(dotnetCli, this.configuration),
             new TestProjectGenerator(dotnetCli, this.configuration),
             new ApplicationProjectGenerator(dotnetCli, this.configuration),
-            new ReadmeGenerator(fileSystem, this.configuration)
+            new CopyTemplateFilesGenerator(fileSystem, this.configuration)
         ];
     }
 

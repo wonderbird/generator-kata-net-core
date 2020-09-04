@@ -5,12 +5,12 @@ const path = require('path');
 
 const Configuration = require('../../app/configuration');
 const FileSystem = require('../../app/file-system');
-const ReadmeGenerator = require('../../app/readme-generator');
+const CopyTemplateFilesGenerator = require('../../app/copy-template-files-generator');
 
 chai.should();
 chai.use(sinonChai);
 
-describe('ReadmeGenerator',
+describe('CopyTemplateFilesGenerator',
     function () {
         const expectedSolutionName = "SampleKata";
 
@@ -22,7 +22,7 @@ describe('ReadmeGenerator',
             fileSystemStub = sinon.createStubInstance(FileSystem);
 
             configuration = new Configuration(expectedSolutionName);
-            readmeGenerator = new ReadmeGenerator(fileSystemStub, configuration);
+            readmeGenerator = new CopyTemplateFilesGenerator(fileSystemStub, configuration);
         });
 
         describe('generate',
