@@ -36,6 +36,14 @@ describe('CopyTemplateFilesGenerator',
                         fileSystemStub.copyTemplate.should.have.been.calledWithExactly(expectedFileName, expectedTargetPath);
                     });
 
+                it('should create the correct .gitignore file',
+                    function () {
+                        readmeGenerator.generate();
+
+                        const expectedSourcePath = 'gitignore';
+                        const expectedTargetPath = '.gitignore';
+                        fileSystemStub.copyTemplate.should.have.been.calledWithExactly(expectedSourcePath, expectedTargetPath);
+                    });
                 // TODO create tests for error handling and boundary conditions
             });
     });

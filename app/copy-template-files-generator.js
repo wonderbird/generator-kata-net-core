@@ -6,8 +6,22 @@ module.exports = class CopyTemplateFilesGenerator {
         this.configuration = configuration;
     }
 
+    _copyReadme() {
+        const readmeFileName = 'README.md';
+        const readmeDestinationPath = path.join(this.configuration.solutionName, readmeFileName);
+        this.fileSystem.copyTemplate(readmeFileName, readmeDestinationPath);
+
+    }
+
+    _copyGitignore() {
+        const gitignoreSourceFileName = 'gitignore';
+        const gitignoreTargetFileName = '.gitignore';
+        this.fileSystem.copyTemplate(gitignoreSourceFileName, gitignoreTargetFileName);
+
+    }
+
     generate() {
-        const destinationPath = path.join(this.configuration.solutionName, 'README.md');
-        this.fileSystem.copyTemplate('README.md', destinationPath);
+        this._copyReadme()
+        this._copyGitignore()
     }
 }
