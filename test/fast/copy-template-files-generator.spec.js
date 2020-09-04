@@ -32,8 +32,8 @@ describe('CopyTemplateFilesGenerator',
                         readmeGenerator.generate();
 
                         const expectedFileName = 'README.md';
-                        const expectedTargetPath = path.join(expectedSolutionName, expectedFileName);
-                        fileSystemStub.copyTemplate.should.have.been.calledWithExactly(expectedFileName, expectedTargetPath);
+                        const expectedDestinationPath = path.join(expectedSolutionName, expectedFileName);
+                        fileSystemStub.copyTemplate.should.have.been.calledWithExactly(expectedFileName, expectedDestinationPath);
                     });
 
                 it('should create the correct .gitignore file',
@@ -41,8 +41,8 @@ describe('CopyTemplateFilesGenerator',
                         readmeGenerator.generate();
 
                         const expectedSourcePath = 'gitignore';
-                        const expectedTargetPath = '.gitignore';
-                        fileSystemStub.copyTemplate.should.have.been.calledWithExactly(expectedSourcePath, expectedTargetPath);
+                        const expectedDestinationPath = '.gitignore';
+                        fileSystemStub.copyTemplate.should.have.been.calledWithExactly(expectedSourcePath, expectedDestinationPath);
                     });
                 // TODO create tests for error handling and boundary conditions
             });
