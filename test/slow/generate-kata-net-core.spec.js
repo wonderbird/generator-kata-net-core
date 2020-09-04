@@ -86,17 +86,17 @@ describe('yo kata-net-core',
             expectedFiles.push(fullPathToApplicationBuildArtifact);
         }
 
-        function addReadmeToExpectedFiles() {
-            const fullPathToReadme = path.join(solutionDirectory, 'README.md');
-            expectedFiles.push(fullPathToReadme);
+        function addFilesFromTemplatesToExpectedFiles() {
+            expectedFiles.push(path.join('.gitignore'));
+            expectedFiles.push(path.join(solutionDirectory, 'README.md'));
         }
 
         function defineExpectedFiles() {
             addSolutionFileToExpectedFiles();
             addLibraryProjectBuildOutputToExpectedFiles();
             addTestBuildOutputToExpectedFiles();
-            addApplicationBuildOutputToExpectedFiles();            
-            addReadmeToExpectedFiles();
+            addApplicationBuildOutputToExpectedFiles();
+            addFilesFromTemplatesToExpectedFiles();
         }
 
         function compileGeneratedSolution() {
