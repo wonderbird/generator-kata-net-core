@@ -5,12 +5,12 @@ const path = require('path');
 
 const Configuration = require('../../app/configuration');
 const FileSystem = require('../../app/file-system');
-const ReadmeGenerator = require('../../app/readme-generator');
+const CopyTemplateFilesGenerator = require('../../app/copy-template-files-generator');
 
 chai.should();
 chai.use(sinonChai);
 
-describe('ReadmeGenerator',
+describe('CopyTemplateFilesGenerator',
     function () {
         const expectedSolutionName = "SampleKata";
 
@@ -22,7 +22,7 @@ describe('ReadmeGenerator',
             fileSystemStub = sinon.createStubInstance(FileSystem);
 
             configuration = new Configuration(expectedSolutionName);
-            readmeGenerator = new ReadmeGenerator(fileSystemStub, configuration);
+            readmeGenerator = new CopyTemplateFilesGenerator(fileSystemStub, configuration);
         });
 
         describe('generate',
@@ -32,10 +32,19 @@ describe('ReadmeGenerator',
                         readmeGenerator.generate();
 
                         const expectedFileName = 'README.md';
-                        const expectedTargetPath = path.join(expectedSolutionName, expectedFileName);
-                        fileSystemStub.copyTemplate.should.have.been.calledWithExactly(expectedFileName, expectedTargetPath);
+                        const expectedDestinationPath = path.join(expectedSolutionName, expectedFileName);
+                        fileSystemStub.copyTemplate.should.have.been.calledWithExactly(expectedFileName, expectedDestinationPath);
                     });
 
+                it('should create the correct .gitignore file',
+                    function () {
+                        readmeGenerator.generate();
+
+                        const expectedSourcePath = 'gitignore';
+                        const expectedDestinationFile = '.gitignore'
+                        const expectedDestinationPath = path.join(expectedSolutionName, expectedDestinationFile);
+                        fileSystemStub.copyTemplate.should.have.been.calledWithExactly(expectedSourcePath, expectedDestinationPath);
+                    });
                 // TODO create tests for error handling and boundary conditions
             });
     });
