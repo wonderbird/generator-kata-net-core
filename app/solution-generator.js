@@ -7,11 +7,6 @@ module.exports = class SolutionGenerator {
         this.dotnetCli = dotnetCli;
         this.configuration = configuration;
 
-        const testSuffix = '.Tests';
-        this.testProjectName = this.configuration.libraryProjectName + testSuffix;
-        const testProjectFileName = this.testProjectName + this.configuration.projectExtension;
-        this.testProjectPath = path.join(this.testProjectName, testProjectFileName);
-
         this.classLibraryGenerator = new ClassLibraryGenerator(dotnetCli, configuration);
         this.testProjectGenerator = new TestProjectGenerator(dotnetCli, configuration);
     }
