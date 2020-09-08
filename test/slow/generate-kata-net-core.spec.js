@@ -23,7 +23,7 @@ describe('yo kata-net-core',
 
         const solutionName = 'GeneratedSolutionCanBeDeleted';
 
-        const solutionDirectory = solutionName;
+        let solutionDirectory = solutionName;
         const libraryProjectName = solutionName + librarySuffix;
         const libraryProjectDirectory = libraryProjectName;
 
@@ -45,11 +45,7 @@ describe('yo kata-net-core',
         }
 
         function runGeneratorUnderTest() {
-            return helpers.run(path.join(__dirname, '../../app'))
-                .withPrompts({
-                    solutionName: solutionName,
-                    isSeparateSolutionDirEnabled: true
-                });
+            return helpers.run(path.join(__dirname, '../../app'));
         }
 
         function addSolutionFileToExpectedFiles() {
@@ -113,11 +109,15 @@ describe('yo kata-net-core',
             testExecutionDirectory.delete();
         }
 
-        it('should create required files and directories',
+        it('when solution directory is enabled, then create required files and directories',
             function () {
                 configureTestExecutionTimeout(this);
 
                 return runGeneratorUnderTest()
+                    .withPrompts({
+                        solutionName: solutionName,
+                        isSeparateSolutionDirEnabled: true
+                    })
                     .then(function (testExecutionDirectoryPath) {
                         compileGeneratedSolution();
 
@@ -127,4 +127,25 @@ describe('yo kata-net-core',
                         cleanupTestExecutionDirectory(testExecutionDirectoryPath);
                     });
             });
+
+            // TODO refactor tests - duplication
+            it('when solution directory is disabled, then create required files and directories',
+                function () {
+                    configureTestExecutionTimeout(this);
+
+                    return runGeneratorUnderTest()
+                        .withPrompts({
+                            solutionName: solutionName,
+                            isSeparateSolutionDirEnabled: false
+                        })
+                        .then(function (testExecutionDirectoryPath) {
+                            compileGeneratedSolution();
+
+                            solutionDirectory = ".";
+                            defineExpectedFiles();
+                            assert.file(expectedFiles);
+
+                            cleanupTestExecutionDirectory(testExecutionDirectoryPath);
+                        });
+                });
     });
