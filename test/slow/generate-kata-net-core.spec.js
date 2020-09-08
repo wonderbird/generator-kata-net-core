@@ -46,7 +46,10 @@ describe('yo kata-net-core',
 
         function runGeneratorUnderTest() {
             return helpers.run(path.join(__dirname, '../../app'))
-                .withPrompts({ solutionName: solutionName });
+                .withPrompts({
+                    solutionName: solutionName,
+                    isSeparateSolutionDirEnabled: true
+                });
         }
 
         function addSolutionFileToExpectedFiles() {
