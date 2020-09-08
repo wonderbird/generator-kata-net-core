@@ -109,7 +109,7 @@ describe('yo kata-net-core',
             testExecutionDirectory.delete();
         }
 
-        it('when solution directory is enabled, then create required files and directories',
+        it('when solution directory is enabled, then create required files and directories in subfolder',
             function () {
                 configureTestExecutionTimeout(this);
 
@@ -129,7 +129,7 @@ describe('yo kata-net-core',
             });
 
             // TODO refactor tests - duplication
-            xit('when solution directory is disabled, then create required files and directories',
+            xit('when solution directory is disabled, then create required files and directories in current directory',
                 function () {
                     configureTestExecutionTimeout(this);
 
