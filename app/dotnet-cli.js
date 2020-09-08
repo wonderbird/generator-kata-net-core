@@ -35,7 +35,7 @@ module.exports = class DotnetCli {
         }
     }
 
-    createNewSolution(solutionName, solutionDirectory) {
+    createNewSolutionInDirectory(solutionName, solutionDirectory) {
         this.runDotnetWithArgumentsOrThrow('new', 'sln', '--output', solutionDirectory, '--name', solutionName);
     }
 

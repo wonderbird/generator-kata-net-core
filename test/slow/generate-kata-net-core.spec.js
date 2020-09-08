@@ -124,7 +124,7 @@ describe('yo kata-net-core',
                         defineExpectedFiles();
                         assert.file(expectedFiles);
 
-                        //cleanupTestExecutionDirectory(testExecutionDirectoryPath);
+                        cleanupTestExecutionDirectory(testExecutionDirectoryPath);
                     });
             });
 

@@ -32,7 +32,7 @@ describe('SolutionGenerator',
                     function() {
                         solutionGenerator.generate();
 
-                        dotnetCliStub.createNewSolution.should.have.been.calledOnceWithExactly(expectedSolutionName, expectedSolutionName);
+                        dotnetCliStub.createNewSolutionInDirectory.should.have.been.calledOnceWithExactly(expectedSolutionName, expectedSolutionName);
                     });
             });
     });

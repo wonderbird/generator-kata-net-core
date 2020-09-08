@@ -51,11 +51,11 @@ describe('DotnetCli',
             stubbedSpawnCommandSyncResult.status = 1;
         }
 
-        describe('createNewSolution',         
+        describe('createNewSolutionInDirectory',         
             function () {
                 it('should invoke dotnet cli with correct parameters',
                     function() {
-                        dotnetCli.createNewSolution(configuredSolutionName, configuredSolutionDirectory);
+                        dotnetCli.createNewSolutionInDirectory(configuredSolutionName, configuredSolutionDirectory);
 
                         assertDotnetArgs('new', 'sln', '--output', configuredSolutionDirectory, '--name', configuredSolutionName);
                     });
@@ -65,7 +65,7 @@ describe('DotnetCli',
                         whenDotnetCliFails();
 
                         const dotnetCli = new DotnetCli(yeomanMock);
-                        expect(dotnetCli.createNewSolution.bind(dotnetCli, configuredSolutionName, configuredSolutionDirectory))
+                        expect(dotnetCli.createNewSolutionInDirectory.bind(dotnetCli, configuredSolutionName, configuredSolutionDirectory))
                             .to.throw(expectedDotnetCommandFailedMessage);
 
                         assertDotnetArgs('new', 'sln', '--output', configuredSolutionDirectory, '--name', configuredSolutionName);
