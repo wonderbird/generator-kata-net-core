@@ -22,30 +22,65 @@ describe('TestProjectGenerator',
         const expectedTestProjectPath = path.join(expectedTestProjectName, expectedTestProjectFileName);
 
         let dotnetCliStub;
+        let configuration;
         let testProjectGenerator;
 
         beforeEach(function () {
             dotnetCliStub = sinon.createStubInstance(DotnetCli);
-            const configuration = new Configuration(configuredSolutionName);
+            configuration = new Configuration(configuredSolutionName);
 
             testProjectGenerator = new TestProjectGenerator(dotnetCliStub, configuration);
         });
 
         describe('generate',
             function () {
-                it('should create the correct test project',
+                describe('when separate solution directory is enabled',
+                    function() {
+                        it('should create the correct test project in solution directory',
+                            function () {
+                                testProjectGenerator.generate();
+
+                                dotnetCliStub.createNewTestProject.should.have.been.calledOnceWithExactly(expectedSolutionName, expectedTestProjectName);
+                            });
+
+                        it('should add the correct class library reference to the test project in solution directory',
+                            function () {
+                                testProjectGenerator.generate();
+
+                                dotnetCliStub.addProjectReference.should.have.been.calledOnceWithExactly(expectedSolutionName,
+                                    expectedTestProjectPath,
+                                    expectedLibraryProjectPath);
+                            });
+
+                        it('should add the correct test project to the correct solution in solution directory',
+                            function () {
+                                testProjectGenerator.generate();
+
+                                dotnetCliStub.addProjectToSolution.should.have.been.calledOnceWithExactly(expectedSolutionName, expectedTestProjectPath);
+                            });
+                    });
+            });
+
+        describe('when separate solution directory is disabled',
+            function() {
+                const currentDirectory = '.';
+
+                beforeEach(function() {
+                    configuration.disableSeparateSolutionDir();
+                });
+
+                it('should create the correct test project in current directory',
                     function () {
                         testProjectGenerator.generate();
 
-                        dotnetCliStub.createNewTestProject.should.have.been.calledOnceWithExactly(expectedSolutionName, expectedTestProjectName);
+                        dotnetCliStub.createNewTestProject.should.have.been.calledOnceWithExactly(currentDirectory, expectedTestProjectName);
                     });
 
-                it('should add the correct class library reference to the test project',
+                it('should add the correct class library reference to the test project in current directory',
                     function () {
                         testProjectGenerator.generate();
 
-                        dotnetCliStub.addProjectReference.should.have.been.calledOnceWithExactly(expectedSolutionName,
-                            expectedTestProjectPath,
+                        dotnetCliStub.addProjectReference.should.have.been.calledOnceWithExactly(currentDirectory, expectedTestProjectPath,
                             expectedLibraryProjectPath);
                     });
 
@@ -53,7 +88,7 @@ describe('TestProjectGenerator',
                     function () {
                         testProjectGenerator.generate();
 
-                        dotnetCliStub.addProjectToSolution.should.have.been.calledOnceWithExactly(expectedSolutionName, expectedTestProjectPath);
+                        dotnetCliStub.addProjectToSolution.should.have.been.calledOnceWithExactly(currentDirectory, expectedTestProjectPath);
                     });
             });
     });

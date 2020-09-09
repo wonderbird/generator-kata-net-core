@@ -17,8 +17,8 @@ describe('ClassLibraryGenerator',
         const expectedProjectName = expectedSolutionName + ".Lib";
 
         let dotnetCliStub;
-        let classLibraryGenerator;
         let configuration;
+        let classLibraryGenerator;
 
         beforeEach(function () {
             dotnetCliStub = sinon.createStubInstance(DotnetCli);
