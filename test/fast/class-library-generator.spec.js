@@ -18,31 +18,61 @@ describe('ClassLibraryGenerator',
 
         let dotnetCliStub;
         let classLibraryGenerator;
+        let configuration;
 
         beforeEach(function () {
             dotnetCliStub = sinon.createStubInstance(DotnetCli);
-            const configuration = new Configuration(configuredSolutionName);
+            configuration = new Configuration(configuredSolutionName);
 
             classLibraryGenerator = new ClassLibraryGenerator(dotnetCliStub, configuration);
         });
 
         describe('generate',
             function () {
-                it('should create the correct class library',
+                describe('when separate solution directory is enabled',
+                    function() {
+                        it('then create the correct class library in solution directory',
+                            function () {
+                                classLibraryGenerator.generate();
+        
+                                dotnetCliStub.createNewClassLibrary.should.have.been.calledOnceWithExactly(expectedSolutionName, expectedProjectName);
+                            });
+                        
+                        it('then add the correct class library to the correct solution in solution directory',
+                            function () {
+                                const expectedProjectFileName = expectedProjectName + ".csproj";
+                                const expectedProjectPath = path.join(expectedProjectName, expectedProjectFileName);
+        
+                                classLibraryGenerator.generate();
+        
+                                dotnetCliStub.addProjectToSolution.should.have.been.calledOnceWithExactly(expectedSolutionName, expectedProjectPath);
+                            });    
+                    });           
+            });
+
+        describe('when separate solution directory is disabled',
+            function() {
+                const currentDirectory = '.';
+
+                beforeEach(function() {
+                    configuration.disableSeparateSolutionDir();
+                });
+
+                it('then create the correct class library in current directory',
                     function () {
                         classLibraryGenerator.generate();
 
-                        dotnetCliStub.createNewClassLibrary.should.have.been.calledOnceWithExactly(expectedSolutionName, expectedProjectName);
+                        dotnetCliStub.createNewClassLibrary.should.have.been.calledOnceWithExactly(currentDirectory, expectedProjectName);
                     });
-                    
-                it('should add the correct class library to the correct solution',
+                
+                it('then add the correct class library to the correct solution in current directory',
                     function () {
                         const expectedProjectFileName = expectedProjectName + ".csproj";
                         const expectedProjectPath = path.join(expectedProjectName, expectedProjectFileName);
 
                         classLibraryGenerator.generate();
 
-                        dotnetCliStub.addProjectToSolution.should.have.been.calledOnceWithExactly(expectedSolutionName, expectedProjectPath);
-                    });
+                        dotnetCliStub.addProjectToSolution.should.have.been.calledOnceWithExactly(currentDirectory, expectedProjectPath);
+                    });    
             });
     });
