@@ -28,11 +28,29 @@ describe('SolutionGenerator',
                     solutionGenerator = new SolutionGenerator(dotnetCliStub, configuration);
                 });
 
-                it('should create the correct solution file',
+                it('when default value for separate solution directory is set then create the correct solution file in subdirectory',
                     function() {
                         solutionGenerator.generate();
 
                         dotnetCliStub.createNewSolutionInDirectory.should.have.been.calledOnceWithExactly(expectedSolutionName, expectedSolutionName);
+                    });
+
+                it('when separate solution directory is enabled then create the correct solution file in subdirectory',
+                    function() {
+                        solutionGenerator.generate();
+
+                        configuration.enableSeparateSolutionDir();
+
+                        dotnetCliStub.createNewSolutionInDirectory.should.have.been.calledOnceWithExactly(expectedSolutionName, expectedSolutionName);
+                    });
+
+                it('when separate solution directory is disabled then create the correct solution file in current directory',
+                    function() {
+                        configuration.disableSeparateSolutionDir();
+                        solutionGenerator.generate();
+
+                        const expectedSolutionDirectory = ".";
+                        dotnetCliStub.createNewSolutionInDirectory.should.have.been.calledOnceWithExactly(expectedSolutionName, expectedSolutionDirectory);
                     });
             });
     });

@@ -5,8 +5,11 @@ var Configuration = require('../../app/configuration');
 
 chai.should();
 
-describe('Configuration',
+describe('Configuration',    
     function () {
+        const initialSolutionName = 'InitialSolutionName';
+        const currentDirectory = '.';
+
         function assertCorrectConfigurationProperties(actualConfiguration, solutionName) {
             const expectedSolutionName = solutionName;
             const expectedLibraryProjectName = solutionName + '.Lib';
@@ -36,11 +39,9 @@ describe('Configuration',
             function () {
                 it('should set correct configuration by solution name',
                     function () {
-                        const solutionName = 'SampleKata';
-
-                        let actualConfiguration = new Configuration(solutionName);
+                        let actualConfiguration = new Configuration(initialSolutionName);
                         
-                        assertCorrectConfigurationProperties(actualConfiguration, solutionName);
+                        assertCorrectConfigurationProperties(actualConfiguration, initialSolutionName);
                     });
             });
 
@@ -50,10 +51,45 @@ describe('Configuration',
                     function () {
                         const changedSolutionName = 'ChangedSolutionName';
 
-                        let actualConfiguration = new Configuration('AnyInitialSolutionName');
+                        let actualConfiguration = new Configuration(initialSolutionName);
                         actualConfiguration.setSolutionNameAndUpdateConfiguration(changedSolutionName);
                         
                         assertCorrectConfigurationProperties(actualConfiguration, changedSolutionName);
+                    });
+
+                it('when separate solution dir disabled, then keep solution directory as current directory',
+                    function () {
+                        const changedSolutionName = 'ChangedSolutionName';
+
+                        let actualConfiguration = new Configuration(initialSolutionName);
+                        actualConfiguration.disableSeparateSolutionDir();
+                        actualConfiguration.setSolutionNameAndUpdateConfiguration(changedSolutionName);
+                        
+                        actualConfiguration.solutionDirectory.should.equal(currentDirectory);
+                    });
+            });
+
+        describe('enableSeparateSolutionDir',
+            function () {
+                it('should set solution directory to solution name',
+                    function () {
+                        let actualConfiguration = new Configuration(initialSolutionName);
+                        actualConfiguration.disableSeparateSolutionDir();
+                        actualConfiguration.enableSeparateSolutionDir();
+
+                        actualConfiguration.solutionDirectory.should.equal(initialSolutionName);
+                    });
+            });
+
+        describe('disableSeparateSolutionDir',
+            function () {
+                it('should set solution directory to current directory',
+                    function () {
+                        let actualConfiguration = new Configuration(initialSolutionName);
+                        actualConfiguration.enableSeparateSolutionDir();
+                        actualConfiguration.disableSeparateSolutionDir();
+
+                        actualConfiguration.solutionDirectory.should.equal(currentDirectory);
                     });
             });
     });

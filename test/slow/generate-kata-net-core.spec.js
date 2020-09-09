@@ -129,7 +129,7 @@ describe('yo kata-net-core',
             });
 
             // TODO refactor tests - duplication
-            xit('when solution directory is disabled, then create required files and directories in current directory',
+            it('when solution directory is disabled, then create required files and directories in current directory',
                 function () {
                     configureTestExecutionTimeout(this);
 

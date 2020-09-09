@@ -5,6 +5,6 @@ module.exports = class SolutionGenerator {
     }
 
     generate() {
-        this.dotnetCli.createNewSolutionInDirectory(this.configuration.solutionName, this.configuration.solutionName);
+        this.dotnetCli.createNewSolutionInDirectory(this.configuration.solutionName, this.configuration.solutionDirectory);
     }
 }
