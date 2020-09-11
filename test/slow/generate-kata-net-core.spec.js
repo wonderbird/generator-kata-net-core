@@ -91,7 +91,7 @@ describe('yo kata-net-core',
         }
 
         function addFilesFromTemplatesToExpectedFiles() {
-            expectedFiles.push(path.join(solutionDirectory, '.gitignore'));
+            expectedFiles.push('.gitignore');
             expectedFiles.push(path.join(solutionDirectory, 'README.md'));
         }
 
@@ -109,7 +109,6 @@ describe('yo kata-net-core',
             }
 
             spawnSync('dotnet', ['build']);
-            // TODO clarify why the build process fails if the solution is created in the current directory
 
             if (solutionDirectory !== '.') {
                 process.chdir("..");
@@ -141,7 +140,7 @@ describe('yo kata-net-core',
             });
 
         // TODO refactor tests - duplication
-        xit('when solution directory is disabled, then create required files and directories in current directory',
+        it('when solution directory is disabled, then create required files and directories in current directory',
             function () {
                 configureTestExecutionTimeout(this);
 
@@ -151,9 +150,8 @@ describe('yo kata-net-core',
                         isSeparateSolutionDirEnabled: false
                     })
                     .then(function (testExecutionDirectoryPath) {
-                        compileGeneratedSolution();
-
                         solutionDirectory = ".";
+                        compileGeneratedSolution();
                         defineExpectedFiles();
                         assert.file(expectedFiles);
 
