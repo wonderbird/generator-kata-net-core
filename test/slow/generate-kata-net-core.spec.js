@@ -120,42 +120,32 @@ describe('yo kata-net-core',
             testExecutionDirectory.delete();
         }
 
-        it('when solution directory is enabled, then create required files and directories in subfolder',
-            function () {
-                configureTestExecutionTimeout(this);
+        var testRunDataSet = [
+            { isSeparateSolutionDirEnabled: true, expectedSolutionDirectory: solutionName, description: "when solution directory is enabled, then create required files and directories in subfolder" },
+            { isSeparateSolutionDirEnabled: false, expectedSolutionDirectory: ".", description: "when solution directory is disabled, then create required files and directories in current directory" }
+        ];
 
-                return runGeneratorUnderTest()
-                    .withPrompts({
-                        solutionName: solutionName,
-                        isSeparateSolutionDirEnabled: true
-                    })
-                    .then(function (testExecutionDirectoryPath) {
-                        compileGeneratedSolution();
+        testRunDataSet.forEach(
+            function(testRunData) {
+                it(testRunData.description,
+                    function () {
+                        configureTestExecutionTimeout(this);
 
-                        defineExpectedFiles();
-                        assert.file(expectedFiles);
+                        return runGeneratorUnderTest()
+                            .withPrompts({
+                                solutionName: solutionName,
+                                isSeparateSolutionDirEnabled: testRunData.isSeparateSolutionDirEnabled
+                            })
+                            .then(function (testExecutionDirectoryPath) {
+                                solutionDirectory = testRunData.expectedSolutionDirectory;
 
-                        cleanupTestExecutionDirectory(testExecutionDirectoryPath);
+                                compileGeneratedSolution();
+
+                                defineExpectedFiles();
+                                assert.file(expectedFiles);
+
+                                cleanupTestExecutionDirectory(testExecutionDirectoryPath);
+                            });
                     });
-            });
-
-        // TODO refactor tests - duplication
-        it('when solution directory is disabled, then create required files and directories in current directory',
-            function () {
-                configureTestExecutionTimeout(this);
-
-                return runGeneratorUnderTest()
-                    .withPrompts({
-                        solutionName: solutionName,
-                        isSeparateSolutionDirEnabled: false
-                    })
-                    .then(function (testExecutionDirectoryPath) {
-                        solutionDirectory = ".";
-                        compileGeneratedSolution();
-                        defineExpectedFiles();
-                        assert.file(expectedFiles);
-
-                        cleanupTestExecutionDirectory(testExecutionDirectoryPath);
-                    });
-            });
+            })
     });

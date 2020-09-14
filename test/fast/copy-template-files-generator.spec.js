@@ -16,20 +16,20 @@ describe('CopyTemplateFilesGenerator',
 
         let fileSystemStub;
         let configuration;
-        let readmeGenerator;
+        let generator;
 
         beforeEach(function () {
             fileSystemStub = sinon.createStubInstance(FileSystem);
 
             configuration = new Configuration(expectedSolutionName);
-            readmeGenerator = new CopyTemplateFilesGenerator(fileSystemStub, configuration);
+            generator = new CopyTemplateFilesGenerator(fileSystemStub, configuration);
         });
 
         describe('generate',
             function () {
                 it('should create the correct .gitignore file',
                     function () {
-                        readmeGenerator.generate();
+                        generator.generate();
 
                         const expectedSourcePath = 'gitignore';
                         const expectedDestinationFile = '.gitignore'
@@ -40,7 +40,7 @@ describe('CopyTemplateFilesGenerator',
                     function() {
                         it('should create the correct README.md file in solution directory',
                             function () {
-                                readmeGenerator.generate();
+                                generator.generate();
 
                                 const expectedFileName = 'README.md';
                                 const expectedDestinationPath = path.join(expectedSolutionName, expectedFileName);
@@ -53,12 +53,11 @@ describe('CopyTemplateFilesGenerator',
                         it('should create the correct README.md file in current directory',
                             function () {
                                 configuration.disableSeparateSolutionDir();
-                                readmeGenerator.generate();
+                                generator.generate();
 
                                 const expectedFileName = 'README.md';
                                 fileSystemStub.copyTemplate.should.have.been.calledWithExactly(expectedFileName, expectedFileName);
                             });
                     });
-                // TODO create tests for error handling and boundary conditions
             });
     });
