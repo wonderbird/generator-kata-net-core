@@ -93,6 +93,12 @@ describe('yo kata-net-core',
         function addFilesFromTemplatesToExpectedFiles() {
             expectedFiles.push(path.join(solutionDirectory, '.gitignore'));
             expectedFiles.push(path.join(solutionDirectory, 'README.md'));
+
+            expectedFiles.push(path.join(solutionDirectory, 'tools', 'msxsl.exe'));
+            expectedFiles.push(path.join(solutionDirectory, 'tools', 'dupfinder.xslt'));
+            expectedFiles.push(path.join(solutionDirectory, 'tools', 'dupfinder.bat'));
+
+            // TODO Replace the project name in the dupfinder.bat file
         }
 
         function defineExpectedFiles() {
