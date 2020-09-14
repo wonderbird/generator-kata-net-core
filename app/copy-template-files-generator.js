@@ -16,7 +16,8 @@ module.exports = class CopyTemplateFilesGenerator {
     _copyGitignore() {
         const sourceFileName = 'gitignore';
         const destinationFileName = '.gitignore';
-        this.fileSystem.copyTemplate(sourceFileName, destinationFileName);
+        const destinationPath = path.join(this.configuration.solutionDirectory, destinationFileName);
+        this.fileSystem.copyTemplate(sourceFileName, destinationPath);
 
     }
 

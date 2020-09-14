@@ -27,15 +27,6 @@ describe('CopyTemplateFilesGenerator',
 
         describe('generate',
             function () {
-                it('should create the correct .gitignore file',
-                    function () {
-                        generator.generate();
-
-                        const expectedSourcePath = 'gitignore';
-                        const expectedDestinationFile = '.gitignore'
-                        fileSystemStub.copyTemplate.should.have.been.calledWithExactly(expectedSourcePath, expectedDestinationFile);
-                    });
-
                 describe('when separate solution directory is enabled',
                     function() {
                         it('should create the correct README.md file in solution directory',
@@ -46,18 +37,41 @@ describe('CopyTemplateFilesGenerator',
                                 const expectedDestinationPath = path.join(expectedSolutionName, expectedFileName);
                                 fileSystemStub.copyTemplate.should.have.been.calledWithExactly(expectedFileName, expectedDestinationPath);
                             });
+
+                        it('should create the correct .gitignore file in solution directory',
+                            function () {
+                                generator.generate();
+        
+                                const expectedSourcePath = 'gitignore';
+                                const expectedDestinationFile = '.gitignore';
+                                const expectedDestinationPath = path.join(expectedSolutionName, expectedDestinationFile);
+                                fileSystemStub.copyTemplate.should.have.been.calledWithExactly(expectedSourcePath, expectedDestinationPath);
+                            });
                     });
 
                 describe('when separate solution directory is disabled',
                     function() {
+                        beforeEach(function() {
+                            configuration.disableSeparateSolutionDir();
+                        });
+
                         it('should create the correct README.md file in current directory',
                             function () {
-                                configuration.disableSeparateSolutionDir();
                                 generator.generate();
 
                                 const expectedFileName = 'README.md';
                                 fileSystemStub.copyTemplate.should.have.been.calledWithExactly(expectedFileName, expectedFileName);
                             });
+
+                        it('should create the correct .gitignore file in current directory',
+                            function () {
+                                generator.generate();
+        
+                                const expectedSourcePath = 'gitignore';
+                                const expectedDestinationFile = '.gitignore'
+                                fileSystemStub.copyTemplate.should.have.been.calledWithExactly(expectedSourcePath, expectedDestinationFile);
+                            });
+        
                     });
             });
     });

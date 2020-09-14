@@ -91,7 +91,7 @@ describe('yo kata-net-core',
         }
 
         function addFilesFromTemplatesToExpectedFiles() {
-            expectedFiles.push('.gitignore');
+            expectedFiles.push(path.join(solutionDirectory, '.gitignore'));
             expectedFiles.push(path.join(solutionDirectory, 'README.md'));
         }
 
