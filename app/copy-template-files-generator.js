@@ -10,7 +10,6 @@ module.exports = class CopyTemplateFilesGenerator {
         const sourceFileName = 'README.md';
         const destinationPath = path.join(this.configuration.solutionDirectory, sourceFileName);
         this.fileSystem.copyTemplate(sourceFileName, destinationPath);
-
     }
 
     _copyGitignore() {
@@ -18,11 +17,18 @@ module.exports = class CopyTemplateFilesGenerator {
         const destinationFileName = '.gitignore';
         const destinationPath = path.join(this.configuration.solutionDirectory, destinationFileName);
         this.fileSystem.copyTemplate(sourceFileName, destinationPath);
-
+    }
+    
+    _copyMsxslExe() {
+        const sourceFileName = 'msxsl.exe';
+        const sourcePath = path.join('tools', sourceFileName);
+        const destinationPath = path.join(this.configuration.solutionDirectory, 'tools', sourceFileName);
+        this.fileSystem.copyTemplate(sourcePath, destinationPath);
     }
 
     generate() {
         this._copyReadme()
         this._copyGitignore()
+        this._copyMsxslExe();
     }
 }

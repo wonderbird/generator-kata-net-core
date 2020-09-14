@@ -47,6 +47,16 @@ describe('CopyTemplateFilesGenerator',
                                 const expectedDestinationPath = path.join(expectedSolutionName, expectedDestinationFile);
                                 fileSystemStub.copyTemplate.should.have.been.calledWithExactly(expectedSourcePath, expectedDestinationPath);
                             });
+
+                        it('should create the correct msxsl.exe file in tools directory beneath solution directory',
+                            function () {
+                                generator.generate();
+        
+                                const expectedFileName = 'msxsl.exe';
+                                const expectedSourcePath = path.join('tools', 'msxsl.exe');
+                                const expectedDestinationPath = path.join(expectedSolutionName, 'tools', expectedFileName);
+                                fileSystemStub.copyTemplate.should.have.been.calledWithExactly(expectedSourcePath, expectedDestinationPath);
+                            });
                     });
 
                 describe('when separate solution directory is disabled',
