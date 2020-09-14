@@ -16,35 +16,48 @@ describe('CopyTemplateFilesGenerator',
 
         let fileSystemStub;
         let configuration;
-        let readmeGenerator;
+        let generator;
 
         beforeEach(function () {
             fileSystemStub = sinon.createStubInstance(FileSystem);
 
             configuration = new Configuration(expectedSolutionName);
-            readmeGenerator = new CopyTemplateFilesGenerator(fileSystemStub, configuration);
+            generator = new CopyTemplateFilesGenerator(fileSystemStub, configuration);
         });
 
         describe('generate',
             function () {
-                it('should create the correct README.md file',
-                    function () {
-                        readmeGenerator.generate();
-
-                        const expectedFileName = 'README.md';
-                        const expectedDestinationPath = path.join(expectedSolutionName, expectedFileName);
-                        fileSystemStub.copyTemplate.should.have.been.calledWithExactly(expectedFileName, expectedDestinationPath);
-                    });
-
                 it('should create the correct .gitignore file',
                     function () {
-                        readmeGenerator.generate();
+                        generator.generate();
 
                         const expectedSourcePath = 'gitignore';
                         const expectedDestinationFile = '.gitignore'
-                        const expectedDestinationPath = path.join(expectedSolutionName, expectedDestinationFile);
-                        fileSystemStub.copyTemplate.should.have.been.calledWithExactly(expectedSourcePath, expectedDestinationPath);
+                        fileSystemStub.copyTemplate.should.have.been.calledWithExactly(expectedSourcePath, expectedDestinationFile);
                     });
-                // TODO create tests for error handling and boundary conditions
+
+                describe('when separate solution directory is enabled',
+                    function() {
+                        it('should create the correct README.md file in solution directory',
+                            function () {
+                                generator.generate();
+
+                                const expectedFileName = 'README.md';
+                                const expectedDestinationPath = path.join(expectedSolutionName, expectedFileName);
+                                fileSystemStub.copyTemplate.should.have.been.calledWithExactly(expectedFileName, expectedDestinationPath);
+                            });
+                    });
+
+                describe('when separate solution directory is disabled',
+                    function() {
+                        it('should create the correct README.md file in current directory',
+                            function () {
+                                configuration.disableSeparateSolutionDir();
+                                generator.generate();
+
+                                const expectedFileName = 'README.md';
+                                fileSystemStub.copyTemplate.should.have.been.calledWithExactly(expectedFileName, expectedFileName);
+                            });
+                    });
             });
     });

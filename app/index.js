@@ -26,15 +26,24 @@ module.exports = class GeneratorKataNetCore extends Generator {
     }
 
     async prompting() {
-        this.answers = await this.prompt({
+        this.answers = await this.prompt([{
             type: "input",
             name: "solutionName",
             message: "Solution name:"
-        });
+        }, {
+            type: "confirm",
+            name: "isSeparateSolutionDirEnabled",
+            message: "Create solution inside separate directory:"
+        }]);
     }
 
     configuring() {
         this.configuration.setSolutionNameAndUpdateConfiguration(this.answers.solutionName);
+        if (this.answers.isSeparateSolutionDirEnabled) {
+            this.configuration.enableSeparateSolutionDir();
+        } else {
+            this.configuration.disableSeparateSolutionDir();
+        }
     }
 
     install() {

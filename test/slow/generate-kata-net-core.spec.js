@@ -23,7 +23,6 @@ describe('yo kata-net-core',
 
         const solutionName = 'GeneratedSolutionCanBeDeleted';
 
-        const solutionDirectory = solutionName;
         const libraryProjectName = solutionName + librarySuffix;
         const libraryProjectDirectory = libraryProjectName;
 
@@ -33,7 +32,13 @@ describe('yo kata-net-core',
         const applicationProjectName = solutionName + applicationSuffix;
         const applicationProjectDirectory = applicationProjectName;
 
-        var expectedFiles = [];
+        let solutionDirectory;
+        var expectedFiles;
+
+        beforeEach(function() {
+            solutionDirectory = solutionName;
+            expectedFiles = [];
+        });
 
         function configureTestExecutionTimeout(mochaContext) {
             const maxTestExecutionDurationOnGithubInMilliseconds = 60000;
@@ -45,8 +50,7 @@ describe('yo kata-net-core',
         }
 
         function runGeneratorUnderTest() {
-            return helpers.run(path.join(__dirname, '../../app'))
-                .withPrompts({ solutionName: solutionName });
+            return helpers.run(path.join(__dirname, '../../app'));
         }
 
         function addSolutionFileToExpectedFiles() {
@@ -87,7 +91,7 @@ describe('yo kata-net-core',
         }
 
         function addFilesFromTemplatesToExpectedFiles() {
-            expectedFiles.push(path.join(solutionDirectory, '.gitignore'));
+            expectedFiles.push('.gitignore');
             expectedFiles.push(path.join(solutionDirectory, 'README.md'));
         }
 
@@ -100,9 +104,15 @@ describe('yo kata-net-core',
         }
 
         function compileGeneratedSolution() {
-            process.chdir(solutionName);
+            if (solutionDirectory !== '.') {
+                process.chdir(solutionDirectory);
+            }
+
             spawnSync('dotnet', ['build']);
-            process.chdir("..");
+
+            if (solutionDirectory !== '.') {
+                process.chdir("..");
+            }
         }
 
         function cleanupTestExecutionDirectory(testExecutionDirectoryPath) {
@@ -110,18 +120,32 @@ describe('yo kata-net-core',
             testExecutionDirectory.delete();
         }
 
-        it('should create required files and directories',
-            function () {
-                configureTestExecutionTimeout(this);
+        var testRunDataSet = [
+            { isSeparateSolutionDirEnabled: true, expectedSolutionDirectory: solutionName, description: "when solution directory is enabled, then create required files and directories in subfolder" },
+            { isSeparateSolutionDirEnabled: false, expectedSolutionDirectory: ".", description: "when solution directory is disabled, then create required files and directories in current directory" }
+        ];
 
-                return runGeneratorUnderTest()
-                    .then(function (testExecutionDirectoryPath) {
-                        compileGeneratedSolution();
+        testRunDataSet.forEach(
+            function(testRunData) {
+                it(testRunData.description,
+                    function () {
+                        configureTestExecutionTimeout(this);
 
-                        defineExpectedFiles();
-                        assert.file(expectedFiles);
+                        return runGeneratorUnderTest()
+                            .withPrompts({
+                                solutionName: solutionName,
+                                isSeparateSolutionDirEnabled: testRunData.isSeparateSolutionDirEnabled
+                            })
+                            .then(function (testExecutionDirectoryPath) {
+                                solutionDirectory = testRunData.expectedSolutionDirectory;
 
-                        cleanupTestExecutionDirectory(testExecutionDirectoryPath);
+                                compileGeneratedSolution();
+
+                                defineExpectedFiles();
+                                assert.file(expectedFiles);
+
+                                cleanupTestExecutionDirectory(testExecutionDirectoryPath);
+                            });
                     });
-            });
+            })
     });

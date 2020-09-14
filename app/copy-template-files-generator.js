@@ -8,7 +8,7 @@ module.exports = class CopyTemplateFilesGenerator {
 
     _copyReadme() {
         const sourceFileName = 'README.md';
-        const destinationPath = path.join(this.configuration.solutionName, sourceFileName);
+        const destinationPath = path.join(this.configuration.solutionDirectory, sourceFileName);
         this.fileSystem.copyTemplate(sourceFileName, destinationPath);
 
     }
@@ -16,8 +16,7 @@ module.exports = class CopyTemplateFilesGenerator {
     _copyGitignore() {
         const sourceFileName = 'gitignore';
         const destinationFileName = '.gitignore';
-        const destinationPath = path.join(this.configuration.solutionName, destinationFileName);
-        this.fileSystem.copyTemplate(sourceFileName, destinationPath);
+        this.fileSystem.copyTemplate(sourceFileName, destinationFileName);
 
     }
 

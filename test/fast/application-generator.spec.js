@@ -22,38 +22,74 @@ describe('ApplicationProjectGenerator',
         const expectedApplicationProjectPath = path.join(expectedApplicationProjectName, expectedApplicationProjectFileName);
 
         let dotnetCliStub;
+        let configuration;
         let applicationProjectGenerator;
 
         beforeEach(function () {
             dotnetCliStub = sinon.createStubInstance(DotnetCli);
-            const configuration = new Configuration(configuredSolutionName);
+            configuration = new Configuration(configuredSolutionName);
 
             applicationProjectGenerator = new ApplicationProjectGenerator(dotnetCliStub, configuration);
         });
 
-        describe('generate',
+        describe('generate',        
             function () {
-                it('should create the correct application project',
-                    function () {
-                        applicationProjectGenerator.generate();
+                describe('when separate solution directory is enabled',
+                    function() {
+                        it('should create the correct application project in solution directory',
+                            function () {
+                                applicationProjectGenerator.generate();
 
-                        dotnetCliStub.createNewApplication.should.have.been.calledOnceWithExactly(expectedSolutionName, expectedApplicationProjectName);
+                                dotnetCliStub.createNewApplication.should.have.been.calledOnceWithExactly(expectedSolutionName, expectedApplicationProjectName);
+                            });
+
+                        it('should add the correct class library reference to the test project in solution directory',
+                            function () {
+                                applicationProjectGenerator.generate();
+
+                                dotnetCliStub.addProjectReference.should.have.been.calledOnceWithExactly(expectedSolutionName,
+                                    expectedApplicationProjectPath,
+                                    expectedLibraryProjectPath);
+                            });
+
+                        it('should add the correct application project to the correct solution in solution directory',
+                            function () {
+                                applicationProjectGenerator.generate();
+
+                                dotnetCliStub.addProjectToSolution.should.have.been.calledOnceWithExactly(expectedSolutionName, expectedApplicationProjectPath);
+                            });
                     });
 
-                it('should add the correct class library reference to the test project',
-                    function () {
-                        applicationProjectGenerator.generate();
+                describe('when separate solution directory is disabled',
+                    function() {
+                        const currentDirectory = '.';
 
-                        dotnetCliStub.addProjectReference.should.have.been.calledOnceWithExactly(expectedSolutionName,
-                            expectedApplicationProjectPath,
-                            expectedLibraryProjectPath);
-                    });
+                        beforeEach(function() {
+                            configuration.disableSeparateSolutionDir();
+                        });
+                
+                        it('should create the correct application project in current directory',
+                            function () {
+                                applicationProjectGenerator.generate();
 
-                it('should add the correct application project to the correct solution',
-                    function () {
-                        applicationProjectGenerator.generate();
+                                dotnetCliStub.createNewApplication.should.have.been.calledOnceWithExactly(currentDirectory, expectedApplicationProjectName);
+                            });
 
-                        dotnetCliStub.addProjectToSolution.should.have.been.calledOnceWithExactly(expectedSolutionName, expectedApplicationProjectPath);
+                        it('should add the correct class library reference to the test project in current directory',
+                            function () {
+                                applicationProjectGenerator.generate();
+
+                                dotnetCliStub.addProjectReference.should.have.been.calledOnceWithExactly(currentDirectory,
+                                    expectedApplicationProjectPath,
+                                    expectedLibraryProjectPath);
+                            });
+
+                        it('should add the correct application project to the correct solution in current directory',
+                            function () {
+                                applicationProjectGenerator.generate();
+
+                                dotnetCliStub.addProjectToSolution.should.have.been.calledOnceWithExactly(currentDirectory, expectedApplicationProjectPath);
+                            });
                     });
             });
     });

@@ -5,11 +5,11 @@ module.exports = class ClassLibraryGenerator {
     }
 
     _generateClassLibrary() {
-        this.dotnetCli.createNewClassLibrary(this.configuration.solutionName, this.configuration.libraryProjectName);
+        this.dotnetCli.createNewClassLibrary(this.configuration.solutionDirectory, this.configuration.libraryProjectName);
     }
 
     _addClassLibraryToSolution() {
-        this.dotnetCli.addProjectToSolution(this.configuration.solutionName, this.configuration.libraryProjectPath);
+        this.dotnetCli.addProjectToSolution(this.configuration.solutionDirectory, this.configuration.libraryProjectPath);
     }
 
     generate() {

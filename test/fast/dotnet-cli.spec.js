@@ -11,6 +11,7 @@ chai.use(sinonChai);
 describe('DotnetCli',
     function () {
         const configuredSolutionName = 'SampleKata';
+        const configuredSolutionDirectory = 'SampleDirectory';
         const configuredCurrentDirectory = 'current working directory';
 
         const expectedDotnetCommandFailedMessage = 'dotnet command failed';
@@ -50,13 +51,13 @@ describe('DotnetCli',
             stubbedSpawnCommandSyncResult.status = 1;
         }
 
-        describe('createNewSolution',         
+        describe('createNewSolutionInDirectory',         
             function () {
                 it('should invoke dotnet cli with correct parameters',
                     function() {
-                        dotnetCli.createNewSolution(configuredSolutionName);
+                        dotnetCli.createNewSolutionInDirectory(configuredSolutionName, configuredSolutionDirectory);
 
-                        assertDotnetArgs('new', 'sln', '--output', configuredSolutionName);
+                        assertDotnetArgs('new', 'sln', '--output', configuredSolutionDirectory, '--name', configuredSolutionName);
                     });
 
                 it('WHEN dotnet cli fails THEN throw exception',
@@ -64,10 +65,10 @@ describe('DotnetCli',
                         whenDotnetCliFails();
 
                         const dotnetCli = new DotnetCli(yeomanMock);
-                        expect(dotnetCli.createNewSolution.bind(dotnetCli, configuredSolutionName))
+                        expect(dotnetCli.createNewSolutionInDirectory.bind(dotnetCli, configuredSolutionName, configuredSolutionDirectory))
                             .to.throw(expectedDotnetCommandFailedMessage);
 
-                        assertDotnetArgs('new', 'sln', '--output', configuredSolutionName);
+                        assertDotnetArgs('new', 'sln', '--output', configuredSolutionDirectory, '--name', configuredSolutionName);
                     });
             });
 
