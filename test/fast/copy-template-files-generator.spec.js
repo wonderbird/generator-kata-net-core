@@ -27,26 +27,28 @@ describe('CopyTemplateFilesGenerator',
 
         describe('generate',
             function () {
+                const expectedSourceAndDestinationPaths = [
+                    { sourcePath: 'README.md', destinationPath: 'README.md' },
+                    { sourcePath: 'gitignore', destinationPath: '.gitignore' },
+                    { sourcePath: path.join('tools', 'msxsl.exe'), destinationPath: path.join('tools', 'msxsl.exe') },
+                    { sourcePath: path.join('tools', 'dupfinder.xslt'), destinationPath: path.join('tools', 'dupfinder.xslt') },
+                    { sourcePath: path.join('tools', 'dupfinder.bat'), destinationPath: path.join('tools', 'dupfinder.bat') },
+                ];
+
                 describe('when separate solution directory is enabled',
                     function() {
-                        it('should create the correct README.md file in solution directory',
-                            function () {
-                                generator.generate();
+                        expectedSourceAndDestinationPaths.forEach(function(expectedSourceAndDestinationPath) {
+                            it('should generate the correct ' + expectedSourceAndDestinationPath.destinationPath + ' in solution directory',
+                                function() {
+                                    generator.generate();
 
-                                const expectedFileName = 'README.md';
-                                const expectedDestinationPath = path.join(expectedSolutionName, expectedFileName);
-                                fileSystemStub.copyTemplate.should.have.been.calledWithExactly(expectedFileName, expectedDestinationPath);
-                            });
+                                    const expectedSourcePath = expectedSourceAndDestinationPath.sourcePath;
+                                    const expectedDestinationPath = path.join(expectedSolutionName, expectedSourceAndDestinationPath.destinationPath);
 
-                        it('should create the correct .gitignore file in solution directory',
-                            function () {
-                                generator.generate();
-        
-                                const expectedSourcePath = 'gitignore';
-                                const expectedDestinationFile = '.gitignore';
-                                const expectedDestinationPath = path.join(expectedSolutionName, expectedDestinationFile);
-                                fileSystemStub.copyTemplate.should.have.been.calledWithExactly(expectedSourcePath, expectedDestinationPath);
-                            });
+                                    fileSystemStub.copyTemplate.should.have.been.calledWithExactly(expectedSourcePath, expectedDestinationPath);
+                                });
+                            }
+                        );
                     });
 
                 describe('when separate solution directory is disabled',
@@ -55,23 +57,17 @@ describe('CopyTemplateFilesGenerator',
                             configuration.disableSeparateSolutionDir();
                         });
 
-                        it('should create the correct README.md file in current directory',
-                            function () {
-                                generator.generate();
+                        expectedSourceAndDestinationPaths.forEach(function(expectedSourceAndDestinationPath) {
+                            it('should generate the correct ' + expectedSourceAndDestinationPath.destinationPath + ' in current directory',
+                                function() {
+                                    generator.generate();
 
-                                const expectedFileName = 'README.md';
-                                fileSystemStub.copyTemplate.should.have.been.calledWithExactly(expectedFileName, expectedFileName);
-                            });
+                                    const expectedSourcePath = expectedSourceAndDestinationPath.sourcePath;
+                                    const expectedDestinationPath = expectedSourceAndDestinationPath.destinationPath;
 
-                        it('should create the correct .gitignore file in current directory',
-                            function () {
-                                generator.generate();
-        
-                                const expectedSourcePath = 'gitignore';
-                                const expectedDestinationFile = '.gitignore'
-                                fileSystemStub.copyTemplate.should.have.been.calledWithExactly(expectedSourcePath, expectedDestinationFile);
-                            });
-        
+                                    fileSystemStub.copyTemplate.should.have.been.calledWithExactly(expectedSourcePath, expectedDestinationPath);
+                                });
+                        });
                     });
             });
     });
