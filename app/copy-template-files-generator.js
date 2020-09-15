@@ -9,6 +9,8 @@ module.exports = class CopyTemplateFilesGenerator {
             { source: 'README.md', destination: 'README.md' },
             { source: 'gitignore', destination: '.gitignore' },
             { source: path.join('tools', 'msxsl.exe'), destination: path.join('tools', 'msxsl.exe') },
+            { source: path.join('tools', 'dupfinder.xslt'), destination: path.join('tools', 'dupfinder.xslt') },
+            { source: path.join('tools', 'dupfinder.bat'), destination: path.join('tools', 'dupfinder.bat') },
         ]
     }
 

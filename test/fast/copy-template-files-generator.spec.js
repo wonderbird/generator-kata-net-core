@@ -31,8 +31,8 @@ describe('CopyTemplateFilesGenerator',
                     { sourcePath: 'README.md', destinationPath: 'README.md' },
                     { sourcePath: 'gitignore', destinationPath: '.gitignore' },
                     { sourcePath: path.join('tools', 'msxsl.exe'), destinationPath: path.join('tools', 'msxsl.exe') },
-//                    { sourcePath: path.join('tools', 'dupfinder.xslt'), destinationPath: path.join('tools', 'dupfinder.xslt') },
-//                    { sourcePath: path.join('tools', 'dupfinder.bat'), destinationPath: path.join('tools', 'dupfinder.bat') },
+                    { sourcePath: path.join('tools', 'dupfinder.xslt'), destinationPath: path.join('tools', 'dupfinder.xslt') },
+                    { sourcePath: path.join('tools', 'dupfinder.bat'), destinationPath: path.join('tools', 'dupfinder.bat') },
                 ];
 
                 describe('when separate solution directory is enabled',
