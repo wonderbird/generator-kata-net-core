@@ -1,9 +1,13 @@
-var path = require('path');
-var spawnSync = require('child_process').spawnSync;
-var assert = require('yeoman-assert');
-var helpers = require('yeoman-test');
+const chai = require('chai');
+const fs = require('fs');
+const path = require('path');
+const spawnSync = require('child_process').spawnSync;
+const assert = require('yeoman-assert');
+const helpers = require('yeoman-test');
 
-var TemporaryDirectory = require('./temporary-directory');
+chai.should();
+
+const TemporaryDirectory = require('./temporary-directory');
 
 describe('yo kata-net-core',
     function () {
@@ -133,7 +137,7 @@ describe('yo kata-net-core',
 
         testRunDataSet.forEach(
             function(testRunData) {
-                it(testRunData.description,
+                xit(testRunData.description,
                     function () {
                         configureTestExecutionTimeout(this);
 
@@ -154,4 +158,26 @@ describe('yo kata-net-core',
                             });
                     });
             })
+
+        it('should replace the solution name in copied template files',
+            function() {
+                configureTestExecutionTimeout(this);
+
+                return runGeneratorUnderTest()
+                    .withPrompts({
+                        solutionName: solutionName,
+                        isSeparateSolutionDirEnabled: true
+                    })
+                    .then(function (testExecutionDirectoryPath) {
+                        const filePath = path.join(testExecutionDirectoryPath, solutionDirectory, 'tools', 'dupfinder.bat')
+                        const fileContents = fs.readFileSync(filePath, "utf8");
+
+                        const regex = /enter/;
+                        const isSolutionNameContained = fileContents.match(regex);
+
+                        isSolutionNameContained[0].should.equal(solutionName);
+                        cleanupTestExecutionDirectory(testExecutionDirectoryPath);
+                    });
+
+            });
     });

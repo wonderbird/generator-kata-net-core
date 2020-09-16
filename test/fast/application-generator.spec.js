@@ -1,11 +1,11 @@
-var chai = require('chai');
-var sinon = require('sinon');
-var sinonChai = require('sinon-chai');
-var path = require('path');
+const chai = require('chai');
+const sinon = require('sinon');
+const sinonChai = require('sinon-chai');
+const path = require('path');
 
-var DotnetCli = require('../../app/dotnet-cli');
-var Configuration = require('../../app/configuration');
-var ApplicationProjectGenerator = require('../../app/application-project-generator');
+const DotnetCli = require('../../app/dotnet-cli');
+const Configuration = require('../../app/configuration');
+const ApplicationProjectGenerator = require('../../app/application-project-generator');
 
 chai.should();
 chai.use(sinonChai);
