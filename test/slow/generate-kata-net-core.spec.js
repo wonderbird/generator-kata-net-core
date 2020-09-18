@@ -129,32 +129,38 @@ describe('yo kata-net-core',
         }
 
         var testRunDataSet = [
-            { isSeparateSolutionDirEnabled: true, expectedSolutionDirectory: solutionName, description: "when solution directory is enabled, then create required files and directories in subfolder" },
-            { isSeparateSolutionDirEnabled: false, expectedSolutionDirectory: ".", description: "when solution directory is disabled, then create required files and directories in current directory" }
+            { isSeparateSolutionDirEnabled: true, expectedSolutionDirectory: solutionName, descriptionWhenStatement: 'when solution directory is enabled', descriptionThenStatement: 'then create required files and directories in subfolder' },
+            { isSeparateSolutionDirEnabled: false, expectedSolutionDirectory: ".", descriptionWhenStatement: 'when solution directory is disabled', descriptionThenStatement: 'then create required files and directories in current directory' }
         ];
 
         testRunDataSet.forEach(
             function(testRunData) {
-                it(testRunData.description,
-                    function () {
-                        configureTestExecutionTimeout(this);
-
-                        return runGeneratorUnderTest()
-                            .withPrompts({
-                                solutionName: solutionName,
-                                isSeparateSolutionDirEnabled: testRunData.isSeparateSolutionDirEnabled
-                            })
-                            .then(function (testExecutionDirectoryPath) {
-                                solutionDirectory = testRunData.expectedSolutionDirectory;
-
-                                compileGeneratedSolution();
-
-                                defineExpectedFiles();
-                                assert.file(expectedFiles);
-
-                                cleanupTestExecutionDirectory(testExecutionDirectoryPath);
+                describe('GIVEN generator has been executed with prompts',
+                    function() {
+                        describe(testRunData.descriptionWhenStatement,
+                            function() {
+                                it(testRunData.descriptionThenStatement,
+                                    function () {
+                                        configureTestExecutionTimeout(this);
+                
+                                        return runGeneratorUnderTest()
+                                            .withPrompts({
+                                                solutionName: solutionName,
+                                                isSeparateSolutionDirEnabled: testRunData.isSeparateSolutionDirEnabled
+                                            })
+                                            .then(function (testExecutionDirectoryPath) {
+                                                solutionDirectory = testRunData.expectedSolutionDirectory;
+                
+                                                compileGeneratedSolution();
+                
+                                                defineExpectedFiles();
+                                                assert.file(expectedFiles);
+                
+                                                cleanupTestExecutionDirectory(testExecutionDirectoryPath);
+                                            });
+                                    });
                             });
-                    });
+                    })
             })
 
         it('should replace the solution name in copied template files',
