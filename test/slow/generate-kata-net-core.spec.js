@@ -1,9 +1,13 @@
-var path = require('path');
-var spawnSync = require('child_process').spawnSync;
-var assert = require('yeoman-assert');
-var helpers = require('yeoman-test');
+const chai = require('chai');
+const fs = require('fs');
+const path = require('path');
+const spawnSync = require('child_process').spawnSync;
+const assert = require('yeoman-assert');
+const helpers = require('yeoman-test');
 
-var TemporaryDirectory = require('./temporary-directory');
+chai.should();
+
+const TemporaryDirectory = require('./temporary-directory');
 
 describe('yo kata-net-core',
     function () {
@@ -97,8 +101,6 @@ describe('yo kata-net-core',
             expectedFiles.push(path.join(solutionDirectory, 'tools', 'msxsl.exe'));
             expectedFiles.push(path.join(solutionDirectory, 'tools', 'dupfinder.xslt'));
             expectedFiles.push(path.join(solutionDirectory, 'tools', 'dupfinder.bat'));
-
-            // TODO Replace the project name in the dupfinder.bat file
         }
 
         function defineExpectedFiles() {
@@ -127,31 +129,60 @@ describe('yo kata-net-core',
         }
 
         var testRunDataSet = [
-            { isSeparateSolutionDirEnabled: true, expectedSolutionDirectory: solutionName, description: "when solution directory is enabled, then create required files and directories in subfolder" },
-            { isSeparateSolutionDirEnabled: false, expectedSolutionDirectory: ".", description: "when solution directory is disabled, then create required files and directories in current directory" }
+            { isSeparateSolutionDirEnabled: true, expectedSolutionDirectory: solutionName, descriptionWhenStatement: 'when solution directory is enabled', descriptionThenStatement: 'then create required files and directories in subfolder' },
+            { isSeparateSolutionDirEnabled: false, expectedSolutionDirectory: ".", descriptionWhenStatement: 'when solution directory is disabled', descriptionThenStatement: 'then create required files and directories in current directory' }
         ];
 
         testRunDataSet.forEach(
             function(testRunData) {
-                it(testRunData.description,
-                    function () {
-                        configureTestExecutionTimeout(this);
+                describe('GIVEN generator has been executed with prompts',
+                    function() {
+                        let testExecutionDirectoryPath;
 
-                        return runGeneratorUnderTest()
-                            .withPrompts({
-                                solutionName: solutionName,
-                                isSeparateSolutionDirEnabled: testRunData.isSeparateSolutionDirEnabled
-                            })
-                            .then(function (testExecutionDirectoryPath) {
-                                solutionDirectory = testRunData.expectedSolutionDirectory;
+                        before(function() {
+                            configureTestExecutionTimeout(this);
 
-                                compileGeneratedSolution();
+                            return runGeneratorUnderTest()
+                                .withPrompts({
+                                    solutionName: solutionName,
+                                    isSeparateSolutionDirEnabled: testRunData.isSeparateSolutionDirEnabled
+                                })
+                                .then(function (theTestExecutionDirectoryPath) {
+                                    testExecutionDirectoryPath = theTestExecutionDirectoryPath;
 
-                                defineExpectedFiles();
-                                assert.file(expectedFiles);
-
-                                cleanupTestExecutionDirectory(testExecutionDirectoryPath);
+                                    solutionDirectory = testRunData.expectedSolutionDirectory;
+                                    compileGeneratedSolution();
                             });
-                    });
+                        });
+
+                        after(function() {
+                            cleanupTestExecutionDirectory(testExecutionDirectoryPath);
+                        });
+
+                        describe(testRunData.descriptionWhenStatement,
+                            function() {
+                                it(testRunData.descriptionThenStatement,
+                                    function () {
+                                        solutionDirectory = testRunData.expectedSolutionDirectory;
+                                        defineExpectedFiles();
+                                        assert.file(expectedFiles);
+                                    });
+
+                                it('then replace the solution name in copied dupfinder.bat file',
+                                    function() {
+                                        solutionDirectory = testRunData.expectedSolutionDirectory;
+
+                                        const filePath = path.join(testExecutionDirectoryPath, solutionDirectory, 'tools', 'dupfinder.bat')
+                                        const fileContents = fs.readFileSync(filePath, "utf8");
+
+                                        const regexWithoutDelimiters = `set SOLUTION_NAME=${solutionName}`;
+                                        const multilineOption = 'm';
+                                        const regex = new RegExp(`^${regexWithoutDelimiters}$`, multilineOption);
+                                        const matchResult = fileContents.match(regex);
+
+                                        matchResult[0].should.equal(regexWithoutDelimiters);
+                                    });
+                            });
+                    })
             })
     });

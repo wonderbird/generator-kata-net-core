@@ -35,6 +35,10 @@ describe('CopyTemplateFilesGenerator',
                     { sourcePath: path.join('tools', 'dupfinder.bat'), destinationPath: path.join('tools', 'dupfinder.bat') },
                 ];
 
+                const expectedCopyTemplateOptions = {
+                    solutionName: expectedSolutionName
+                };
+
                 describe('when separate solution directory is enabled',
                     function() {
                         expectedSourceAndDestinationPaths.forEach(function(expectedSourceAndDestinationPath) {
@@ -45,7 +49,7 @@ describe('CopyTemplateFilesGenerator',
                                     const expectedSourcePath = expectedSourceAndDestinationPath.sourcePath;
                                     const expectedDestinationPath = path.join(expectedSolutionName, expectedSourceAndDestinationPath.destinationPath);
 
-                                    fileSystemStub.copyTemplate.should.have.been.calledWithExactly(expectedSourcePath, expectedDestinationPath);
+                                    fileSystemStub.copyTemplate.should.have.been.calledWithExactly(expectedSourcePath, expectedDestinationPath, expectedCopyTemplateOptions);
                                 });
                             }
                         );
@@ -65,7 +69,7 @@ describe('CopyTemplateFilesGenerator',
                                     const expectedSourcePath = expectedSourceAndDestinationPath.sourcePath;
                                     const expectedDestinationPath = expectedSourceAndDestinationPath.destinationPath;
 
-                                    fileSystemStub.copyTemplate.should.have.been.calledWithExactly(expectedSourcePath, expectedDestinationPath);
+                                    fileSystemStub.copyTemplate.should.have.been.calledWithExactly(expectedSourcePath, expectedDestinationPath, expectedCopyTemplateOptions);
                                 });
                         });
                     });

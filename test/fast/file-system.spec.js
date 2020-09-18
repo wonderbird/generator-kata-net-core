@@ -15,9 +15,13 @@ describe('FileSystem',
                 it('should copy a file from template to project',
                     function() {
                         const fileName = 'testFileName';
+                        const options = {
+                            someParameter: 'someValue'
+                        };
 
                         const expectedSourcePath = path.join('sourceDir', fileName);
                         const expectedDestinationPath = path.join('destinationDir', fileName);
+                        const expectedOptions = options;
 
                         const fsStub = {
                             copyTpl: sinon.stub()
@@ -31,9 +35,9 @@ describe('FileSystem',
 
                         const fileSystem = new FileSystem(yeomanStub);
                         
-                        fileSystem.copyTemplate(fileName, fileName);
+                        fileSystem.copyTemplate(fileName, fileName, options);
 
-                        fsStub.copyTpl.should.have.been.calledWithExactly(expectedSourcePath, expectedDestinationPath);
+                        fsStub.copyTpl.should.have.been.calledWithExactly(expectedSourcePath, expectedDestinationPath, expectedOptions);
                         yeomanStub.templatePath.should.have.been.calledWithExactly(fileName);
                     });
             });
