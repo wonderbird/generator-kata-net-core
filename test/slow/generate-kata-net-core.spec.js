@@ -172,10 +172,12 @@ describe('yo kata-net-core',
                         const filePath = path.join(testExecutionDirectoryPath, solutionDirectory, 'tools', 'dupfinder.bat')
                         const fileContents = fs.readFileSync(filePath, "utf8");
 
-                        const regex = /enter/;
-                        const isSolutionNameContained = fileContents.match(regex);
+                        const regexWithoutDelimiters = `set SOLUTION_NAME=${solutionName}`;
+                        const multilineOption = 'm';
+                        const regex = new RegExp(`^${regexWithoutDelimiters}$`, multilineOption);
+                        const matchResult = fileContents.match(regex);
 
-                        isSolutionNameContained[0].should.equal(solutionName);
+                        matchResult[0].should.equal(regexWithoutDelimiters);
                         cleanupTestExecutionDirectory(testExecutionDirectoryPath);
                     });
 
