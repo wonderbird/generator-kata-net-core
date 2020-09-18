@@ -137,27 +137,35 @@ describe('yo kata-net-core',
             function(testRunData) {
                 describe('GIVEN generator has been executed with prompts',
                     function() {
+                        let _testExecutionDirectoryPath;
+
+                        before(function() {
+                            configureTestExecutionTimeout(this);
+
+                            return runGeneratorUnderTest()
+                                .withPrompts({
+                                    solutionName: solutionName,
+                                    isSeparateSolutionDirEnabled: testRunData.isSeparateSolutionDirEnabled
+                                })
+                                .then(function (testExecutionDirectoryPath) {
+                                    _testExecutionDirectoryPath = testExecutionDirectoryPath;
+
+                                    solutionDirectory = testRunData.expectedSolutionDirectory;
+                                    compileGeneratedSolution();
+                            });
+                        });
+
+                        after(function() {
+                            cleanupTestExecutionDirectory(_testExecutionDirectoryPath);
+                        });
+
                         describe(testRunData.descriptionWhenStatement,
                             function() {
                                 it(testRunData.descriptionThenStatement,
                                     function () {
-                                        configureTestExecutionTimeout(this);
-                
-                                        return runGeneratorUnderTest()
-                                            .withPrompts({
-                                                solutionName: solutionName,
-                                                isSeparateSolutionDirEnabled: testRunData.isSeparateSolutionDirEnabled
-                                            })
-                                            .then(function (testExecutionDirectoryPath) {
-                                                solutionDirectory = testRunData.expectedSolutionDirectory;
-                
-                                                compileGeneratedSolution();
-                
-                                                defineExpectedFiles();
-                                                assert.file(expectedFiles);
-                
-                                                cleanupTestExecutionDirectory(testExecutionDirectoryPath);
-                                            });
+                                        solutionDirectory = testRunData.expectedSolutionDirectory;
+                                        defineExpectedFiles();
+                                        assert.file(expectedFiles);
                                     });
                             });
                     })
