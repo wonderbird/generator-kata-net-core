@@ -167,31 +167,22 @@ describe('yo kata-net-core',
                                         defineExpectedFiles();
                                         assert.file(expectedFiles);
                                     });
+
+                                it('then replace the solution name in copied dupfinder.bat file',
+                                    function() {
+                                        solutionDirectory = testRunData.expectedSolutionDirectory;
+
+                                        const filePath = path.join(_testExecutionDirectoryPath, solutionDirectory, 'tools', 'dupfinder.bat')
+                                        const fileContents = fs.readFileSync(filePath, "utf8");
+
+                                        const regexWithoutDelimiters = `set SOLUTION_NAME=${solutionName}`;
+                                        const multilineOption = 'm';
+                                        const regex = new RegExp(`^${regexWithoutDelimiters}$`, multilineOption);
+                                        const matchResult = fileContents.match(regex);
+
+                                        matchResult[0].should.equal(regexWithoutDelimiters);
+                                    });
                             });
                     })
             })
-
-        it('should replace the solution name in copied template files',
-            function() {
-                configureTestExecutionTimeout(this);
-
-                return runGeneratorUnderTest()
-                    .withPrompts({
-                        solutionName: solutionName,
-                        isSeparateSolutionDirEnabled: true
-                    })
-                    .then(function (testExecutionDirectoryPath) {
-                        const filePath = path.join(testExecutionDirectoryPath, solutionDirectory, 'tools', 'dupfinder.bat')
-                        const fileContents = fs.readFileSync(filePath, "utf8");
-
-                        const regexWithoutDelimiters = `set SOLUTION_NAME=${solutionName}`;
-                        const multilineOption = 'm';
-                        const regex = new RegExp(`^${regexWithoutDelimiters}$`, multilineOption);
-                        const matchResult = fileContents.match(regex);
-
-                        matchResult[0].should.equal(regexWithoutDelimiters);
-                        cleanupTestExecutionDirectory(testExecutionDirectoryPath);
-                    });
-
-            });
     });
