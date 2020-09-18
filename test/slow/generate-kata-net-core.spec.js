@@ -137,7 +137,7 @@ describe('yo kata-net-core',
             function(testRunData) {
                 describe('GIVEN generator has been executed with prompts',
                     function() {
-                        let _testExecutionDirectoryPath;
+                        let testExecutionDirectoryPath;
 
                         before(function() {
                             configureTestExecutionTimeout(this);
@@ -147,8 +147,8 @@ describe('yo kata-net-core',
                                     solutionName: solutionName,
                                     isSeparateSolutionDirEnabled: testRunData.isSeparateSolutionDirEnabled
                                 })
-                                .then(function (testExecutionDirectoryPath) {
-                                    _testExecutionDirectoryPath = testExecutionDirectoryPath;
+                                .then(function (theTestExecutionDirectoryPath) {
+                                    testExecutionDirectoryPath = theTestExecutionDirectoryPath;
 
                                     solutionDirectory = testRunData.expectedSolutionDirectory;
                                     compileGeneratedSolution();
@@ -156,7 +156,7 @@ describe('yo kata-net-core',
                         });
 
                         after(function() {
-                            cleanupTestExecutionDirectory(_testExecutionDirectoryPath);
+                            cleanupTestExecutionDirectory(testExecutionDirectoryPath);
                         });
 
                         describe(testRunData.descriptionWhenStatement,
@@ -172,7 +172,7 @@ describe('yo kata-net-core',
                                     function() {
                                         solutionDirectory = testRunData.expectedSolutionDirectory;
 
-                                        const filePath = path.join(_testExecutionDirectoryPath, solutionDirectory, 'tools', 'dupfinder.bat')
+                                        const filePath = path.join(testExecutionDirectoryPath, solutionDirectory, 'tools', 'dupfinder.bat')
                                         const fileContents = fs.readFileSync(filePath, "utf8");
 
                                         const regexWithoutDelimiters = `set SOLUTION_NAME=${solutionName}`;
