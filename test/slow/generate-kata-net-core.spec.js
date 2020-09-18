@@ -101,8 +101,6 @@ describe('yo kata-net-core',
             expectedFiles.push(path.join(solutionDirectory, 'tools', 'msxsl.exe'));
             expectedFiles.push(path.join(solutionDirectory, 'tools', 'dupfinder.xslt'));
             expectedFiles.push(path.join(solutionDirectory, 'tools', 'dupfinder.bat'));
-
-            // TODO Replace the project name in the dupfinder.bat file
         }
 
         function defineExpectedFiles() {
@@ -137,7 +135,7 @@ describe('yo kata-net-core',
 
         testRunDataSet.forEach(
             function(testRunData) {
-                xit(testRunData.description,
+                it(testRunData.description,
                     function () {
                         configureTestExecutionTimeout(this);
 
