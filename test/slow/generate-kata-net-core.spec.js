@@ -168,20 +168,26 @@ describe('yo kata-net-core',
                                         assert.file(expectedFiles);
                                     });
 
-                                it('then replace the solution name in copied dupfinder.bat file',
-                                    function() {
-                                        solutionDirectory = testRunData.expectedSolutionDirectory;
+                                [
+                                    { expectedNumberOfOccurrences: 3, relativePath: 'README.md' },
+                                    { expectedNumberOfOccurrences: 1, relativePath: path.join('tools', 'dupfinder.bat') }
+                                ].forEach(testCaseData => 
+                                    it(`then replace the solution name ${testCaseData.expectedNumberOfOccurrences} time(s) in copied file ${testCaseData.relativePath}`,
+                                        function() {
+                                            solutionDirectory = testRunData.expectedSolutionDirectory;
 
-                                        const filePath = path.join(testExecutionDirectoryPath, solutionDirectory, 'tools', 'dupfinder.bat')
-                                        const fileContents = fs.readFileSync(filePath, "utf8");
+                                            const fullPath = path.join(testExecutionDirectoryPath, solutionDirectory, testCaseData.relativePath);
+                                            const fileContents = fs.readFileSync(fullPath, "utf8");
 
-                                        const regexWithoutDelimiters = `set SOLUTION_NAME=${solutionName}`;
-                                        const multilineOption = 'm';
-                                        const regex = new RegExp(`^${regexWithoutDelimiters}$`, multilineOption);
-                                        const matchResult = fileContents.match(regex);
+                                            const regexString = `${solutionName}`;
+                                            const multilineOption = 'm';
+                                            const globalOption = 'g';
+                                            const regex = new RegExp(regexString, multilineOption + globalOption);
+                                            const matchResult = fileContents.match(regex);
 
-                                        matchResult[0].should.equal(regexWithoutDelimiters);
-                                    });
+                                            matchResult.length.should.equal(testCaseData.expectedNumberOfOccurrences);
+                                        })
+                                );
                             });
                     })
             })
