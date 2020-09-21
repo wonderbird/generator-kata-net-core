@@ -94,21 +94,25 @@ describe('yo kata-net-core',
             expectedFiles.push(fullPathToApplicationBuildArtifact);
         }
 
-        function addFilesFromTemplatesToExpectedFiles() {
-            expectedFiles.push(path.join(solutionDirectory, '.gitignore'));
-            expectedFiles.push(path.join(solutionDirectory, 'README.md'));
-
+        function addFilesFromTemplatesToExpectedFiles(isMitLicenseSelected) {
             expectedFiles.push(path.join(solutionDirectory, 'tools', 'msxsl.exe'));
             expectedFiles.push(path.join(solutionDirectory, 'tools', 'dupfinder.xslt'));
             expectedFiles.push(path.join(solutionDirectory, 'tools', 'dupfinder.bat'));
+
+            expectedFiles.push(path.join(solutionDirectory, '.gitignore'));
+            expectedFiles.push(path.join(solutionDirectory, 'README.md'));
+
+            if (isMitLicenseSelected) {
+                expectedFiles.push(path.join(solutionDirectory, 'LICENSE'));
+            }
         }
 
-        function defineExpectedFiles() {
+        function defineExpectedFiles(isMitLicenseSelected) {
             addSolutionFileToExpectedFiles();
             addLibraryProjectBuildOutputToExpectedFiles();
             addTestBuildOutputToExpectedFiles();
             addApplicationBuildOutputToExpectedFiles();
-            addFilesFromTemplatesToExpectedFiles();
+            addFilesFromTemplatesToExpectedFiles(isMitLicenseSelected);
         }
 
         function compileGeneratedSolution() {
@@ -129,8 +133,8 @@ describe('yo kata-net-core',
         }
 
         [
-            { isSeparateSolutionDirEnabled: true, expectedSolutionDirectory: solutionName, descriptionWhenStatement: 'when solution directory is enabled', descriptionThenStatement: 'then create required files and directories in subfolder' },
-            { isSeparateSolutionDirEnabled: false, expectedSolutionDirectory: ".", descriptionWhenStatement: 'when solution directory is disabled', descriptionThenStatement: 'then create required files and directories in current directory' }
+            { isSeparateSolutionDirEnabled: true, isMitLicenseSelected: true, expectedSolutionDirectory: solutionName, descriptionWhenStatement: 'when solution directory is enabled and MIT license is selected', descriptionThenStatement: 'then create required files and directories in subfolder' },
+            { isSeparateSolutionDirEnabled: false, isMitLicenseSelected: false, expectedSolutionDirectory: ".", descriptionWhenStatement: 'when solution directory is disabled and no license selected', descriptionThenStatement: 'then create required files and directories in current directory' }
         ].forEach(generatorPromptsConfiguration =>
             describe('GIVEN generator has been executed with prompts',
                 function() {
@@ -142,7 +146,8 @@ describe('yo kata-net-core',
                         return runGeneratorUnderTest()
                             .withPrompts({
                                 solutionName: solutionName,
-                                isSeparateSolutionDirEnabled: generatorPromptsConfiguration.isSeparateSolutionDirEnabled
+                                isSeparateSolutionDirEnabled: generatorPromptsConfiguration.isSeparateSolutionDirEnabled,
+                                isMitLicenseSelected: generatorPromptsConfiguration.isMitLicenseSelected,
                             })
                             .then(function (theTestExecutionDirectoryPath) {
                                 testExecutionDirectoryPath = theTestExecutionDirectoryPath;
@@ -161,7 +166,8 @@ describe('yo kata-net-core',
                             it(generatorPromptsConfiguration.descriptionThenStatement,
                                 function () {
                                     solutionDirectory = generatorPromptsConfiguration.expectedSolutionDirectory;
-                                    defineExpectedFiles();
+                                    // TODO find a more beautiful way of conditionally adding the MIT LICENSE to expected files.
+                                    defineExpectedFiles(generatorPromptsConfiguration.isMitLicenseSelected);
                                     assert.file(expectedFiles);
                                 });
 
