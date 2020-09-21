@@ -34,15 +34,27 @@ module.exports = class GeneratorKataNetCore extends Generator {
             type: "confirm",
             name: "isSeparateSolutionDirEnabled",
             message: "Create solution inside separate directory:"
+        }, {
+            type: "confirm",
+            name: "isMitLicenseSelected",
+            message: "Is the MIT license applicable for this project:"
         }]);
     }
 
     configuring() {
         this.configuration.setSolutionNameAndUpdateConfiguration(this.answers.solutionName);
+
         if (this.answers.isSeparateSolutionDirEnabled) {
             this.configuration.enableSeparateSolutionDir();
         } else {
             this.configuration.disableSeparateSolutionDir();
+        }
+
+        // TODO continue here: add the MIT license configuration to the Configuration class
+        if (this.answers.isMitLicenseSelected) {
+            this.configuration.selectMitLicense();
+        } else {
+            this.configuration.deselectMitLicense();
         }
     }
 
