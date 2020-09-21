@@ -128,67 +128,64 @@ describe('yo kata-net-core',
             testExecutionDirectory.delete();
         }
 
-        var testRunDataSet = [
+        [
             { isSeparateSolutionDirEnabled: true, expectedSolutionDirectory: solutionName, descriptionWhenStatement: 'when solution directory is enabled', descriptionThenStatement: 'then create required files and directories in subfolder' },
             { isSeparateSolutionDirEnabled: false, expectedSolutionDirectory: ".", descriptionWhenStatement: 'when solution directory is disabled', descriptionThenStatement: 'then create required files and directories in current directory' }
-        ];
+        ].forEach(generatorPromptsConfiguration =>
+            describe('GIVEN generator has been executed with prompts',
+                function() {
+                    let testExecutionDirectoryPath;
 
-        testRunDataSet.forEach(
-            function(testRunData) {
-                describe('GIVEN generator has been executed with prompts',
-                    function() {
-                        let testExecutionDirectoryPath;
+                    before(function() {
+                        configureTestExecutionTimeout(this);
 
-                        before(function() {
-                            configureTestExecutionTimeout(this);
+                        return runGeneratorUnderTest()
+                            .withPrompts({
+                                solutionName: solutionName,
+                                isSeparateSolutionDirEnabled: generatorPromptsConfiguration.isSeparateSolutionDirEnabled
+                            })
+                            .then(function (theTestExecutionDirectoryPath) {
+                                testExecutionDirectoryPath = theTestExecutionDirectoryPath;
 
-                            return runGeneratorUnderTest()
-                                .withPrompts({
-                                    solutionName: solutionName,
-                                    isSeparateSolutionDirEnabled: testRunData.isSeparateSolutionDirEnabled
-                                })
-                                .then(function (theTestExecutionDirectoryPath) {
-                                    testExecutionDirectoryPath = theTestExecutionDirectoryPath;
-
-                                    solutionDirectory = testRunData.expectedSolutionDirectory;
-                                    compileGeneratedSolution();
-                            });
+                                solutionDirectory = generatorPromptsConfiguration.expectedSolutionDirectory;
+                                compileGeneratedSolution();
                         });
+                    });
 
-                        after(function() {
-                            cleanupTestExecutionDirectory(testExecutionDirectoryPath);
+                    after(function() {
+                        cleanupTestExecutionDirectory(testExecutionDirectoryPath);
+                    });
+
+                    describe(generatorPromptsConfiguration.descriptionWhenStatement,
+                        function() {
+                            it(generatorPromptsConfiguration.descriptionThenStatement,
+                                function () {
+                                    solutionDirectory = generatorPromptsConfiguration.expectedSolutionDirectory;
+                                    defineExpectedFiles();
+                                    assert.file(expectedFiles);
+                                });
+
+                            [
+                                { expectedNumberOfOccurrences: 3, relativePath: 'README.md' },
+                                { expectedNumberOfOccurrences: 1, relativePath: path.join('tools', 'dupfinder.bat') }
+                            ].forEach(testCaseData => 
+                                it(`then replace the solution name ${testCaseData.expectedNumberOfOccurrences} time(s) in copied file ${testCaseData.relativePath}`,
+                                    function() {
+                                        solutionDirectory = generatorPromptsConfiguration.expectedSolutionDirectory;
+
+                                        const fullPath = path.join(testExecutionDirectoryPath, solutionDirectory, testCaseData.relativePath);
+                                        const fileContents = fs.readFileSync(fullPath, "utf8");
+
+                                        const regexString = `${solutionName}`;
+                                        const multilineOption = 'm';
+                                        const globalOption = 'g';
+                                        const regex = new RegExp(regexString, multilineOption + globalOption);
+                                        const matchResult = fileContents.match(regex);
+
+                                        matchResult.length.should.equal(testCaseData.expectedNumberOfOccurrences);
+                                    })
+                            );
                         });
-
-                        describe(testRunData.descriptionWhenStatement,
-                            function() {
-                                it(testRunData.descriptionThenStatement,
-                                    function () {
-                                        solutionDirectory = testRunData.expectedSolutionDirectory;
-                                        defineExpectedFiles();
-                                        assert.file(expectedFiles);
-                                    });
-
-                                [
-                                    { expectedNumberOfOccurrences: 3, relativePath: 'README.md' },
-                                    { expectedNumberOfOccurrences: 1, relativePath: path.join('tools', 'dupfinder.bat') }
-                                ].forEach(testCaseData => 
-                                    it(`then replace the solution name ${testCaseData.expectedNumberOfOccurrences} time(s) in copied file ${testCaseData.relativePath}`,
-                                        function() {
-                                            solutionDirectory = testRunData.expectedSolutionDirectory;
-
-                                            const fullPath = path.join(testExecutionDirectoryPath, solutionDirectory, testCaseData.relativePath);
-                                            const fileContents = fs.readFileSync(fullPath, "utf8");
-
-                                            const regexString = `${solutionName}`;
-                                            const multilineOption = 'm';
-                                            const globalOption = 'g';
-                                            const regex = new RegExp(regexString, multilineOption + globalOption);
-                                            const matchResult = fileContents.match(regex);
-
-                                            matchResult.length.should.equal(testCaseData.expectedNumberOfOccurrences);
-                                        })
-                                );
-                            });
-                    })
-            })
+                })
+            )
     });
