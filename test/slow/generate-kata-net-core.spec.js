@@ -166,7 +166,7 @@ describe('yo kata-net-core',
                             it(generatorPromptsConfiguration.descriptionThenStatement,
                                 function () {
                                     solutionDirectory = generatorPromptsConfiguration.expectedSolutionDirectory;
-                                    // TODO find a more beautiful way of conditionally adding the MIT LICENSE to expected files.
+                                    // TODO (in progress -> ExpectedFilesBuilder) find a more beautiful way of conditionally adding the MIT LICENSE to expected files.
                                     defineExpectedFiles(generatorPromptsConfiguration.isMitLicenseSelected);
                                     assert.file(expectedFiles);
                                 });

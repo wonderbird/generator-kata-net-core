@@ -22,13 +22,17 @@ module.exports = class CopyTemplateFilesGenerator {
         this.fileSystem.copyTemplate(sourceRelativePath, destinationPath, options);
     }
 
-    generate() {
+    _addMitLicenseIfConfigured() {
         if (this.configuration.isMitLicenseSelected) {
             this.sourceAndDestinationRelativePaths.push({
                 source: 'LICENSE',
                 destination: 'LICENSE'
             });
         }
+    }
+
+    generate() {
+        this._addMitLicenseIfConfigured();
 
         this.sourceAndDestinationRelativePaths.forEach(
             sourceAndDestination => this._copy(sourceAndDestination.source, sourceAndDestination.destination));

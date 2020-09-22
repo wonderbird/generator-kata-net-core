@@ -44,12 +44,20 @@ module.exports = class GeneratorKataNetCore extends Generator {
     configuring() {
         this.configuration.setSolutionNameAndUpdateConfiguration(this.answers.solutionName);
 
+        this._configureSeparateSolutionDir();
+
+        this._configureMitLicense();
+    }
+
+    _configureSeparateSolutionDir() {
         if (this.answers.isSeparateSolutionDirEnabled) {
             this.configuration.enableSeparateSolutionDir();
         } else {
             this.configuration.disableSeparateSolutionDir();
         }
+    }
 
+    _configureMitLicense() {
         if (this.answers.isMitLicenseSelected) {
             this.configuration.selectMitLicense();
         } else {
