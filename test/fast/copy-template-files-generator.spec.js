@@ -73,5 +73,20 @@ describe('CopyTemplateFilesGenerator',
                                 });
                         });
                     });
+
+                describe('when MIT license is selected',
+                    function() {
+                        it('then generate LICENSE file',
+                            function() {
+                                configuration.selectMitLicense();
+                                
+                                generator.generate();
+
+                                const expectedSourcePath = 'LICENSE';
+                                const expectedDestinationPath = path.join(expectedSolutionName, 'LICENSE');
+
+                                fileSystemStub.copyTemplate.should.have.been.calledWithExactly(expectedSourcePath, expectedDestinationPath, expectedCopyTemplateOptions);
+                            });
+                    });
             });
     });

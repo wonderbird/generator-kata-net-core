@@ -10,6 +10,7 @@ module.exports = class Configuration {
         this.applicationSuffix = '.App';
 
         this.isSeparateSolutionDirEnabled = true;
+        this.isMitLicenseSelected = false;
 
         this.setSolutionNameAndUpdateConfiguration(solutionName);
     }
@@ -44,5 +45,13 @@ module.exports = class Configuration {
     disableSeparateSolutionDir() {
         this.isSeparateSolutionDirEnabled = false;
         this.solutionDirectory = this.currentDirectory;
+    }
+
+    selectMitLicense() {
+        this.isMitLicenseSelected = true;
+    }
+
+    deselectMitLicense() {
+        this.isMitLicenseSelected = false;
     }
 }

@@ -50,7 +50,6 @@ module.exports = class GeneratorKataNetCore extends Generator {
             this.configuration.disableSeparateSolutionDir();
         }
 
-        // TODO continue here: add the MIT license configuration to the Configuration class
         if (this.answers.isMitLicenseSelected) {
             this.configuration.selectMitLicense();
         } else {

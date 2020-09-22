@@ -11,7 +11,7 @@ module.exports = class CopyTemplateFilesGenerator {
             { source: path.join('tools', 'msxsl.exe'), destination: path.join('tools', 'msxsl.exe') },
             { source: path.join('tools', 'dupfinder.xslt'), destination: path.join('tools', 'dupfinder.xslt') },
             { source: path.join('tools', 'dupfinder.bat'), destination: path.join('tools', 'dupfinder.bat') },
-        ]
+        ];
     }
 
     _copy(sourceRelativePath, destinationRelativePath) {
@@ -23,6 +23,13 @@ module.exports = class CopyTemplateFilesGenerator {
     }
 
     generate() {
+        if (this.configuration.isMitLicenseSelected) {
+            this.sourceAndDestinationRelativePaths.push({
+                source: 'LICENSE',
+                destination: 'LICENSE'
+            });
+        }
+
         this.sourceAndDestinationRelativePaths.forEach(
             sourceAndDestination => this._copy(sourceAndDestination.source, sourceAndDestination.destination));
     }
