@@ -74,19 +74,28 @@ describe('CopyTemplateFilesGenerator',
                         });
                     });
 
-                describe('when MIT license is selected',
-                    function() {
-                        it('then generate LICENSE file',
-                            function() {
-                                configuration.selectMitLicense();
-                                
-                                generator.generate();
+                    it('when MIT license is selected, then generate LICENSE file',
+                        function() {
+                            configuration.selectMitLicense();
+                            
+                            generator.generate();
 
-                                const expectedSourcePath = 'LICENSE';
-                                const expectedDestinationPath = path.join(expectedSolutionName, 'LICENSE');
+                            const expectedSourcePath = 'LICENSE';
+                            const expectedDestinationPath = path.join(expectedSolutionName, 'LICENSE');
 
-                                fileSystemStub.copyTemplate.should.have.been.calledWithExactly(expectedSourcePath, expectedDestinationPath, expectedCopyTemplateOptions);
-                            });
-                    });
+                            fileSystemStub.copyTemplate.should.have.been.calledWithExactly(expectedSourcePath, expectedDestinationPath, expectedCopyTemplateOptions);
+                        });
+
+                        it('when MIT license is deselected, then no LICENSE file is generated',
+                        function() {
+                            configuration.deselectMitLicense();
+                            
+                            generator.generate();
+
+                            const notExpectedSourcePath = 'LICENSE';
+                            const notExpectedDestinationPath = path.join(expectedSolutionName, 'LICENSE');
+
+                            fileSystemStub.copyTemplate.should.not.have.been.calledWithExactly(notExpectedSourcePath, notExpectedDestinationPath, expectedCopyTemplateOptions);
+                        });
             });
     });

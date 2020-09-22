@@ -58,8 +58,6 @@ module.exports = class GeneratorKataNetCore extends Generator {
     }
 
     install() {
-        this.log('Creating new solution "' + this.configuration.solutionName + '"')
-
         this.generators.forEach(generator => generator.generate());
     }
 }
