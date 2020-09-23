@@ -80,6 +80,17 @@ npm run test
 npm run lint
 ```
 
+### Analyzing the Code Complexity
+
+```sh
+npm run complexity
+```
+
+The command above uses the [complexity-report-html](https://github.com/igneel64/complexity-report-html) module to generate two reports
+
+* `.complexity-report/app.html` shows an overview of complexity by file and function for the `app` folder
+* `.complexity-report/test.html` shows an overview of complexity by file and function for the `test` folder
+
 ## References
 
 - Yeoman: "Homepage", https://yeoman.io, last visited on Aug. 24, 2020.

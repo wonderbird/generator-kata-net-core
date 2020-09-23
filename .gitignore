@@ -108,3 +108,6 @@ dist
 
 # MacOS filesystem helpers
 .DS_Store
+
+# complexity-report results
+.complexity-report
