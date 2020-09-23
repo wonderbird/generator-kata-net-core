@@ -12,7 +12,7 @@
     "lint:fix": "eslint --fix --ext .js,.jex .",
     "complexity:app": "complexity-report-html app && mv .complexity-report/report.html .complexity-report/app.html",
     "complexity:test": "complexity-report-html test && mv .complexity-report/report.html .complexity-report/test.html",
-    "complexity": "npm run complexity:app; npm run complexity:test"
+    "complexity": "npm run complexity:app && npm run complexity:test"
   },
   "repository": {
     "type": "git",
