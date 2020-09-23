@@ -16,7 +16,7 @@ describe('ExpectedFilesBuilder',
                 const builder = new ExpectedFilesBuilder(solutionName);
                 const result = builder.build();
 
-                expectedFiles = [
+                const expectedFiles = [
                     path.join(solutionDirectory, `${solutionName}.sln`),
                     path.join(solutionDirectory, `${solutionName}.Lib`, 'bin', 'Debug', 'netStandard2.0', `${solutionName}.Lib`, `${solutionName}.Lib.dll`),
                 ];
@@ -33,7 +33,7 @@ describe('ExpectedFilesBuilder',
 
                 const result = builder.build();
 
-                expectedFiles = [
+                const expectedFiles = [
                     path.join(changedSolutionDirectory, `${solutionName}.sln`),
                     path.join(changedSolutionDirectory, `${solutionName}.Lib`, 'bin', 'Debug', 'netStandard2.0', `${solutionName}.Lib`, `${solutionName}.Lib.dll`),
                 ];
