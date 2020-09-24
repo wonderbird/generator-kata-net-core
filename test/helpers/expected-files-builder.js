@@ -12,24 +12,26 @@ module.exports = class ExpectedFilesBuilder {
     }
 
     build() {
+        const expectedFiles = [];
+        
+        const solutionFileName = `${this.solutionName}.sln`;
+        expectedFiles.push(path.join(this.solutionDirectory, solutionFileName));
+
+        const libraryFolderName = `${this.solutionName}.Lib`;
+        const libraryBuildResultName = `${libraryFolderName}.dll`
         const libraryBuildOutputDirectory = path.join('bin', 'Debug', 'netStandard2.0');
+        expectedFiles.push(path.join(this.solutionDirectory, libraryFolderName, libraryBuildOutputDirectory, libraryBuildResultName));
 
-        return [
-            path.join(this.solutionDirectory, this._getSolutionFileName()),
-            path.join(this.solutionDirectory, this._getLibraryFolderName(), libraryBuildOutputDirectory, this._getLibraryFolderName(), this._getLibraryBuildResultName()),
-        ];
-    }
+        const testFolderName = `${this.solutionName}.Test`;
+        const testBuildResultName = `${testFolderName}.dll`
+        const testBuildOutputDirectory = path.join('bin', 'Debug', 'netcoreapp3.1');
+        expectedFiles.push(path.join(this.solutionDirectory, testFolderName, testBuildOutputDirectory, testBuildResultName));
 
-    _getLibraryBuildResultName() {
-        const libraryFolderName = this._getLibraryFolderName();
-        return `${libraryFolderName}.dll`;
-    }
+        const appFolderName = `${this.solutionName}.App`;
+        const appBuildResultName = `${appFolderName}.dll`
+        const appBuildOutputDirectory = path.join('bin', 'Debug', 'netcoreapp3.1');
+        expectedFiles.push(path.join(this.solutionDirectory, appFolderName, appBuildOutputDirectory, appBuildResultName));
 
-    _getLibraryFolderName() {
-        return `${this.solutionName}.Lib`;
-    }
-
-    _getSolutionFileName() {
-        return `${this.solutionName}.sln`;
+        return expectedFiles;
     }
 }

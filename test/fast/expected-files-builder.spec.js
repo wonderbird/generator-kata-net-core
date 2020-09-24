@@ -9,19 +9,31 @@ describe('ExpectedFilesBuilder',
     function() {
         const solutionName = 'TestSolutionName';
 
+        function createDefaultExpectedFilesWithoutSolutionDirectory(solutionName) {
+            const expectedFiles = [
+                `${solutionName}.sln`,
+                path.join(`${solutionName}.Lib`, 'bin', 'Debug', 'netStandard2.0', `${solutionName}.Lib.dll`),
+                path.join(`${solutionName}.Test`, 'bin', 'Debug', 'netcoreapp3.1', `${solutionName}.Test.dll`),
+                path.join(`${solutionName}.App`, 'bin', 'Debug', 'netcoreapp3.1', `${solutionName}.App.dll`),
+            ];
+
+            return expectedFiles;
+        }
+
+        function prependSolutionDirectoryToAll(solutionDirectory, inputFiles) {
+            const expandedFiles = inputFiles.map(inputFile => path.join(solutionDirectory, inputFile));
+            return expandedFiles;
+        }
+
         it('when default object is built, then return expected defaults',
             function() {
-                const solutionDirectory = solutionName;
-
                 const builder = new ExpectedFilesBuilder(solutionName);
                 const result = builder.build();
 
-                const expectedFiles = [
-                    path.join(solutionDirectory, `${solutionName}.sln`),
-                    path.join(solutionDirectory, `${solutionName}.Lib`, 'bin', 'Debug', 'netStandard2.0', `${solutionName}.Lib`, `${solutionName}.Lib.dll`),
-                ];
+                const expectedFilesWithoutSolutionDirectory = createDefaultExpectedFilesWithoutSolutionDirectory(solutionName);
+                const expectedFilesWithSolutionDirectory = prependSolutionDirectoryToAll(solutionName, expectedFilesWithoutSolutionDirectory);
 
-                result.should.have.deep.members(expectedFiles);
+                result.should.have.deep.members(expectedFilesWithSolutionDirectory);
             });
 
         it('when solution directory is changed, then changed solution directory is considered',
@@ -33,12 +45,10 @@ describe('ExpectedFilesBuilder',
 
                 const result = builder.build();
 
-                const expectedFiles = [
-                    path.join(changedSolutionDirectory, `${solutionName}.sln`),
-                    path.join(changedSolutionDirectory, `${solutionName}.Lib`, 'bin', 'Debug', 'netStandard2.0', `${solutionName}.Lib`, `${solutionName}.Lib.dll`),
-                ];
+                const expectedFilesWithoutSolutionDirectory = createDefaultExpectedFilesWithoutSolutionDirectory(solutionName);
+                const expectedFilesWithSolutionDirectory = prependSolutionDirectoryToAll(changedSolutionDirectory, expectedFilesWithoutSolutionDirectory);
 
-                result.should.have.deep.members(expectedFiles);
+                result.should.have.deep.members(expectedFilesWithSolutionDirectory);
             });
 
         // TODO continue extracing the ExpectedFilesBuilder from generate-kata-net-core.spec.js
