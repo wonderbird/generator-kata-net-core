@@ -28,6 +28,6 @@ jobs:
     - name: Archive complexity reports
       uses: actions/upload-artifact@v2
       with:
-        name: complexity-report-app-folder
+        name: complexity-reports
         path: .complexity-report/
   
