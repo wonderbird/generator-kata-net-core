@@ -25,14 +25,9 @@ jobs:
     - run: npm test
     - run: npm run lint
     - run: npm run complexity
-    - name: Archive complexity report for app folder
+    - name: Archive complexity reports
       uses: actions/upload-artifact@v2
       with:
         name: complexity-report-app-folder
-        path: .complexity-report/app.html
-    - name: Archive complexity report for test folder
-      uses: actions/upload-artifact@v2
-      with:
-        name: complexity-report-test-folder
-        path: .complexity-report/test.html
+        path: .complexity-report/
   
