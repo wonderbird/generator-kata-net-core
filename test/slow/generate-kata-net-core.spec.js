@@ -4,6 +4,7 @@ const path = require('path');
 const spawnSync = require('child_process').spawnSync;
 const assert = require('yeoman-assert');
 const helpers = require('yeoman-test');
+const ExpectedFilesBuilder = require('../helpers/expected-files-builder');
 
 chai.should();
 
@@ -12,37 +13,7 @@ const TemporaryDirectory = require('./temporary-directory');
 describe('yo kata-net-core',
     function () {
 
-        const solutionExtension = '.sln';
-        const dllExtension = '.dll';
-        const exeExtension = '.dll';
-
-        const librarySuffix = '.Lib';
-        const testSuffix = '.Tests';
-        const applicationSuffix = '.App';
-
-        const buildOutputDirectory = 'bin';
-        const debugOutputDirectory = 'Debug';
-        const netStandardDirectory = 'netstandard2.0';
-        const netCoreAppDirectory = 'netcoreapp3.1';
-
         const solutionName = 'GeneratedSolutionCanBeDeleted';
-
-        const libraryProjectName = solutionName + librarySuffix;
-        const libraryProjectDirectory = libraryProjectName;
-
-        const testName = libraryProjectName + testSuffix;
-        const testDirectory = testName;
-
-        const applicationProjectName = solutionName + applicationSuffix;
-        const applicationProjectDirectory = applicationProjectName;
-
-        let solutionDirectory;
-        var expectedFiles;
-
-        beforeEach(function() {
-            solutionDirectory = solutionName;
-            expectedFiles = [];
-        });
 
         function configureTestExecutionTimeout(mochaContext) {
             const maxTestExecutionDurationOnGithubInMilliseconds = 60000;
@@ -57,65 +28,7 @@ describe('yo kata-net-core',
             return helpers.run(path.join(__dirname, '../../app'));
         }
 
-        function addSolutionFileToExpectedFiles() {
-            const solutionFileName = solutionName + solutionExtension;
-            const fullPathToSolutionFile = path.join(solutionDirectory, solutionFileName);
-
-            expectedFiles.push(fullPathToSolutionFile);
-        }
-
-        function addLibraryProjectBuildOutputToExpectedFiles() {
-            const libraryProjectBuildDirectory = path.join(libraryProjectDirectory, buildOutputDirectory, debugOutputDirectory, netStandardDirectory);
-            const libraryProjectBuildArtifact = libraryProjectName + dllExtension;
-
-            const fullPathToProjectBuildArtifact =
-                path.join(solutionDirectory, libraryProjectBuildDirectory, libraryProjectBuildArtifact);
-
-            expectedFiles.push(fullPathToProjectBuildArtifact);
-        }
-
-        function addTestBuildOutputToExpectedFiles() {
-            const testBuildDirectory = path.join(testDirectory, buildOutputDirectory, debugOutputDirectory, netCoreAppDirectory);
-            const testBuildArtifact = testName + dllExtension;
-
-            const fullPathToTestBuildArtifact =
-                path.join(solutionDirectory, testBuildDirectory, testBuildArtifact);
-
-            expectedFiles.push(fullPathToTestBuildArtifact);
-        }
-
-        function addApplicationBuildOutputToExpectedFiles() {
-            const applicationBuildDirectory = path.join(applicationProjectDirectory, buildOutputDirectory, debugOutputDirectory, netCoreAppDirectory);
-            const applicationBuildArtifact = applicationProjectName + exeExtension;
-
-            const fullPathToApplicationBuildArtifact =
-                path.join(solutionDirectory, applicationBuildDirectory, applicationBuildArtifact);
-
-            expectedFiles.push(fullPathToApplicationBuildArtifact);
-        }
-
-        function addFilesFromTemplatesToExpectedFiles(isMitLicenseSelected) {
-            expectedFiles.push(path.join(solutionDirectory, 'tools', 'msxsl.exe'));
-            expectedFiles.push(path.join(solutionDirectory, 'tools', 'dupfinder.xslt'));
-            expectedFiles.push(path.join(solutionDirectory, 'tools', 'dupfinder.bat'));
-
-            expectedFiles.push(path.join(solutionDirectory, '.gitignore'));
-            expectedFiles.push(path.join(solutionDirectory, 'README.md'));
-
-            if (isMitLicenseSelected) {
-                expectedFiles.push(path.join(solutionDirectory, 'LICENSE'));
-            }
-        }
-
-        function defineExpectedFiles(isMitLicenseSelected) {
-            addSolutionFileToExpectedFiles();
-            addLibraryProjectBuildOutputToExpectedFiles();
-            addTestBuildOutputToExpectedFiles();
-            addApplicationBuildOutputToExpectedFiles();
-            addFilesFromTemplatesToExpectedFiles(isMitLicenseSelected);
-        }
-
-        function compileGeneratedSolution() {
+        function compileGeneratedSolution(solutionDirectory) {
             if (solutionDirectory !== '.') {
                 process.chdir(solutionDirectory);
             }
@@ -133,12 +46,12 @@ describe('yo kata-net-core',
         }
 
         [
-            { isSeparateSolutionDirEnabled: true, isMitLicenseSelected: true, expectedSolutionDirectory: solutionName, descriptionWhenStatement: 'when solution directory is enabled and MIT license is selected', descriptionThenStatement: 'then create required files and directories in subfolder' },
-            { isSeparateSolutionDirEnabled: false, isMitLicenseSelected: false, expectedSolutionDirectory: ".", descriptionWhenStatement: 'when solution directory is disabled and no license selected', descriptionThenStatement: 'then create required files and directories in current directory' }
+            { isSeparateSolutionDirEnabled: true, isMitLicenseSelected: true, expectedSolutionDirectory: solutionName },
+            { isSeparateSolutionDirEnabled: false, isMitLicenseSelected: false, expectedSolutionDirectory: "." }
         ].forEach(generatorPromptsConfiguration =>
             describe('GIVEN generator has been executed with prompts',
                 function() {
-                    let testExecutionDirectoryPath;
+                    let savedTestExecutionDirectoryPath;
 
                     before(function() {
                         configureTestExecutionTimeout(this);
@@ -149,25 +62,29 @@ describe('yo kata-net-core',
                                 isSeparateSolutionDirEnabled: generatorPromptsConfiguration.isSeparateSolutionDirEnabled,
                                 isMitLicenseSelected: generatorPromptsConfiguration.isMitLicenseSelected,
                             })
-                            .then(function (theTestExecutionDirectoryPath) {
-                                testExecutionDirectoryPath = theTestExecutionDirectoryPath;
+                            .then(function (testExecutionDirectoryPath) {
+                                savedTestExecutionDirectoryPath = testExecutionDirectoryPath;
 
-                                solutionDirectory = generatorPromptsConfiguration.expectedSolutionDirectory;
-                                compileGeneratedSolution();
+                                compileGeneratedSolution(generatorPromptsConfiguration.expectedSolutionDirectory);
                         });
                     });
 
                     after(function() {
-                        cleanupTestExecutionDirectory(testExecutionDirectoryPath);
+                        cleanupTestExecutionDirectory(savedTestExecutionDirectoryPath);
                     });
 
-                    describe(generatorPromptsConfiguration.descriptionWhenStatement,
+                    describe(`when solution directory is ${generatorPromptsConfiguration.expectedSolutionDirectory} `
+                             + `and MIT license is ${generatorPromptsConfiguration.isMitLicenseSelected} `,
+                    //generatorPromptsConfiguration.descriptionWhenStatement,
                         function() {
-                            it(generatorPromptsConfiguration.descriptionThenStatement,
+                            it(`then create required files and directories in directory "${generatorPromptsConfiguration.expectedSolutionDirectory}"`,
                                 function () {
-                                    solutionDirectory = generatorPromptsConfiguration.expectedSolutionDirectory;
-                                    // TODO (in progress -> ExpectedFilesBuilder) find a more beautiful way of conditionally adding the MIT LICENSE to expected files.
-                                    defineExpectedFiles(generatorPromptsConfiguration.isMitLicenseSelected);
+                                    const solutionDirectory = generatorPromptsConfiguration.expectedSolutionDirectory;
+                                    const expectedFiles = new ExpectedFilesBuilder(solutionName)
+                                        .withSolutionDirectory(solutionDirectory)
+                                        .withMitLicense(generatorPromptsConfiguration.isMitLicenseSelected)
+                                        .build();
+
                                     assert.file(expectedFiles);
                                 });
 
@@ -177,9 +94,9 @@ describe('yo kata-net-core',
                             ].forEach(testCaseData => 
                                 it(`then replace the solution name ${testCaseData.expectedNumberOfOccurrences} time(s) in copied file ${testCaseData.relativePath}`,
                                     function() {
-                                        solutionDirectory = generatorPromptsConfiguration.expectedSolutionDirectory;
+                                        const solutionDirectory = generatorPromptsConfiguration.expectedSolutionDirectory;
 
-                                        const fullPath = path.join(testExecutionDirectoryPath, solutionDirectory, testCaseData.relativePath);
+                                        const fullPath = path.join(savedTestExecutionDirectoryPath, solutionDirectory, testCaseData.relativePath);
                                         const fileContents = fs.readFileSync(fullPath, "utf8");
 
                                         const regexString = `${solutionName}`;
