@@ -12,7 +12,7 @@ describe('ExpectedFilesBuilder',
         function createDefaultExpectedFilesWithoutSolutionDirectory(solutionName) {
             const expectedFiles = [
                 `${solutionName}.sln`,
-                path.join(`${solutionName}.Lib`, 'bin', 'Debug', 'netStandard2.0', `${solutionName}.Lib.dll`),
+                path.join(`${solutionName}.Lib`, 'bin', 'Debug', 'netstandard2.0', `${solutionName}.Lib.dll`),
                 path.join(`${solutionName}.Lib.Tests`, 'bin', 'Debug', 'netcoreapp3.1', `${solutionName}.Lib.Tests.dll`),
                 path.join(`${solutionName}.App`, 'bin', 'Debug', 'netcoreapp3.1', `${solutionName}.App.dll`),
                 path.join('tools', 'msxsl.exe'),
