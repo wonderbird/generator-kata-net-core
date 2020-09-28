@@ -37,8 +37,24 @@ module.exports = class GeneratorKataNetCore extends Generator {
         }, {
             type: "confirm",
             name: "isMitLicenseSelected",
-            message: "Is the MIT license applicable for this project:"
-        }]);
+            message: "Add MIT license file to this project:"
+        }])
+        .then(this._promptForMitLicenseDetailsIfApplicable.bind(this));
+    }
+
+    // TODO add a test showing that we only prompt for the MIT LICENSE author name, if MIT license is applicable
+    async _promptForMitLicenseDetailsIfApplicable(answers) {
+        if (answers.isMitLicenseSelected) {
+            const additionalAnswers = await this.prompt([{
+                type: "input",
+                name: "authorName",
+                message: "Enter your name for the LICENSE file:"
+            }]);
+
+            answers.authorName = additionalAnswers.authorName;
+        }
+
+        return answers;
     }
 
     configuring() {

@@ -61,6 +61,7 @@ describe('yo kata-net-core',
                                 solutionName: solutionName,
                                 isSeparateSolutionDirEnabled: generatorPromptsConfiguration.isSeparateSolutionDirEnabled,
                                 isMitLicenseSelected: generatorPromptsConfiguration.isMitLicenseSelected,
+                                authorName: 'Unit Test',
                             })
                             .then(function (testExecutionDirectoryPath) {
                                 savedTestExecutionDirectoryPath = testExecutionDirectoryPath;
