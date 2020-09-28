@@ -16,7 +16,7 @@ describe('yo kata-net-core',
         const solutionName = 'GeneratedSolutionCanBeDeleted';
 
         function configureTestExecutionTimeout(mochaContext) {
-            const maxTestExecutionDurationOnGithubInMilliseconds = 60000;
+            const maxTestExecutionDurationOnGithubInMilliseconds = 70000;
             const safetyTimeoutMarginInMilliseconds = 5000;
             const testExecutionTimeoutInMilliseconds =
                 maxTestExecutionDurationOnGithubInMilliseconds + safetyTimeoutMarginInMilliseconds;
