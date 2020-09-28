@@ -33,6 +33,8 @@ describe('Configuration',
 
             actualConfiguration.applicationProjectName.should.equal(expectedApplicationProjectName);
             actualConfiguration.applicationProjectPath.should.equal(expectedApplicationProjectPath);
+
+            actualConfiguration.isMitLicenseSelected.should.equal(false);
         }
 
         describe('constructor',
