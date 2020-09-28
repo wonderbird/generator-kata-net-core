@@ -25,7 +25,7 @@ module.exports = class ExpectedFilesBuilder {
 
         const libraryFolderName = `${this.solutionName}.Lib`;
         const libraryBuildResultName = `${libraryFolderName}.dll`
-        const libraryBuildOutputDirectory = path.join('bin', 'Debug', 'netStandard2.0');
+        const libraryBuildOutputDirectory = path.join('bin', 'Debug', 'netstandard2.0');
         expectedFiles.push(path.join(this.solutionDirectory, libraryFolderName, libraryBuildOutputDirectory, libraryBuildResultName));
 
         const testFolderName = `${this.solutionName}.Lib.Tests`;
