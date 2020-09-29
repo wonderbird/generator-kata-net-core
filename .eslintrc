@@ -8,7 +8,8 @@
     "sourceType": "module"
   },
   "plugins": [
-    "node"
+    "node",
+    "promise"
   ],
   "env": {
     "browser": false,
@@ -17,7 +18,10 @@
     "es2020": false,
     "mocha": true
   },
-  "extends": "eslint:recommended",
+  "extends": [
+      "eslint:recommended",
+      "plugin:promise/recommended"
+  ],
   "rules": {
     "complexity": ["error", 10]
   },

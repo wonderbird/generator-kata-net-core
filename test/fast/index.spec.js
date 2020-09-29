@@ -12,7 +12,6 @@ chai.use(sinonChai);
 
 describe('GeneratorKataNetCore',
     function() {
-
         describe('install',
             function () {
                 let generator;
@@ -39,4 +38,35 @@ describe('GeneratorKataNetCore',
                         );
                     });
             });
+
+        describe('prompting',
+            function () {
+                it('when MIT LICENSE is selected, then ask for author name',
+                    async function () {
+                        const configuredAnswers = { isMitLicenseSelected: true };
+
+                        const generator = new GeneratorKataNetCore();
+                        generator.prompt = sinon.stub().returns(Promise.resolve(configuredAnswers));
+
+                        await generator.prompting();
+                        
+                        const expectedPrompt = [{
+                            type: "input",
+                            name: "authorName",
+                            message: "Enter your name for the LICENSE file:"
+                        }];
+                        generator.prompt.should.have.been.calledWithExactly(expectedPrompt);
+                    });
+                    
+                it('when MIT LICENSE is NOT selected, then do not ask for author name',
+                    async function () {
+                        const configuredAnswers = { isMitLicenseSelected: false };
+
+                        const generator = new GeneratorKataNetCore();
+                        generator.prompt = sinon.stub().returns(Promise.resolve(configuredAnswers));
+
+                        await generator.prompting();
+                        generator.prompt.should.have.been.calledOnce;
+                    });
+            })
     });

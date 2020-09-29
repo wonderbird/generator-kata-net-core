@@ -42,7 +42,6 @@ module.exports = class GeneratorKataNetCore extends Generator {
         .then(this._promptForMitLicenseDetailsIfApplicable.bind(this));
     }
 
-    // TODO add a test showing that we only prompt for the MIT LICENSE author name, if MIT license is applicable
     async _promptForMitLicenseDetailsIfApplicable(answers) {
         if (answers.isMitLicenseSelected) {
             const additionalAnswers = await this.prompt([{
