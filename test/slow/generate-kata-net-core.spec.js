@@ -14,6 +14,7 @@ describe('yo kata-net-core',
     function () {
 
         const solutionName = 'GeneratedSolutionCanBeDeleted';
+        const authorName = 'Unit Test Author Name';
 
         function configureTestExecutionTimeout(mochaContext) {
             const maxTestExecutionDurationOnGithubInMilliseconds = 70000;
@@ -45,15 +46,28 @@ describe('yo kata-net-core',
             testExecutionDirectory.delete();
         }
 
+        function assertReplacementInFile(testExecutionDirectory, solutionDirectory, relativeFilePath, replacement, numberOfOccurrences) {
+            const fullPath = path.join(testExecutionDirectory, solutionDirectory, relativeFilePath);
+            const fileContents = fs.readFileSync(fullPath, "utf8");
+
+            const regexString = `${replacement}`;
+            const multilineOption = 'm';
+            const globalOption = 'g';
+            const regex = new RegExp(regexString, multilineOption + globalOption);
+            const matchResult = fileContents.match(regex);
+
+            matchResult.length.should.equal(numberOfOccurrences);
+        }
+        
         [
             { isSeparateSolutionDirEnabled: true, isMitLicenseSelected: true, expectedSolutionDirectory: solutionName },
             { isSeparateSolutionDirEnabled: false, isMitLicenseSelected: false, expectedSolutionDirectory: "." }
         ].forEach(generatorPromptsConfiguration =>
             describe('GIVEN generator has been executed with prompts',
-                function() {
+                function () {
                     let savedTestExecutionDirectoryPath;
 
-                    before(function() {
+                    before(function () {
                         configureTestExecutionTimeout(this);
 
                         return runGeneratorUnderTest()
@@ -61,23 +75,22 @@ describe('yo kata-net-core',
                                 solutionName: solutionName,
                                 isSeparateSolutionDirEnabled: generatorPromptsConfiguration.isSeparateSolutionDirEnabled,
                                 isMitLicenseSelected: generatorPromptsConfiguration.isMitLicenseSelected,
-                                authorName: 'Unit Test',
+                                authorName: authorName,
                             })
                             .then(function (testExecutionDirectoryPath) {
                                 savedTestExecutionDirectoryPath = testExecutionDirectoryPath;
 
                                 compileGeneratedSolution(generatorPromptsConfiguration.expectedSolutionDirectory);
-                        });
+                            });
                     });
 
-                    after(function() {
+                    after(function () {
                         cleanupTestExecutionDirectory(savedTestExecutionDirectoryPath);
                     });
 
                     describe(`when solution directory is ${generatorPromptsConfiguration.expectedSolutionDirectory} `
-                             + `and MIT license is ${generatorPromptsConfiguration.isMitLicenseSelected} `,
-                    //generatorPromptsConfiguration.descriptionWhenStatement,
-                        function() {
+                        + `and MIT license is ${generatorPromptsConfiguration.isMitLicenseSelected} `,
+                        function () {
                             it(`then create required files and directories in directory "${generatorPromptsConfiguration.expectedSolutionDirectory}"`,
                                 function () {
                                     const solutionDirectory = generatorPromptsConfiguration.expectedSolutionDirectory;
@@ -90,26 +103,26 @@ describe('yo kata-net-core',
                                 });
 
                             [
-                                { expectedNumberOfOccurrences: 3, relativePath: 'README.md' },
-                                { expectedNumberOfOccurrences: 1, relativePath: path.join('tools', 'dupfinder.bat') }
-                            ].forEach(testCaseData => 
-                                it(`then replace the solution name ${testCaseData.expectedNumberOfOccurrences} time(s) in copied file ${testCaseData.relativePath}`,
-                                    function() {
-                                        const solutionDirectory = generatorPromptsConfiguration.expectedSolutionDirectory;
-
-                                        const fullPath = path.join(savedTestExecutionDirectoryPath, solutionDirectory, testCaseData.relativePath);
-                                        const fileContents = fs.readFileSync(fullPath, "utf8");
-
-                                        const regexString = `${solutionName}`;
-                                        const multilineOption = 'm';
-                                        const globalOption = 'g';
-                                        const regex = new RegExp(regexString, multilineOption + globalOption);
-                                        const matchResult = fileContents.match(regex);
-
-                                        matchResult.length.should.equal(testCaseData.expectedNumberOfOccurrences);
-                                    })
+                                { replacement: solutionName, expectedNumberOfOccurrences: 3, relativePath: 'README.md' },
+                                { replacement: solutionName, expectedNumberOfOccurrences: 1, relativePath: path.join('tools', 'dupfinder.bat') },
+                            ].forEach(testCaseData =>
+                                it(`then insert "${testCaseData.replacement}" ${testCaseData.expectedNumberOfOccurrences} time(s) in copied file ${testCaseData.relativePath}`,
+                                    () => assertReplacementInFile(savedTestExecutionDirectoryPath,
+                                                                  generatorPromptsConfiguration.expectedSolutionDirectory,
+                                                                  testCaseData.relativePath,
+                                                                  testCaseData.replacement,
+                                                                  testCaseData.expectedNumberOfOccurrences))
                             );
                         });
+
+                    if (generatorPromptsConfiguration.isMitLicenseSelected) {
+                        it(`when MIT LICENSE is selected, then insert ${authorName} into LICENSE file`,
+                            () => assertReplacementInFile(savedTestExecutionDirectoryPath,
+                                                          generatorPromptsConfiguration.expectedSolutionDirectory,
+                                                          'LICENSE',
+                                                          authorName,
+                                                          1));
+                    }
                 })
-            )
+        );
     });
