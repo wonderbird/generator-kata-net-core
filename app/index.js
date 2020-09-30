@@ -37,15 +37,29 @@ module.exports = class GeneratorKataNetCore extends Generator {
         }, {
             type: "confirm",
             name: "isMitLicenseSelected",
-            message: "Is the MIT license applicable for this project:"
-        }]);
+            message: "Add MIT license file to this project:"
+        }])
+        .then(this._promptForMitLicenseDetailsIfApplicable.bind(this));
+    }
+
+    async _promptForMitLicenseDetailsIfApplicable(answers) {
+        if (answers.isMitLicenseSelected) {
+            const additionalAnswers = await this.prompt([{
+                type: "input",
+                name: "authorName",
+                message: "Enter the author's name for the LICENSE file:"
+            }]);
+
+            answers.authorName = additionalAnswers.authorName;
+        }
+
+        return answers;
     }
 
     configuring() {
         this.configuration.setSolutionNameAndUpdateConfiguration(this.answers.solutionName);
 
         this._configureSeparateSolutionDir();
-
         this._configureMitLicense();
     }
 
@@ -60,6 +74,7 @@ module.exports = class GeneratorKataNetCore extends Generator {
     _configureMitLicense() {
         if (this.answers.isMitLicenseSelected) {
             this.configuration.selectMitLicense();
+            this.configuration.setAuthorName(this.answers.authorName);
         } else {
             this.configuration.deselectMitLicense();
         }

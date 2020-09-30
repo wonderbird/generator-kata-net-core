@@ -35,9 +35,13 @@ describe('CopyTemplateFilesGenerator',
                     { sourcePath: path.join('tools', 'dupfinder.bat'), destinationPath: path.join('tools', 'dupfinder.bat') },
                 ];
 
-                const expectedCopyTemplateOptions = {
-                    solutionName: expectedSolutionName
-                };
+                let expectedCopyTemplateOptions;
+                
+                beforeEach(function() {
+                    expectedCopyTemplateOptions = {
+                        solutionName: expectedSolutionName
+                    }
+                });
 
                 describe('when separate solution directory is enabled',
                     function() {
@@ -74,28 +78,31 @@ describe('CopyTemplateFilesGenerator',
                         });
                     });
 
-                    it('when MIT license is selected, then generate LICENSE file',
-                        function() {
-                            configuration.selectMitLicense();
-                            
-                            generator.generate();
+                it('when MIT license is selected, then generate LICENSE file',
+                    function() {
+                        configuration.selectMitLicense();
+                        const configuredAuthorName = 'Unit Test Author';
+                        configuration.setAuthorName(configuredAuthorName);
+                        
+                        generator.generate();
 
-                            const expectedSourcePath = 'LICENSE';
-                            const expectedDestinationPath = path.join(expectedSolutionName, 'LICENSE');
+                        const expectedSourcePath = 'LICENSE';
+                        const expectedDestinationPath = path.join(expectedSolutionName, 'LICENSE');
+                        expectedCopyTemplateOptions.authorName = configuredAuthorName;
 
-                            fileSystemStub.copyTemplate.should.have.been.calledWithExactly(expectedSourcePath, expectedDestinationPath, expectedCopyTemplateOptions);
-                        });
+                        fileSystemStub.copyTemplate.should.have.been.calledWithExactly(expectedSourcePath, expectedDestinationPath, expectedCopyTemplateOptions);
+                    });
 
-                        it('when MIT license is deselected, then no LICENSE file is generated',
-                        function() {
-                            configuration.deselectMitLicense();
-                            
-                            generator.generate();
+                it('when MIT license is deselected, then no LICENSE file is generated',
+                    function() {
+                        configuration.deselectMitLicense();
+                        
+                        generator.generate();
 
-                            const notExpectedSourcePath = 'LICENSE';
-                            const notExpectedDestinationPath = path.join(expectedSolutionName, 'LICENSE');
+                        const notExpectedSourcePath = 'LICENSE';
+                        const notExpectedDestinationPath = path.join(expectedSolutionName, 'LICENSE');
 
-                            fileSystemStub.copyTemplate.should.not.have.been.calledWithExactly(notExpectedSourcePath, notExpectedDestinationPath, expectedCopyTemplateOptions);
-                        });
+                        fileSystemStub.copyTemplate.should.not.have.been.calledWithExactly(notExpectedSourcePath, notExpectedDestinationPath, expectedCopyTemplateOptions);
+                    });
             });
     });

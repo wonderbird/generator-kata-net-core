@@ -54,4 +54,8 @@ module.exports = class Configuration {
     deselectMitLicense() {
         this.isMitLicenseSelected = false;
     }
+
+    setAuthorName(authorName) {
+        this.authorName = authorName;
+    }
 }
