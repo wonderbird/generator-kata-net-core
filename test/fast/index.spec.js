@@ -53,7 +53,7 @@ describe('GeneratorKataNetCore',
                         const expectedPrompt = [{
                             type: "input",
                             name: "authorName",
-                            message: "Enter your name for the LICENSE file:"
+                            message: "Enter the author's name for the LICENSE file:"
                         }];
                         generator.prompt.should.have.been.calledWithExactly(expectedPrompt);
                     });
