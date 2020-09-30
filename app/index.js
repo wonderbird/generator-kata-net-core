@@ -47,7 +47,7 @@ module.exports = class GeneratorKataNetCore extends Generator {
             const additionalAnswers = await this.prompt([{
                 type: "input",
                 name: "authorName",
-                message: "Enter your name for the LICENSE file:"
+                message: "Enter the author's name for the LICENSE file:"
             }]);
 
             answers.authorName = additionalAnswers.authorName;
