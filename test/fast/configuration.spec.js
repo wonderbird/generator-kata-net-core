@@ -1,4 +1,5 @@
-var chai = require('chai');
+const chai = require('chai');
+const expect = chai.expect;
 const path = require('path');
 
 var Configuration = require('../../app/configuration');
@@ -35,6 +36,7 @@ describe('Configuration',
             actualConfiguration.applicationProjectPath.should.equal(expectedApplicationProjectPath);
 
             actualConfiguration.isMitLicenseSelected.should.equal(false);
+            expect(actualConfiguration.authorName).to.be.undefined;
         }
 
         describe('constructor',

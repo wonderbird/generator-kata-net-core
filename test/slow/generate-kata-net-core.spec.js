@@ -118,7 +118,7 @@ describe('yo kata-net-core',
                         });
 
                     if (generatorPromptsConfiguration.isMitLicenseSelected) {
-                        xit(`when MIT LICENSE is selected, then insert ${authorName} into LICENSE file`,
+                        it(`when MIT LICENSE is selected, then insert ${authorName} into LICENSE file`,
                             () => assertReplacementInFile(savedTestExecutionDirectoryPath,
                                                           generatorPromptsConfiguration.expectedSolutionDirectory,
                                                           'LICENSE',

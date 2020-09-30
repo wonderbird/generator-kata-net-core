@@ -60,7 +60,6 @@ module.exports = class GeneratorKataNetCore extends Generator {
         this.configuration.setSolutionNameAndUpdateConfiguration(this.answers.solutionName);
 
         this._configureSeparateSolutionDir();
-
         this._configureMitLicense();
     }
 
@@ -75,6 +74,7 @@ module.exports = class GeneratorKataNetCore extends Generator {
     _configureMitLicense() {
         if (this.answers.isMitLicenseSelected) {
             this.configuration.selectMitLicense();
+            this.configuration.setAuthorName(this.answers.authorName);
         } else {
             this.configuration.deselectMitLicense();
         }

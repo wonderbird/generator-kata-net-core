@@ -19,6 +19,11 @@ module.exports = class CopyTemplateFilesGenerator {
         const options = {
             solutionName: this.configuration.solutionName
         }
+
+        if (this.configuration.authorName !== undefined) {
+            options.authorName = this.configuration.authorName;
+        }
+
         this.fileSystem.copyTemplate(sourceRelativePath, destinationPath, options);
     }
 
