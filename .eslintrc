@@ -4,7 +4,7 @@
   // Prevent including the Visual Studio 2019 eslint configuration file from ~/.eslintrc
   "root": true,
   "parserOptions": {
-    "ecmaVersion": 11,
+    "ecmaVersion": 2020,
     "sourceType": "module"
   },
   "plugins": [
@@ -15,7 +15,7 @@
     "browser": false,
     "node": true,
     "commonjs": true,
-    "es2020": false,
+    "es2020": true,
     "mocha": true
   },
   "extends": [

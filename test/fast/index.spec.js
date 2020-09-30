@@ -1,6 +1,6 @@
-var chai = require('chai');
-var sinon = require('sinon');
-var sinonChai = require('sinon-chai');
+const chai = require('chai');
+const sinon = require('sinon');
+const sinonChai = require('sinon-chai');
 
 const SolutionGenerator = require('../../app/solution-generator');
 const GeneratorKataNetCore = require('../../app/index');

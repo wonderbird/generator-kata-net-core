@@ -81,6 +81,8 @@ describe('yo kata-net-core',
                                 savedTestExecutionDirectoryPath = testExecutionDirectoryPath;
 
                                 compileGeneratedSolution(generatorPromptsConfiguration.expectedSolutionDirectory);
+
+                                return this;
                             });
                     });
 
