@@ -13,6 +13,7 @@ chai.use(sinonChai);
 describe('CopyTemplateFilesGenerator',
     function () {
         const expectedSolutionName = "SampleKata";
+        const fakeYear = 3100;
 
         let fileSystemStub;
         let configuration;
@@ -21,7 +22,11 @@ describe('CopyTemplateFilesGenerator',
         beforeEach(function () {
             fileSystemStub = sinon.createStubInstance(FileSystem);
 
-            configuration = new Configuration(expectedSolutionName);
+            const dateUtilsStub = {
+                getCurrentYear: sinon.stub().returns(fakeYear)
+            }
+
+            configuration = new Configuration(expectedSolutionName, dateUtilsStub);
             generator = new CopyTemplateFilesGenerator(fileSystemStub, configuration);
         });
 
@@ -39,7 +44,8 @@ describe('CopyTemplateFilesGenerator',
                 
                 beforeEach(function() {
                     expectedCopyTemplateOptions = {
-                        solutionName: expectedSolutionName
+                        solutionName: expectedSolutionName,
+                        currentYear: fakeYear
                     }
                 });
 

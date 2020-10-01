@@ -1,7 +1,14 @@
-var path = require('path');
+const path = require('path');
+const DateUtils = require('./date-utils');
 
 module.exports = class Configuration {
-    constructor(solutionName) {
+    constructor(solutionName, dateUtilsReplacement) {
+        if (dateUtilsReplacement !== undefined) {
+            this.dateUtils = dateUtilsReplacement;
+        } else {
+            this.dateUtils = new DateUtils();
+        }
+
         this.currentDirectory = ".";
 
         this.projectExtension = '.csproj';
@@ -11,6 +18,8 @@ module.exports = class Configuration {
 
         this.isSeparateSolutionDirEnabled = true;
         this.isMitLicenseSelected = false;
+
+        this.currentYear = this.dateUtils.getCurrentYear();
 
         this.setSolutionNameAndUpdateConfiguration(solutionName);
     }

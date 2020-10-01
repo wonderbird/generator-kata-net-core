@@ -1,10 +1,13 @@
 const chai = require('chai');
-const expect = chai.expect;
+const sinon = require('sinon');
+const sinonChai = require('sinon-chai');
 const path = require('path');
 
-var Configuration = require('../../app/configuration');
+const Configuration = require('../../app/configuration');
 
 chai.should();
+chai.use(sinonChai);
+const expect = chai.expect;
 
 describe('Configuration',    
     function () {
@@ -46,6 +49,19 @@ describe('Configuration',
                         let actualConfiguration = new Configuration(initialSolutionName);
                         
                         assertCorrectConfigurationProperties(actualConfiguration, initialSolutionName);
+                    });
+
+                it('should set correct "currentYear"',
+                    function() {
+                        const fakeYear = 3100;
+                        const dateUtils = {
+                            getCurrentYear: sinon.stub().returns(fakeYear)
+                        }
+
+                        const actualConfiguration = new Configuration(initialSolutionName, dateUtils);
+
+                        actualConfiguration.currentYear.should.equal(fakeYear);
+                        dateUtils.getCurrentYear.should.have.been.called;
                     });
             });
 
