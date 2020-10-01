@@ -2,6 +2,7 @@ module.exports = class DateUtils {
     constructor() {}
 
     getCurrentYear() {
-        return 2021;
+        const today = new Date();
+        return today.getFullYear();
     }
 }

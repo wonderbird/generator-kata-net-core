@@ -17,7 +17,8 @@ module.exports = class CopyTemplateFilesGenerator {
     _copy(sourceRelativePath, destinationRelativePath) {
         const destinationPath = path.join(this.configuration.solutionDirectory, destinationRelativePath);
         const options = {
-            solutionName: this.configuration.solutionName
+            solutionName: this.configuration.solutionName,
+            currentYear: this.configuration.currentYear
         }
 
         if (this.configuration.authorName !== undefined) {

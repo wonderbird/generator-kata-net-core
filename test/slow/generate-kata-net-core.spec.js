@@ -129,7 +129,8 @@ describe('yo kata-net-core',
 
                                 it('then insert current year into LICENSE file',
                                     function () {
-                                        var currentYearString = '' + new Date().getFullYear();
+                                        const currentYear = new Date().getFullYear();
+                                        const currentYearString = '' + currentYear;
                                         assertReplacementInFile(savedTestExecutionDirectoryPath,
                                                                 generatorPromptsConfiguration.expectedSolutionDirectory,
                                                                 'LICENSE',
