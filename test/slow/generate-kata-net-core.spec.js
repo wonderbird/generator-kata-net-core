@@ -117,14 +117,28 @@ describe('yo kata-net-core',
                             );
                         });
 
-                    if (generatorPromptsConfiguration.isMitLicenseSelected) {
-                        it(`when MIT LICENSE is selected, then insert ${authorName} into LICENSE file`,
-                            () => assertReplacementInFile(savedTestExecutionDirectoryPath,
-                                                          generatorPromptsConfiguration.expectedSolutionDirectory,
-                                                          'LICENSE',
-                                                          authorName,
-                                                          1));
-                    }
+                    describe('when MIT LICENSE is selected',
+                        function () {
+                            if (generatorPromptsConfiguration.isMitLicenseSelected) {
+                                it(`then insert ${authorName} into LICENSE file`,
+                                    () => assertReplacementInFile(savedTestExecutionDirectoryPath,
+                                                                  generatorPromptsConfiguration.expectedSolutionDirectory,
+                                                                  'LICENSE',
+                                                                  authorName,
+                                                                  1));
+
+                                it('then insert current year into LICENSE file',
+                                    function () {
+                                        var currentYearString = '' + new Date().getFullYear();
+                                        assertReplacementInFile(savedTestExecutionDirectoryPath,
+                                                                generatorPromptsConfiguration.expectedSolutionDirectory,
+                                                                'LICENSE',
+                                                                currentYearString,
+                                                                1);
+                                    });
+                            }
+
+                        });
                 })
         );
     });
