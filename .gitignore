@@ -111,3 +111,6 @@ dist
 
 # complexity-report results
 .complexity-report
+
+# My Workspace
+generator-kata-net-core.code-workspace
