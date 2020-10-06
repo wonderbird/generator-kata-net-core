@@ -1,0 +1,30 @@
+@startuml
+left to right direction
+
+[GeneratorKataNetCore\n\n//Main entrypoint - This generator//\n//is called by Yeoman//] as gen
+[Configuration\n\n//Store configuration and//\n//answers to the prompts//] as config
+[SolutionGenerator\n\n//Create a dotnet solution//] as solution
+[ClassLibraryGenerator\n\n//Create a dotnet class library project//] as lib
+[TestProjectGenerator\n\n//Create a dotnet xUnit project//] as unit
+[ApplicationProjectGenerator\n\n//Create a dotnet app project//] as app
+[CopyTemplateFilesGenerator\n\n//Copy templates to target folder//] as templates
+[DotnetCli\n\n//Wrapper for the dotnet//\n//command line interface//] as dotnet
+
+[FileSystem\n\n//Encapsulate Yeoman filesystem access//] as fs
+[DateUtils\n\n//Encapsulate JavaScript Date utilities//] as date
+
+gen *- config
+gen -- solution
+gen -- app
+gen -- lib
+gen -- unit
+gen -- templates
+
+templates -- fs
+config -right- date
+
+solution -- dotnet
+app -- dotnet
+lib -- dotnet
+unit -- dotnet
+@enduml
