@@ -2,7 +2,7 @@
 
 ## Documentation Contents
 
-1. composite-structure.adoc[Composite Structure]
+1. link:composite-structure.adoc[Composite Structure]
 
 ## How To Render The Docs
 
