@@ -1,0 +1,18 @@
+# Yeoman `kata-net-core` Generator
+
+## Documentation Contents
+
+1. composite-structure.adoc[Composite Structure]
+
+## How To Render The Docs
+
+The documentation is written in https://gist.github.com/dcode/0cfbf2699a1fe9b46ff04c41721dda74[GitHub Flavoured AsciiDoc]. Images are inserted as described by D. Buret in https://github.com/DBuret/journal/blob/master/github-adoc-puml.adoc[Using plantuml in AsciiDoc on GitHub]
+
+You can use the following tools to process the docs in an editor:
+
+* https://code.visualstudio.com[Visual Studio Code]
+* https://marketplace.visualstudio.com/items?itemName=asciidoctor.asciidoctor-vscode[AsciiDoc Plugin]
+* https://marketplace.visualstudio.com/items?itemName=jebbs.plantuml[PlantUML Plugin]
+  * This requires to have the https://graphviz.org[Graphviz dot] tool installed in your path
+
+In order to view a PlantUML diagram, open the `.puml` file in Visual Studio Code and press `ALT+D` to enable the preview pane.
