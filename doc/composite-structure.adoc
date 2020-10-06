@@ -2,4 +2,7 @@
 
 :gitplant: http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/wonderbird/generator-kata-net-core/master/doc/
 
+[caption="Composite Structure of the Generator"]
 image::{gitplant}/composite-structure.puml[Composite Structure Diagram]
+
+Yeoman uses the `GeneratorKataNetCore` class as its main entrypoint. This class is located in the link:app/index.js[app/index.js] file - the file names of all other classes match the class names.

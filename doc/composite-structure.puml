@@ -1,7 +1,10 @@
 @startuml
 left to right direction
 
-[GeneratorKataNetCore\n\n//Main entrypoint - This generator//\n//is called by Yeoman//] as gen
+skinparam monochrome true
+skinparam ComponentStyle uml2
+
+[**GeneratorKataNetCore**\n\n//Main entrypoint - This generator//\n//is called by Yeoman//] as gen
 [Configuration\n\n//Store configuration and//\n//answers to the prompts//] as config
 [SolutionGenerator\n\n//Create a dotnet solution//] as solution
 [ClassLibraryGenerator\n\n//Create a dotnet class library project//] as lib
