@@ -1,10 +1,10 @@
 # Yeoman Generator: .NET Core Kata
 
 ![Build Status Badge](https://github.com/wonderbird/generator-kata-net-core/workflows/Node.js%20CI/badge.svg)
-[![Test Coverage](https://img.shields.io/codeclimate/coverage/wonderbird/generator-kata-net-core)](https://codeclimate.com/github/codeclimate/codeclimate)
-[![Code Maintainability](https://img.shields.io/codeclimate/maintainability-percentage/wonderbird/generator-kata-net-core)](https://codeclimate.com/github/codeclimate/codeclimate)
-[![Issues in Code](https://img.shields.io/codeclimate/issues/wonderbird/generator-kata-net-core)](https://codeclimate.com/github/codeclimate/codeclimate)
-[![Technical Debt](https://img.shields.io/codeclimate/tech-debt/wonderbird/generator-kata-net-core)](https://codeclimate.com/github/codeclimate/codeclimate)
+[![Test Coverage](https://img.shields.io/codeclimate/coverage/wonderbird/generator-kata-net-core)](https://codeclimate.com/github/wonderbird/generator-kata-net-core)
+[![Code Maintainability](https://img.shields.io/codeclimate/maintainability-percentage/wonderbird/generator-kata-net-core)](https://codeclimate.com/github/wonderbird/generator-kata-net-core)
+[![Issues in Code](https://img.shields.io/codeclimate/issues/wonderbird/generator-kata-net-core)](https://codeclimate.com/github/wonderbird/generator-kata-net-core/issues)
+[![Technical Debt](https://img.shields.io/codeclimate/tech-debt/wonderbird/generator-kata-net-core)](https://codeclimate.com/github/wonderbird/generator-kata-net-core)
 
 [Yeoman](https://yeoman.io) generator for empty C# code kata using .NET Core
 
