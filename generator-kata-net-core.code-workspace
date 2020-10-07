@@ -1,8 +1,11 @@
 {
 	"folders": [
-		{
-			"path": "."
-		}
+        {
+            "path": "."
+        },
+        {
+            "path": "../isaqb-cpsa-al-ausarbeitung"
+        }
     ],
     "settings": {
         "nodeTdd.testScript": "test:fast",

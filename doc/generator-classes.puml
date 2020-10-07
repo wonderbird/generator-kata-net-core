@@ -1,0 +1,58 @@
+@startuml
+left to right direction
+
+skinparam monochrome true
+skinparam ComponentStyle uml2
+
+package GeneratorClasses {
+    interface Generator {
+        +generate()
+    }
+
+    class SolutionGenerator {
+        //Create dotnet solution//
+    }
+
+    class ClassLibraryGenerator {
+        //Create dotnet class library//
+    }
+
+    class TestProjectGenerator {
+        //Create xUnit test project//
+    }
+
+    class ApplicationProjectGenerator {
+        //Create console application//
+    }
+    class CopyTemplateFilesGenerator {
+        //Copy template files//\n//and replace placeholders//
+    }
+
+    Generator <|-- SolutionGenerator
+    Generator <|-- ClassLibraryGenerator
+    Generator <|-- TestProjectGenerator
+    Generator <|-- ApplicationProjectGenerator
+    Generator <|-- CopyTemplateFilesGenerator
+}
+
+class GeneratorKataNetCore {
+    //Main entrypoint - This generator//\n//is called by Yeoman//
+}
+
+interface DotnetCli {
+    //Wrapper for the dotnet//\n//command line interface//
+}
+
+interface FileSystem {
+    //Encapsulate Yeoman//\n//filesystem access//
+}
+
+GeneratorKataNetCore *-- Generator
+
+SolutionGenerator -- DotnetCli
+ClassLibraryGenerator -- DotnetCli
+TestProjectGenerator -- DotnetCli
+ApplicationProjectGenerator -- DotnetCli
+CopyTemplateFilesGenerator -- FileSystem
+
+@enduml

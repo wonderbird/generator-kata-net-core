@@ -5,4 +5,10 @@
 [caption="Composite Structure of the Generator"]
 image::{gitplant}/composite-structure.puml[Composite Structure Diagram]
 
-Yeoman uses the `GeneratorKataNetCore` class as its main entrypoint. This class is located in the link:app/index.js[app/index.js] file - the file names of all other classes match the class names.
+Yeoman uses the `GeneratorKataNetCore` class as its main entrypoint. Details about the interface are documentend on the https://yeoman.io/authoring/index.html[yeoman homepage]. This class is located in the link:app/index.js[app/index.js] file - the file names of all other classes match the class names.
+
+The following diagram shows the generator classes used by `GeneratorKataNetCore` sequentially in order to create the solution, class library and other stuff.
+
+[caption="Generator Classes"]
+image::{gitplant}/generator-classes.puml[Generator Classes]
+

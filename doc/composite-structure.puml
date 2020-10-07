@@ -6,28 +6,18 @@ skinparam ComponentStyle uml2
 
 [**GeneratorKataNetCore**\n\n//Main entrypoint - This generator//\n//is called by Yeoman//] as gen
 [Configuration\n\n//Store configuration and//\n//answers to the prompts//] as config
-[SolutionGenerator\n\n//Create a dotnet solution//] as solution
-[ClassLibraryGenerator\n\n//Create a dotnet class library project//] as lib
-[TestProjectGenerator\n\n//Create a dotnet xUnit project//] as unit
-[ApplicationProjectGenerator\n\n//Create a dotnet app project//] as app
-[CopyTemplateFilesGenerator\n\n//Copy templates to target folder//] as templates
-[DotnetCli\n\n//Wrapper for the dotnet//\n//command line interface//] as dotnet
 
-[FileSystem\n\n//Encapsulate Yeoman filesystem access//] as fs
-[DateUtils\n\n//Encapsulate JavaScript Date utilities//] as date
+[Generator Classes\n\n//Dedicated classes to generate//\n//dotnet solution, class library,//\n//test project etc.//] as genclasses
+
+[DotnetCli\n\n//Wrapper for the dotnet//\n//command line interface//] as dotnet
+[FileSystem\n\n//Encapsulate Yeoman//\n//filesystem access//] as fs
+[DateUtils\n\n//Encapsulate JavaScript//\n//Date utilities//] as date
 
 gen *- config
-gen -- solution
-gen -- app
-gen -- lib
-gen -- unit
-gen -- templates
+gen *-- genclasses
 
-templates -- fs
+genclasses -- fs
 config -right- date
 
-solution -- dotnet
-app -- dotnet
-lib -- dotnet
-unit -- dotnet
+genclasses -- dotnet
 @enduml
