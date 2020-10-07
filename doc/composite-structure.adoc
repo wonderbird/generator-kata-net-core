@@ -1,6 +1,15 @@
+== Technical Context
+
+The following external tools colaborate with this `generator-kata-net-core` project in order to create .NET Core solutions:
+
+[caption="Technical Context"]
+image::{gitplant}/technical-context.puml[Technical Context Diagram]
+
 == Composite Structure
 
 :gitplant: http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/wonderbird/generator-kata-net-core/master/doc/
+
+The inner structure of this `generator-kata-net-core` project is depicted here:
 
 [caption="Composite Structure of the Generator"]
 image::{gitplant}/composite-structure.puml[Composite Structure Diagram]

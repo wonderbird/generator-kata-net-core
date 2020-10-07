@@ -1,0 +1,8 @@
+@startuml
+left to right direction
+
+skinparam monochrome true
+skinparam ComponentStyle uml2
+
+[Nothing here yet]
+@enduml
