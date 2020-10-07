@@ -47,7 +47,7 @@ jobs:
       with:
         node-version: '12'
     - run: npm ci
-    - uses: paambaati/codeclimate-action@v2.2.4
+    - uses: paambaati/codeclimate-action@v2.7.2
       env:
         CC_TEST_REPORTER_ID: feb2db939b4dc14d79333f2ef4427981596ca8d25a2a64fdc87d9bb82815b40a
       with:
