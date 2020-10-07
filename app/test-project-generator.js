@@ -1,7 +1,8 @@
-module.exports = class TestProjectGenerator {
+const DotnetGeneratorBase = require('./dotnet-generator-base');
+
+module.exports = class TestProjectGenerator extends DotnetGeneratorBase {
     constructor(dotnetCli, configuration) {
-        this.dotnetCli = dotnetCli;
-        this.configuration = configuration;
+        super(dotnetCli, configuration);
     }
 
     _generateTestProject() {

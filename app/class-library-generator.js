@@ -1,7 +1,8 @@
-module.exports = class ClassLibraryGenerator {
+const DotnetGeneratorBase = require('./dotnet-generator-base');
+
+module.exports = class ClassLibraryGenerator extends DotnetGeneratorBase {
     constructor(dotnetCli, configuration) {
-        this.dotnetCli = dotnetCli;
-        this.configuration = configuration;
+        super(dotnetCli, configuration);
     }
 
     _generateClassLibrary() {
