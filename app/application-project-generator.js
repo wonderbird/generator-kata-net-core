@@ -1,8 +1,7 @@
-const DotnetGeneratorBase = require('./dotnet-generator-base');
-
-module.exports = class ApplicationProjectGenerator extends DotnetGeneratorBase {
+module.exports = class ApplicationProjectGenerator {
     constructor(dotnetCli, configuration) {
-        super(dotnetCli, configuration);
+        this.dotnetCli = dotnetCli;
+        this.configuration = configuration;
     }
 
     _generateApplicationProject() {

@@ -1,8 +1,7 @@
-const DotnetGeneratorBase = require('./dotnet-generator-base');
-
-module.exports = class SolutionGenerator extends DotnetGeneratorBase {
+module.exports = class SolutionGenerator {
     constructor(dotnetCli, configuration) {
-        super(dotnetCli, configuration);
+        this.dotnetCli = dotnetCli;
+        this.configuration = configuration;
     }
 
     generate() {
