@@ -1,8 +1,37 @@
 @startuml
-left to right direction
 
-skinparam monochrome true
 skinparam ComponentStyle uml2
+skinparam ArrowColor Black
+skinparam ActorBorderColor Black
+skinparam ActorBackgroundColor White
+skinparam ArtifactBackgroundColor White
+skinparam ComponentBorderColor Black
+skinparam ComponentBackgroundColor White
+skinparam InterfaceBorderColor Black
+skinparam InterfaceBackgroundColor White
+skinparam LegendBackgroundColor White
+skinparam NodeBackgroundColor White
+skinparam NoteBorderColor Black
+skinparam NoteBackgroundColor White
+skinparam RectangleBorderColor Black
+skinparam RectangleBackgroundColor White
 
-[Nothing here yet]
+
+legend
+**Legend**
+
+<back:White>            </back> External system
+
+<back:LightSkyBlue>            </back> System in this repository
+
+A --    -- B The external system is interacting with the system in this repository
+end legend
+
+[Yeoman\n\n//Software project generator//] as yo
+[generator-kata-net-core\n\n//.NET Core project generator//] as gen #LightSkyBlue
+[dotnet CLI\n\n//Command line interface//\n//to generate .NET artifacts//] as dotnet
+
+yo - gen
+gen - dotnet
+
 @enduml
