@@ -2,10 +2,22 @@
 
 == Technical Context
 
-The following external tools colaborate with this `generator-kata-net-core` project in order to create .NET Core solutions:
-
 [caption="Technical Context"]
 image::{gitplant}/technical-context.puml[Technical Context Diagram]
+
+The following external tools colaborate with this `generator-kata-net-core` project in order to create .NET Core solutions:
+
+[options="header",cols="1,2,2"]
+|===
+|External Component|Role|Interface documentation
+|Yeoman
+|Generic scaffolding tool for software projects
+| https://yeoman.io
+
+|.NET Core CLI
+|Command line interface application used to generate .NET Core solutions, projects and to build, run and test .NET Core solutions
+| https://docs.microsoft.com/en-us/dotnet/core/tools/
+|===
 
 == Composite Structure
 

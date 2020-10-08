@@ -39,7 +39,7 @@ class GeneratorKataNetCore {
 }
 
 interface DotnetCli {
-    //Wrapper for the dotnet//\n//command line interface//
+    //Wrapper for the .NET Core//\n//command line interface//
 }
 
 interface FileSystem {

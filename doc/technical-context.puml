@@ -14,7 +14,7 @@ end legend
 
 [Yeoman\n\n//Software project generator//] as yo
 [generator-kata-net-core\n\n//.NET Core project generator//] as gen #LightSkyBlue
-[dotnet CLI\n\n//Command line interface//\n//to generate .NET artifacts//] as dotnet
+[.NET Core CLI\n\n//Command line interface//\n//to generate .NET artifacts//] as dotnet
 
 yo - gen
 gen - dotnet
