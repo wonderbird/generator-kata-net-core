@@ -5,18 +5,21 @@ left to right direction
 
 [**GeneratorKataNetCore**\n\n//Main entrypoint - This generator//\n//is called by Yeoman//] as gen
 [Configuration\n\n//Store configuration and//\n//answers to the prompts//] as config
+[DateUtils\n\n//Encapsulate JavaScript//\n//Date utilities//] as date
 
 [Generator Classes\n\n//Dedicated classes to generate//\n//dotnet solution, class library,//\n//test project etc.//] as genclasses
 
 [DotnetCli\n\n//Wrapper for the .NET Core//\n//command line interface//] as dotnet
 [FileSystem\n\n//Encapsulate Yeoman//\n//filesystem access//] as fs
-[DateUtils\n\n//Encapsulate JavaScript//\n//Date utilities//] as date
+[Template Files\n\n//Templates files copied//\n//to the generated solution//] as templates
 
 gen *- config
 gen *-- genclasses
 
 genclasses -- fs
+genclasses -- templates
 config -right- date
+config -- genclasses
 
 genclasses -- dotnet
 @enduml

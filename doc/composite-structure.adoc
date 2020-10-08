@@ -12,11 +12,11 @@ The following external tools colaborate with this `generator-kata-net-core` proj
 |External Component|Role|Interface documentation
 |Yeoman
 |Generic scaffolding tool for software projects
-| https://yeoman.io
+|https://yeoman.io/authoring/index.html
 
 |.NET Core CLI
 |Command line interface application used to generate .NET Core solutions, projects and to build, run and test .NET Core solutions
-| https://docs.microsoft.com/en-us/dotnet/core/tools/
+|https://docs.microsoft.com/en-us/dotnet/core/tools/
 |===
 
 == Composite Structure
@@ -27,6 +27,12 @@ The inner structure of this `generator-kata-net-core` project is depicted here:
 image::{gitplant}/composite-structure.puml[Composite Structure Diagram]
 
 Yeoman uses the `GeneratorKataNetCore` class as its main entrypoint. Details about the interface are documentend on the https://yeoman.io/authoring/index.html[yeoman homepage]. This class is located in the link:app/index.js[app/index.js] file - the file names of all other classes match the class names.
+
+The parameters entered by the user are collected in the `Configuration`. This object also holds information about the system, e.g. the current year.
+
+`GeneratorKataNetCore` then calls the `Generator Classes` individually in the correct sequence and passes the `Configuration` down to them.
+
+The `Generator Classes` use the .NET Core CLI to create the required .NET project elements. They use the `FileSystem` wrapper in order to copy `Template Files`. The values of the `Configuration` are used to replace the placeholders contained in the `Template Files`.
 
 The following diagram shows the generator classes used by `GeneratorKataNetCore` sequentially in order to create the solution, class library and other stuff.
 
