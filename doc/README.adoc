@@ -16,3 +16,8 @@ You can use the following tools to process the docs in an editor:
   * This requires to have the https://graphviz.org[Graphviz dot] tool installed in your path
 
 In order to view a PlantUML diagram, open the `.puml` file in Visual Studio Code and press `ALT+D` to enable the preview pane.
+
+If you have modified and pushed a PlantUML diagram, then you can purge the GitHub image cache as follows:
+
+1. Open the diagram in a separate browser tab in order to get the image URL
+2. `curl -X PURGE <image url>`

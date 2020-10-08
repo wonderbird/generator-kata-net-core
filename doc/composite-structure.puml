@@ -1,8 +1,7 @@
 @startuml
 left to right direction
 
-skinparam monochrome true
-skinparam ComponentStyle uml2
+!includeurl https://raw.githubusercontent.com/wonderbird/generator-kata-net-core/master/doc/plantuml-style.puml
 
 [**GeneratorKataNetCore**\n\n//Main entrypoint - This generator//\n//is called by Yeoman//] as gen
 [Configuration\n\n//Store configuration and//\n//answers to the prompts//] as config

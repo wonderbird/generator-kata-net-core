@@ -1,0 +1,16 @@
+skinparam ComponentStyle uml2
+
+skinparam ArrowColor Black
+skinparam ActorBorderColor Black
+skinparam ActorBackgroundColor White
+skinparam ArtifactBackgroundColor White
+skinparam ComponentBorderColor Black
+skinparam ComponentBackgroundColor White
+skinparam InterfaceBorderColor Black
+skinparam InterfaceBackgroundColor White
+skinparam LegendBackgroundColor White
+skinparam NodeBackgroundColor White
+skinparam NoteBorderColor Black
+skinparam NoteBackgroundColor White
+skinparam RectangleBorderColor Black
+skinparam RectangleBackgroundColor White
