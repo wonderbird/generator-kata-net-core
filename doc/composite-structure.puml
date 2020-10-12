@@ -9,7 +9,7 @@ left to right direction
 
 [Generator Classes\n\n//Dedicated classes to generate//\n//dotnet solution, class library,//\n//test project etc.//] as genclasses
 
-[DotnetCli\n\n//Wrapper for the .NET Core//\n//command line interface//] as dotnet
+[.NET Core CLI\n\n//Wrapper for the .NET Core//\n//command line interface//] as dotnet
 [FileSystem\n\n//Encapsulate Yeoman//\n//filesystem access//] as fs
 [Template Files\n\n//Templates files copied//\n//to the generated solution//] as templates
 
