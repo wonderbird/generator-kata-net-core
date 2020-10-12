@@ -1,5 +1,5 @@
 
-:gitplant: http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/wonderbird/generator-kata-net-core/master/doc/
+:gitplant: http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/wonderbird/generator-kata-net-core/master/doc
 
 = Yeoman `kata-net-core` Generator
 
