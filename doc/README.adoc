@@ -18,6 +18,8 @@ The 3rd party software with which the `generator-kata-net-core` interacts are de
 .Technical Context
 image::{gitplant}/technical-context.puml[Technical Context Diagram]
 
+
+.Description and Interfaces of External Components
 [options="header",cols="1,2,2"]
 |===
 |External Component|Role|Interface documentation
@@ -39,6 +41,7 @@ The inner structure of this `generator-kata-net-core` project is shown here:
 .Composite Structure of the Generator
 image::{gitplant}/composite-structure.puml[Composite Structure Diagram]
 
+
 Yeoman uses the `GeneratorKataNetCore` class as the main entrypoint. Details about this interface are documentend on the https://yeoman.io/authoring/index.html[yeoman homepage]. This class is located in the link:app/index.js[app/index.js] file - the file names of all other classes match the class names.
 
 The parameters entered by the user are collected in the `Configuration`. This object also holds information about the system, e.g. the current year.
@@ -51,6 +54,7 @@ The following diagram shows the `Generator Classes`:
 
 [caption="Generator Classes"]
 image::{gitplant}/generator-classes.puml[Generator Classes]
+
 
 [[section-rendering-docs]]
 == How To Render The Docs
