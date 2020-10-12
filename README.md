@@ -63,6 +63,10 @@ npm run test
 
 ## Development
 
+### Detailed Design Documentation
+
+Detailed design documentation can be found in the [doc](doc) folder.
+
 ### Building this Project
 
 ```sh

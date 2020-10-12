@@ -2,6 +2,13 @@
 
 !includeurl https://raw.githubusercontent.com/wonderbird/generator-kata-net-core/master/doc/plantuml-style.puml
 
+[Yeoman\n\n//Software project generator//] as yo
+[generator-kata-net-core\n\n//.NET Core project generator//] as gen #LightSkyBlue
+[.NET Core CLI\n\n//Command line interface//\n//to generate .NET artifacts//] as dotnet
+
+yo - gen
+gen - dotnet
+
 legend
 **Legend**
 
@@ -11,12 +18,4 @@ legend
 
 A --    -- B The external system is interacting with the system in this repository
 end legend
-
-[Yeoman\n\n//Software project generator//] as yo
-[generator-kata-net-core\n\n//.NET Core project generator//] as gen #LightSkyBlue
-[.NET Core CLI\n\n//Command line interface//\n//to generate .NET artifacts//] as dotnet
-
-yo - gen
-gen - dotnet
-
 @enduml

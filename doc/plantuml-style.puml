@@ -8,6 +8,8 @@ skinparam ComponentBorderColor Black
 skinparam ComponentBackgroundColor White
 skinparam InterfaceBorderColor Black
 skinparam InterfaceBackgroundColor White
+skinparam ClassBorderColor Black
+skinparam ClassBackgroundColor White
 skinparam LegendBackgroundColor White
 skinparam NodeBackgroundColor White
 skinparam NoteBorderColor Black

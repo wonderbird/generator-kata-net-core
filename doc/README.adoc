@@ -1,10 +1,59 @@
-# Yeoman `kata-net-core` Generator
 
-## Documentation Contents
+:gitplant: http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/wonderbird/generator-kata-net-core/master/doc/
 
-1. link:composite-structure.adoc[Composite Structure]
+= Yeoman `kata-net-core` Generator
 
-## How To Render The Docs
+== Documentation Contents
+
+1. <<section-technical-context>>
+2. <<section-composite-structure>>
+3. <<section-rendering-docs>>
+
+
+[[section-technical-context]]
+== Technical Context
+
+The 3rd party software with which the `generator-kata-net-core` interacts are depicted in the following:
+
+.Technical Context
+image::{gitplant}/technical-context.puml[Technical Context Diagram]
+
+[options="header",cols="1,2,2"]
+|===
+|External Component|Role|Interface documentation
+|Yeoman
+|Generic scaffolding tool for software projects
+|https://yeoman.io/authoring/index.html
+
+|.NET Core CLI
+|Command line interface application used to generate .NET Core solutions, projects and to build, run and test .NET Core solutions
+|https://docs.microsoft.com/en-us/dotnet/core/tools/
+|===
+
+
+[[section-composite-structure]]
+== Composite Structure
+
+The inner structure of this `generator-kata-net-core` project is shown here:
+
+.Composite Structure of the Generator
+image::{gitplant}/composite-structure.puml[Composite Structure Diagram]
+
+Yeoman uses the `GeneratorKataNetCore` class as the main entrypoint. Details about this interface are documentend on the https://yeoman.io/authoring/index.html[yeoman homepage]. This class is located in the link:app/index.js[app/index.js] file - the file names of all other classes match the class names.
+
+The parameters entered by the user are collected in the `Configuration`. This object also holds information about the system, e.g. the current year.
+
+To create the .NET Core solution with it projects and additional files, `GeneratorKataNetCore` calls the `Generator Classes` individually in the correct sequence and passes the `Configuration` down to them.
+
+The `Generator Classes` use the .NET Core CLI to create the required .NET project elements. The `FileSystem` wrapper allows copying `Template Files`. The values of the `Configuration` are used to replace the placeholders contained in the `Template Files`.
+
+The following diagram shows the `Generator Classes`:
+
+[caption="Generator Classes"]
+image::{gitplant}/generator-classes.puml[Generator Classes]
+
+[[section-rendering-docs]]
+== How To Render The Docs
 
 The documentation is written in https://gist.github.com/dcode/0cfbf2699a1fe9b46ff04c41721dda74[GitHub Flavoured AsciiDoc]. Images are inserted as described by D. Buret in https://github.com/DBuret/journal/blob/master/github-adoc-puml.adoc[Using plantuml in AsciiDoc on GitHub]
 
@@ -17,7 +66,9 @@ You can use the following tools to process the docs in an editor:
 
 In order to view a PlantUML diagram, open the `.puml` file in Visual Studio Code and press `ALT+D` to enable the preview pane.
 
-If you have modified and pushed a PlantUML diagram, then you can purge the GitHub image cache as follows:
+**Note**
+
+If you have modified and pushed a PlantUML diagram, then you can purge the GitHub image cache as follows. Unfortunately this does not work reliably.
 
 1. Open the diagram in a separate browser tab in order to get the image URL
 2. `curl -X PURGE <image url>`
