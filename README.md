@@ -106,3 +106,7 @@ The command above uses the [complexity-report-html](https://github.com/igneel64/
 - Yeoman: "Yeoman Github repository", https://github.com/yeoman, last visited on Aug. 24, 2020.
 - xUnit.net: "xUnit Github repository", https://xunit.github.io, last visited on Aug. 24, 2020.
 - Microsoft Corporation: "Unit testing C# in .NET Core using dotnet test and xUnit", https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-dotnet-test, last visited on Aug. 24, 2020.
+
+## Thanks
+
+Many thanks to [JetBrains](https://www.jetbrains.com/?from=generator-kata-net-core) who provide an [Open Source License](https://www.jetbrains.com/community/opensource/) for this project ❤️.
