@@ -25,17 +25,17 @@ module.exports = class ExpectedFilesBuilder {
 
         const libraryFolderName = `${this.solutionName}.Lib`;
         const libraryBuildResultName = `${libraryFolderName}.dll`
-        const libraryBuildOutputDirectory = path.join('bin', 'Debug', 'netstandard2.0');
+        const libraryBuildOutputDirectory = path.join('bin', 'Debug', 'net5.0');
         expectedFiles.push(path.join(this.solutionDirectory, libraryFolderName, libraryBuildOutputDirectory, libraryBuildResultName));
 
         const testFolderName = `${this.solutionName}.Lib.Tests`;
         const testBuildResultName = `${testFolderName}.dll`
-        const testBuildOutputDirectory = path.join('bin', 'Debug', 'netcoreapp3.1');
+        const testBuildOutputDirectory = path.join('bin', 'Debug', 'net5.0');
         expectedFiles.push(path.join(this.solutionDirectory, testFolderName, testBuildOutputDirectory, testBuildResultName));
 
         const appFolderName = `${this.solutionName}.App`;
         const appBuildResultName = `${appFolderName}.dll`
-        const appBuildOutputDirectory = path.join('bin', 'Debug', 'netcoreapp3.1');
+        const appBuildOutputDirectory = path.join('bin', 'Debug', 'net5.0');
         expectedFiles.push(path.join(this.solutionDirectory, appFolderName, appBuildOutputDirectory, appBuildResultName));
 
         expectedFiles.push(path.join(this.solutionDirectory, 'tools', 'msxsl.exe'));
