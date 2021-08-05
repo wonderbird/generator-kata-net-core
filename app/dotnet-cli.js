@@ -28,7 +28,7 @@ module.exports = class DotnetCli {
         const argsArray = Array.from(arguments);
         const spawnResult = this.yeoman.spawnCommandSync('dotnet', argsArray);
     
-        if (spawnResult.status != 0) {
+        if (spawnResult.failed === true) {
             const stdoutString = spawnResult.output[1];
             const stderrString = spawnResult.output[2];
             throw Error('dotnet command failed with stdout = "' + stdoutString + '", stderr = "' + stderrString + '"');
