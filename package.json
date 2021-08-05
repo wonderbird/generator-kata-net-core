@@ -5,6 +5,7 @@
   "private": "true",
   "main": "index.js",
   "scripts": {
+    "debug": "npx --node-options=--inspect-brk yo kata-net-core",
     "test": "nyc --reporter=text mocha --recursive",
     "test:fast": "mocha --recursive test/fast",
     "test:watch": "mocha \"test/fast/**/*.js\" --watch --watch-extensions js",
