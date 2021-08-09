@@ -47,7 +47,7 @@ describe('ApplicationProjectGenerator',
                             function () {
                                 applicationProjectGenerator.generate();
 
-                                dotnetCliStub.addProjectReference.should.have.been.calledOnceWithExactly(expectedSolutionName,
+                                dotnetCliStub.addProjectReference.should.have.been.calledOnceWithExactly(
                                     expectedApplicationProjectPath,
                                     expectedLibraryProjectPath);
                             });
@@ -56,6 +56,7 @@ describe('ApplicationProjectGenerator',
                             function () {
                                 applicationProjectGenerator.generate();
 
+                                // TODO: Fix: first parameter should be solutionPath
                                 dotnetCliStub.addProjectToSolution.should.have.been.calledOnceWithExactly(expectedSolutionName, expectedApplicationProjectPath);
                             });
                     });
@@ -79,7 +80,7 @@ describe('ApplicationProjectGenerator',
                             function () {
                                 applicationProjectGenerator.generate();
 
-                                dotnetCliStub.addProjectReference.should.have.been.calledOnceWithExactly(currentDirectory,
+                                dotnetCliStub.addProjectReference.should.have.been.calledOnceWithExactly(
                                     expectedApplicationProjectPath,
                                     expectedLibraryProjectPath);
                             });
@@ -88,6 +89,7 @@ describe('ApplicationProjectGenerator',
                             function () {
                                 applicationProjectGenerator.generate();
 
+                                // TODO: Fix: first parameter should be solutionPath
                                 dotnetCliStub.addProjectToSolution.should.have.been.calledOnceWithExactly(currentDirectory, expectedApplicationProjectPath);
                             });
                     });

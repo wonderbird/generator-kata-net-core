@@ -5,17 +5,17 @@ module.exports = class TestProjectGenerator {
     }
 
     _generateTestProject() {
-        this.dotnetCli.createNewTestProject(this.configuration.solutionDirectory, this.configuration.testProjectName);
+        this.dotnetCli.createNewTestProject(this.configuration.testProjectDirectory, this.configuration.testProjectName);
     }
 
     _addClassLibraryReferenceToTestProject() {
-        this.dotnetCli.addProjectReference(this.configuration.solutionDirectory,
+        this.dotnetCli.addProjectReference(
             this.configuration.testProjectPath,
             this.configuration.libraryProjectPath);
     }
 
     _addTestProjectToSolution() {
-        this.dotnetCli.addProjectToSolution(this.configuration.solutionDirectory, this.configuration.testProjectPath);
+        this.dotnetCli.addProjectToSolution(this.configuration.solutionPath, this.configuration.testProjectPath);
     }
 
     generate() {
