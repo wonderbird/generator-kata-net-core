@@ -48,7 +48,7 @@ describe('DotnetCli',
         }
 
         function whenDotnetCliFails() {
-            stubbedSpawnCommandSyncResult.status = 1;
+            stubbedSpawnCommandSyncResult.failed = true;
         }
 
         describe('createNewSolutionInDirectory',         
@@ -72,7 +72,7 @@ describe('DotnetCli',
                     });
             });
 
-        describe('createNewClasLibrary',
+        describe('createNewClassLibrary',
             function () {
                 const configuredLibraryProjectName = configuredSolutionName + '.Lib';
 
