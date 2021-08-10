@@ -47,7 +47,7 @@ describe('TestProjectGenerator',
                             function () {
                                 testProjectGenerator.generate();
 
-                                dotnetCliStub.addProjectReference.should.have.been.calledOnceWithExactly(expectedSolutionName,
+                                dotnetCliStub.addProjectReference.should.have.been.calledOnceWithExactly(
                                     expectedTestProjectPath,
                                     expectedLibraryProjectPath);
                             });
@@ -56,6 +56,7 @@ describe('TestProjectGenerator',
                             function () {
                                 testProjectGenerator.generate();
 
+                                // TODO: Fix: first parameter should be solutionPath
                                 dotnetCliStub.addProjectToSolution.should.have.been.calledOnceWithExactly(expectedSolutionName, expectedTestProjectPath);
                             });
                     });
@@ -80,7 +81,7 @@ describe('TestProjectGenerator',
                     function () {
                         testProjectGenerator.generate();
 
-                        dotnetCliStub.addProjectReference.should.have.been.calledOnceWithExactly(currentDirectory, expectedTestProjectPath,
+                        dotnetCliStub.addProjectReference.should.have.been.calledOnceWithExactly(expectedTestProjectPath,
                             expectedLibraryProjectPath);
                     });
 
@@ -88,6 +89,7 @@ describe('TestProjectGenerator',
                     function () {
                         testProjectGenerator.generate();
 
+                        // TODO: Fix: first parameter should be solutionPath
                         dotnetCliStub.addProjectToSolution.should.have.been.calledOnceWithExactly(currentDirectory, expectedTestProjectPath);
                     });
             });

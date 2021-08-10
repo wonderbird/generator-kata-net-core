@@ -40,27 +40,22 @@ module.exports = class DotnetCli {
     }
 
     createNewClassLibrary(directory, libraryProjectName) {
-        this.runInDirectoryAndReturnAfterwards(directory,
-            () => this.runDotnetWithArgumentsOrThrow('new', 'classlib', '--language', 'C#', '--name', libraryProjectName));
+        this.runDotnetWithArgumentsOrThrow('new', 'classlib', '--output', directory, '--language', 'C#', '--name', libraryProjectName);
     }
 
-    addProjectToSolution(solutionName, projectPath) {
-        this.runInDirectoryAndReturnAfterwards(solutionName,
-            () => this.runDotnetWithArgumentsOrThrow('sln', 'add', projectPath));
+    addProjectToSolution(solutionPath, projectPath) {
+        this.runDotnetWithArgumentsOrThrow('sln', solutionPath, 'add', projectPath);
     }
 
     createNewTestProject(directory, testProjectName) {
-        this.runInDirectoryAndReturnAfterwards(directory,
-            () => this.runDotnetWithArgumentsOrThrow('new', 'xunit', '--name', testProjectName));
+        this.runDotnetWithArgumentsOrThrow('new', 'xunit', '--output', directory, '--name', testProjectName);
     }
 
-    addProjectReference(directory, targetProjectPath, referenceProjectPath) {
-        this.runInDirectoryAndReturnAfterwards(directory,
-            () => this.runDotnetWithArgumentsOrThrow('add', targetProjectPath, 'reference', referenceProjectPath));
+    addProjectReference(targetProjectPath, referenceProjectPath) {
+        this.runDotnetWithArgumentsOrThrow('add', targetProjectPath, 'reference', referenceProjectPath);
     }
 
     createNewApplication(directory, applicationProjectName) {
-        this.runInDirectoryAndReturnAfterwards(directory,
-            () => this.runDotnetWithArgumentsOrThrow('new', 'console', '--language', 'C#', '--name', applicationProjectName));
+        this.runDotnetWithArgumentsOrThrow('new', 'console', '--output', directory, '--language', 'C#', '--name', applicationProjectName);
     }
 }

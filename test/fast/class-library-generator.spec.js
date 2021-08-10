@@ -45,6 +45,7 @@ describe('ClassLibraryGenerator',
         
                                 classLibraryGenerator.generate();
         
+                                // TODO: Fix: first parameter should be solutionPath
                                 dotnetCliStub.addProjectToSolution.should.have.been.calledOnceWithExactly(expectedSolutionName, expectedProjectPath);
                             });    
                     });           
@@ -72,6 +73,7 @@ describe('ClassLibraryGenerator',
 
                         classLibraryGenerator.generate();
 
+                        // TODO: Fix: first parameter should be solutionPath
                         dotnetCliStub.addProjectToSolution.should.have.been.calledOnceWithExactly(currentDirectory, expectedProjectPath);
                     });    
             });

@@ -11,6 +11,7 @@ module.exports = class Configuration {
 
         this.currentDirectory = ".";
 
+        this.solutionExtension = '.sln';
         this.projectExtension = '.csproj';
         this.librarySuffix = '.Lib';
         this.testSuffix = '.Tests';
@@ -32,28 +33,38 @@ module.exports = class Configuration {
         } else {
             this.disableSeparateSolutionDir();
         }
-
-        this.libraryProjectName = this.solutionName + this.librarySuffix;
-        const libraryProjectFileName = this.libraryProjectName + this.projectExtension;
-        this.libraryProjectPath = path.join(this.libraryProjectName, libraryProjectFileName);
-  
-        this.testProjectName = this.libraryProjectName + this.testSuffix;
-        const testProjectFileName = this.testProjectName + this.projectExtension;
-        this.testProjectPath = path.join(this.testProjectName, testProjectFileName);
-
-        this.applicationProjectName = this.solutionName + this.applicationSuffix;
-        const applicationProjectFileName = this.applicationProjectName + this.projectExtension;
-        this.applicationProjectPath = path.join(this.applicationProjectName, applicationProjectFileName);
     }
 
     enableSeparateSolutionDir() {
         this.isSeparateSolutionDirEnabled = true;
         this.solutionDirectory = this.solutionName;
+        this.updateSolutionDirDependentConfig();
     }
 
     disableSeparateSolutionDir() {
         this.isSeparateSolutionDirEnabled = false;
         this.solutionDirectory = this.currentDirectory;
+        this.updateSolutionDirDependentConfig();
+    }
+
+    updateSolutionDirDependentConfig() {
+        this.solutionPath = path.join(this.solutionDirectory, this.solutionName);
+        this.solutionPath += this.solutionExtension;
+
+        this.libraryProjectName = this.solutionName + this.librarySuffix;
+        this.libraryProjectDirectory = path.join(this.solutionDirectory, this.libraryProjectName);
+        const libraryProjectFileName = this.libraryProjectName + this.projectExtension;
+        this.libraryProjectPath = path.join(this.libraryProjectDirectory, libraryProjectFileName);
+  
+        this.testProjectName = this.libraryProjectName + this.testSuffix;
+        this.testProjectDirectory = path.join(this.solutionDirectory, this.testProjectName);
+        const testProjectFileName = this.testProjectName + this.projectExtension;
+        this.testProjectPath = path.join(this.testProjectDirectory, testProjectFileName);
+
+        this.applicationProjectName = this.solutionName + this.applicationSuffix;
+        this.applicationProjectDirectory = path.join(this.solutionDirectory, this.applicationProjectName);
+        const applicationProjectFileName = this.applicationProjectName + this.projectExtension;
+        this.applicationProjectPath = path.join(this.applicationProjectDirectory, applicationProjectFileName);
     }
 
     selectMitLicense() {
