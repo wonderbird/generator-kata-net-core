@@ -122,4 +122,4 @@ The command above uses the [complexity-report-html](https://github.com/igneel64/
 - Yeoman: [Yeoman Github repository](https://github.com/yeoman)
 - Microsoft: [Node.js debugging in VS Code](https://code.visualstudio.com/docs/nodejs/nodejs-debugging)
 - Microsoft: [Unit testing C# in .NET Core using dotnet test and xUnit](https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-dotnet-test)
-- xUnit.net: [xUnit Github repository](https://xunit.github.io)
+- xUnit.net: [xUnit](https://xunit.net/)
