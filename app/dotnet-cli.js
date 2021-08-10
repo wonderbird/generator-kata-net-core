@@ -4,6 +4,7 @@ module.exports = class DotnetCli {
         this.process = process;
     }
 
+    // TODO: finally we can delete changeDirectoryOrThrow
     changeDirectoryOrThrow(directory) {
         try {
             this.process.chdir(directory);
@@ -12,6 +13,7 @@ module.exports = class DotnetCli {
         }
     }
 
+    // TODO: finally we can delete runInDirectoryAndReturnAfterwards
     runInDirectoryAndReturnAfterwards(directory, delegateFunction) {
         const previousWorkingDirectory = this.process.cwd();
 
@@ -39,14 +41,12 @@ module.exports = class DotnetCli {
         this.runDotnetWithArgumentsOrThrow('new', 'sln', '--output', solutionDirectory, '--name', solutionName);
     }
 
-    createNewClassLibrary(directory, libraryProjectName) {
-        this.runInDirectoryAndReturnAfterwards(directory,
-            () => this.runDotnetWithArgumentsOrThrow('new', 'classlib', '--language', 'C#', '--name', libraryProjectName));
+    createNewClassLibrary(libraryDirectory, libraryProjectName) {
+        this.runDotnetWithArgumentsOrThrow('new', 'classlib', '--output', libraryDirectory, '--language', 'C#', '--name', libraryProjectName);
     }
 
-    addProjectToSolution(solutionName, projectPath) {
-        this.runInDirectoryAndReturnAfterwards(solutionName,
-            () => this.runDotnetWithArgumentsOrThrow('sln', 'add', projectPath));
+    addProjectToSolution(solutionPath, projectPath) {
+        this.runDotnetWithArgumentsOrThrow('sln', solutionPath, 'add', projectPath);
     }
 
     createNewTestProject(directory, testProjectName) {

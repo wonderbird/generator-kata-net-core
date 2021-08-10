@@ -2,6 +2,7 @@ var chai = require('chai');
 var expect = chai.expect;
 var sinon = require('sinon');
 var sinonChai = require('sinon-chai');
+const path = require('path');
 
 var DotnetCli = require('../../app/dotnet-cli');
 
@@ -53,14 +54,14 @@ describe('DotnetCli',
 
         describe('createNewSolutionInDirectory',         
             function () {
-                it('should invoke dotnet cli with correct parameters',
+                it('should invoke dotnet cli with correct parameters for solution',
                     function() {
                         dotnetCli.createNewSolutionInDirectory(configuredSolutionName, configuredSolutionDirectory);
 
                         assertDotnetArgs('new', 'sln', '--output', configuredSolutionDirectory, '--name', configuredSolutionName);
                     });
 
-                it('WHEN dotnet cli fails THEN throw exception',
+                it('WHEN dotnet cli fails for solution THEN throw exception',
                     function() {
                         whenDotnetCliFails();
 
@@ -75,54 +76,21 @@ describe('DotnetCli',
         describe('createNewClassLibrary',
             function () {
                 const configuredLibraryProjectName = configuredSolutionName + '.Lib';
+                const configuredLibraryDirectory = path.join(configuredSolutionDirectory, configuredLibraryProjectName);
 
-                function whenChdirFails() {
-                    processStub.chdir.throws();
-                }
-
-                function assertChdirCalledWith(directory) {
-                    processStub.chdir.should.have.been.calledOnceWithExactly(directory);
-                }
-
-                it('should invoke dotnet cli with correct parameters',
+                it('should invoke dotnet cli with correct parameters for class library',
                     function() {
-                        dotnetCli.createNewClassLibrary(configuredSolutionName, configuredLibraryProjectName);
+                        dotnetCli.createNewClassLibrary(configuredLibraryDirectory, configuredLibraryProjectName);
 
-                        assertDotnetArgs('new', 'classlib', '--language', 'C#', '--name', configuredLibraryProjectName);
+                        assertDotnetArgs('new', 'classlib', '--output', configuredLibraryDirectory, '--language', 'C#', '--name', configuredLibraryProjectName);
                     });
 
-                it('WHEN changing working directory fails THEN throw exception',
-                    function() {
-                        whenChdirFails();
-
-                        const expectedExceptionMessage = 'changing the working directory failed';
-                        expect(dotnetCli.createNewClassLibrary.bind(dotnetCli, configuredSolutionName, configuredLibraryProjectName))
-                            .to.throw(expectedExceptionMessage);
-
-                        assertChdirCalledWith(configuredSolutionName);
-                    });
-
-                it('WHEN dotnet cli fails THEN throw exception',
+                it('WHEN dotnet cli fails for class library THEN throw exception',
                     function() {
                         whenDotnetCliFails();
 
                         expect(dotnetCli.createNewClassLibrary.bind(dotnetCli, configuredSolutionName, configuredLibraryProjectName))
                             .to.throw(expectedDotnetCommandFailedMessage);
-                    });
-
-                it('WHEN dotnet cli fails THEN change back to previous directory',
-                    function() {
-                        whenDotnetCliFails();
-
-                        try {
-                            dotnetCli.createNewClassLibrary(configuredSolutionName, configuredLibraryProjectName);
-                        } catch(e) {
-                            // explicitly ignore the expected exception for this particular test
-                        }
-
-                        processStub.chdir.should.have.been.calledTwice;
-                        const directoryOnSecondCall = processStub.chdir.getCall(1).args[0];
-                        directoryOnSecondCall.should.equal(configuredCurrentDirectory);
                     });
             });
 
@@ -130,7 +98,7 @@ describe('DotnetCli',
             function () {
                 const configuredApplicationProjectName = configuredSolutionName + '.App';
 
-                it('should invoke dotnet cli with correct parameters',
+                it('should invoke dotnet cli with correct parameters for application',
                     function() {
                         dotnetCli.createNewApplication(configuredSolutionName, configuredApplicationProjectName);
 
