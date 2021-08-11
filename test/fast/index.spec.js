@@ -1,6 +1,7 @@
 const chai = require('chai');
 const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
+const yeoman = require('yeoman-test');
 
 const SolutionGenerator = require('../../app/solution-generator');
 const GeneratorKataNetCore = require('../../app/index');
@@ -12,6 +13,12 @@ chai.use(sinonChai);
 
 describe('GeneratorKataNetCore',
     function() {
+        let generatorOptions = {env: {}};
+
+        beforeEach(async function() {
+            generatorOptions.env = await yeoman.createEnv();
+        })
+
         describe('install',
             function () {
                 let generator;
@@ -25,7 +32,7 @@ describe('GeneratorKataNetCore',
                             sinon.createStubInstance(TestProjectGenerator)                               
                         ];
 
-                        generator = new GeneratorKataNetCore();
+                        generator = new GeneratorKataNetCore(generatorOptions);
                         generator.generators = generatorMocks;
                     });
     
@@ -45,7 +52,7 @@ describe('GeneratorKataNetCore',
                     async function () {
                         const configuredAnswers = { isMitLicenseSelected: true };
 
-                        const generator = new GeneratorKataNetCore();
+                        const generator = new GeneratorKataNetCore(generatorOptions);
                         generator.prompt = sinon.stub().returns(Promise.resolve(configuredAnswers));
 
                         await generator.prompting();
@@ -62,7 +69,7 @@ describe('GeneratorKataNetCore',
                     async function () {
                         const configuredAnswers = { isMitLicenseSelected: false };
 
-                        const generator = new GeneratorKataNetCore();
+                        const generator = new GeneratorKataNetCore(generatorOptions);
                         generator.prompt = sinon.stub().returns(Promise.resolve(configuredAnswers));
 
                         await generator.prompting();
