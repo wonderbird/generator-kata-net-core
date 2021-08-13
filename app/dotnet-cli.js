@@ -4,28 +4,6 @@ module.exports = class DotnetCli {
         this.process = process;
     }
 
-    // TODO: finally we can delete changeDirectoryOrThrow
-    changeDirectoryOrThrow(directory) {
-        try {
-            this.process.chdir(directory);
-        } catch(e) {
-            throw Error('changing the working directory failed');
-        }
-    }
-
-    // TODO: finally we can delete runInDirectoryAndReturnAfterwards
-    runInDirectoryAndReturnAfterwards(directory, delegateFunction) {
-        const previousWorkingDirectory = this.process.cwd();
-
-        this.changeDirectoryOrThrow(directory);
-
-        try {
-            delegateFunction();
-        } finally {
-            this.process.chdir(previousWorkingDirectory);
-        }
-    }
-
     runDotnetWithArgumentsOrThrow(/* parameters to the dotnet command are consumed from the arguments object */) {
         const argsArray = Array.from(arguments);
         const spawnResult = this.yeoman.spawnCommandSync('dotnet', argsArray);
@@ -49,9 +27,8 @@ module.exports = class DotnetCli {
         this.runDotnetWithArgumentsOrThrow('sln', solutionPath, 'add', projectPath);
     }
 
-    createNewTestProject(directory, testProjectName) {
-        this.runInDirectoryAndReturnAfterwards(directory,
-            () => this.runDotnetWithArgumentsOrThrow('new', 'xunit', '--name', testProjectName));
+    createNewTestProject(testDirectory, testProjectName) {
+        this.runDotnetWithArgumentsOrThrow('new', 'xunit', '--output', testDirectory, '--name', testProjectName);
     }
 
     addProjectReference(targetProjectPath, referenceProjectPath) {

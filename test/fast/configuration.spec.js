@@ -19,7 +19,7 @@ describe('Configuration',
             const expectedLibraryProjectName = solutionName + '.Lib';
             const expectedLibraryProjectPath = path.join(solutionName, solutionName + '.Lib', solutionName + '.Lib.csproj');
             const expectedTestProjectName = solutionName + '.Lib.Tests';
-            const expectedTestProjectPath = path.join(solutionName + '.Lib.Tests', solutionName + '.Lib.Tests.csproj');
+            const expectedTestProjectPath = path.join(solutionName, solutionName + '.Lib.Tests', solutionName + '.Lib.Tests.csproj');
             const expectedApplicationProjectName = solutionName + '.App';
             const expectedApplicationProjectPath = path.join(solutionName, solutionName + '.App', solutionName + '.App.csproj');
 

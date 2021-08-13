@@ -60,7 +60,8 @@ module.exports = class Configuration {
   
         this.testProjectName = this.libraryProjectName + this.testSuffix;
         const testProjectFileName = this.testProjectName + this.projectExtension;
-        this.testProjectPath = path.join(this.testProjectName, testProjectFileName);
+        this.testProjectDirectory = path.join(this.solutionDirectory, this.testProjectName)
+        this.testProjectPath = path.join(this.testProjectDirectory, testProjectFileName);
 
         this.applicationProjectName = this.solutionName + this.applicationSuffix;
         const applicationProjectFileName = this.applicationProjectName + this.projectExtension;

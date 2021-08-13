@@ -14,12 +14,11 @@ describe('TestProjectGenerator',
     function () {
         const configuredSolutionName = "SampleKata";
         const expectedSolutionName = configuredSolutionName;
+        const expectedSolutionFileName = expectedSolutionName + ".sln"
         const expectedLibraryProjectName = expectedSolutionName + ".Lib";
         const expectedLibraryProjectFileName = expectedLibraryProjectName + ".csproj";
-        const expectedLibraryProjectPath = path.join(expectedLibraryProjectName, expectedLibraryProjectFileName);
         const expectedTestProjectName = expectedLibraryProjectName + ".Tests";
         const expectedTestProjectFileName = expectedTestProjectName + ".csproj";
-        const expectedTestProjectPath = path.join(expectedTestProjectName, expectedTestProjectFileName);
 
         let dotnetCliStub;
         let configuration;
@@ -34,29 +33,32 @@ describe('TestProjectGenerator',
 
         describe('generate',
             function () {
+                const expectedTestProjectDirectory = path.join(expectedSolutionName, expectedTestProjectName);
+                const expectedTestProjectPath = path.join(expectedTestProjectDirectory, expectedTestProjectFileName);
+                const expectedLibraryProjectPath = path.join(expectedSolutionName, expectedLibraryProjectName, expectedLibraryProjectFileName);
+                const expectedSolutionPath = path.join(expectedSolutionName, expectedSolutionFileName);
+
                 describe('when separate solution directory is enabled',
                     function() {
                         it('should create the correct test project in solution directory',
                             function () {
                                 testProjectGenerator.generate();
 
-                                dotnetCliStub.createNewTestProject.should.have.been.calledOnceWithExactly(expectedSolutionName, expectedTestProjectName);
+                                dotnetCliStub.createNewTestProject.should.have.been.calledOnceWithExactly(expectedTestProjectDirectory, expectedTestProjectName);
                             });
 
                         it('should add the correct class library reference to the test project in solution directory',
                             function () {
                                 testProjectGenerator.generate();
 
-                                dotnetCliStub.addProjectReference.should.have.been.calledOnceWithExactly(expectedSolutionName,
-                                    expectedTestProjectPath,
-                                    expectedLibraryProjectPath);
+                                dotnetCliStub.addProjectReference.should.have.been.calledOnceWithExactly(expectedTestProjectPath, expectedLibraryProjectPath);
                             });
 
                         it('should add the correct test project to the correct solution in solution directory',
                             function () {
                                 testProjectGenerator.generate();
 
-                                dotnetCliStub.addProjectToSolution.should.have.been.calledOnceWithExactly(expectedSolutionName, expectedTestProjectPath);
+                                dotnetCliStub.addProjectToSolution.should.have.been.calledOnceWithExactly(expectedSolutionPath, expectedTestProjectPath);
                             });
                     });
             });
@@ -64,6 +66,10 @@ describe('TestProjectGenerator',
         describe('when separate solution directory is disabled',
             function() {
                 const currentDirectory = '.';
+                const expectedTestProjectDirectory = path.join(currentDirectory, expectedTestProjectName);
+                const expectedTestProjectPath = path.join(expectedTestProjectDirectory, expectedTestProjectFileName);
+                const expectedLibraryProjectPath = path.join(currentDirectory, expectedLibraryProjectName, expectedLibraryProjectFileName);
+                const expectedSolutionPath = path.join(currentDirectory, expectedSolutionFileName);
 
                 beforeEach(function() {
                     configuration.disableSeparateSolutionDir();
@@ -73,22 +79,21 @@ describe('TestProjectGenerator',
                     function () {
                         testProjectGenerator.generate();
 
-                        dotnetCliStub.createNewTestProject.should.have.been.calledOnceWithExactly(currentDirectory, expectedTestProjectName);
+                        dotnetCliStub.createNewTestProject.should.have.been.calledOnceWithExactly(expectedTestProjectDirectory, expectedTestProjectName);
                     });
 
                 it('should add the correct class library reference to the test project in current directory',
                     function () {
                         testProjectGenerator.generate();
 
-                        dotnetCliStub.addProjectReference.should.have.been.calledOnceWithExactly(currentDirectory, expectedTestProjectPath,
-                            expectedLibraryProjectPath);
+                        dotnetCliStub.addProjectReference.should.have.been.calledOnceWithExactly(expectedTestProjectPath, expectedLibraryProjectPath);
                     });
 
                 it('should add the correct test project to the correct solution',
                     function () {
                         testProjectGenerator.generate();
 
-                        dotnetCliStub.addProjectToSolution.should.have.been.calledOnceWithExactly(currentDirectory, expectedTestProjectPath);
+                        dotnetCliStub.addProjectToSolution.should.have.been.calledOnceWithExactly(expectedSolutionPath, expectedTestProjectPath);
                     });
             });
     });
