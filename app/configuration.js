@@ -64,7 +64,8 @@ module.exports = class Configuration {
 
         this.applicationProjectName = this.solutionName + this.applicationSuffix;
         const applicationProjectFileName = this.applicationProjectName + this.projectExtension;
-        this.applicationProjectPath = path.join(this.applicationProjectName, applicationProjectFileName);
+        this.applicationProjectDirectory = path.join(this.solutionDirectory, this.applicationProjectName)
+        this.applicationProjectPath = path.join(this.applicationProjectDirectory, applicationProjectFileName);
     }
 
     selectMitLicense() {

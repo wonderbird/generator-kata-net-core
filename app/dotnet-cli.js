@@ -54,13 +54,11 @@ module.exports = class DotnetCli {
             () => this.runDotnetWithArgumentsOrThrow('new', 'xunit', '--name', testProjectName));
     }
 
-    addProjectReference(directory, targetProjectPath, referenceProjectPath) {
-        this.runInDirectoryAndReturnAfterwards(directory,
-            () => this.runDotnetWithArgumentsOrThrow('add', targetProjectPath, 'reference', referenceProjectPath));
+    addProjectReference(targetProjectPath, referenceProjectPath) {
+        this.runDotnetWithArgumentsOrThrow('add', targetProjectPath, 'reference', referenceProjectPath);
     }
 
-    createNewApplication(directory, applicationProjectName) {
-        this.runInDirectoryAndReturnAfterwards(directory,
-            () => this.runDotnetWithArgumentsOrThrow('new', 'console', '--language', 'C#', '--name', applicationProjectName));
+    createNewApplication(applicationDirectory, applicationProjectName) {
+        this.runDotnetWithArgumentsOrThrow('new', 'console', '--output', applicationDirectory, '--language', 'C#', '--name', applicationProjectName);
     }
 }

@@ -97,12 +97,13 @@ describe('DotnetCli',
         describe('createNewApplication',
             function () {
                 const configuredApplicationProjectName = configuredSolutionName + '.App';
+                const configuredApplicationDirectory = path.join(configuredSolutionDirectory, configuredApplicationProjectName);
 
                 it('should invoke dotnet cli with correct parameters for application',
                     function() {
-                        dotnetCli.createNewApplication(configuredSolutionName, configuredApplicationProjectName);
+                        dotnetCli.createNewApplication(configuredApplicationDirectory, configuredApplicationProjectName);
 
-                        assertDotnetArgs('new', 'console', '--language', 'C#', '--name', configuredApplicationProjectName);
+                        assertDotnetArgs('new', 'console', '--output', configuredApplicationDirectory, '--language', 'C#', '--name', configuredApplicationProjectName);
                     });
             });
     });

@@ -21,7 +21,7 @@ describe('Configuration',
             const expectedTestProjectName = solutionName + '.Lib.Tests';
             const expectedTestProjectPath = path.join(solutionName + '.Lib.Tests', solutionName + '.Lib.Tests.csproj');
             const expectedApplicationProjectName = solutionName + '.App';
-            const expectedApplicationProjectPath = path.join(solutionName + '.App', solutionName + '.App.csproj');
+            const expectedApplicationProjectPath = path.join(solutionName, solutionName + '.App', solutionName + '.App.csproj');
 
             actualConfiguration.librarySuffix.should.equal('.Lib');
             actualConfiguration.projectExtension.should.equal('.csproj');

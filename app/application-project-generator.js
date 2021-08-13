@@ -5,13 +5,11 @@ module.exports = class ApplicationProjectGenerator {
     }
 
     _generateApplicationProject() {
-        this.dotnetCli.createNewApplication(this.configuration.solutionDirectory, this.configuration.applicationProjectName);
+        this.dotnetCli.createNewApplication(this.configuration.applicationProjectDirectory, this.configuration.applicationProjectName);
     }
 
     _addClassLibraryReferenceToApplicationProject() {
-        this.dotnetCli.addProjectReference(this.configuration.solutionDirectory,
-            this.configuration.applicationProjectPath,
-            this.configuration.libraryProjectPath);
+        this.dotnetCli.addProjectReference(this.configuration.applicationProjectPath, this.configuration.libraryProjectPath);
     }
 
     _addApplicationProjectToSolution() {
