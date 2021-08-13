@@ -14,6 +14,7 @@ describe('ApplicationProjectGenerator',
     function () {
         const configuredSolutionName = "SampleKata";
         const expectedSolutionName = configuredSolutionName;
+        const expectedSolutionFileName = configuredSolutionName + '.sln';
         const expectedLibraryProjectName = expectedSolutionName + ".Lib";
         const expectedLibraryProjectFileName = expectedLibraryProjectName + ".csproj";
         const expectedApplicationProjectName = expectedSolutionName + ".App";
@@ -37,6 +38,7 @@ describe('ApplicationProjectGenerator',
                         const expectedApplicationProjectDirectory = path.join(expectedSolutionName, expectedApplicationProjectName)
                         const expectedApplicationProjectPath = path.join(expectedApplicationProjectDirectory, expectedApplicationProjectFileName);
                         const expectedLibraryProjectPath = path.join(expectedSolutionName, expectedLibraryProjectName, expectedLibraryProjectFileName);
+                        const expectedSolutionPath = path.join(expectedSolutionName, expectedSolutionFileName);
 
                         it('should create the correct application project in solution directory',
                             function () {
@@ -56,7 +58,7 @@ describe('ApplicationProjectGenerator',
                             function () {
                                 applicationProjectGenerator.generate();
 
-                                dotnetCliStub.addProjectToSolution.should.have.been.calledOnceWithExactly(expectedSolutionName, expectedApplicationProjectPath);
+                                dotnetCliStub.addProjectToSolution.should.have.been.calledOnceWithExactly(expectedSolutionPath, expectedApplicationProjectPath);
                             });
                     });
 
@@ -66,6 +68,7 @@ describe('ApplicationProjectGenerator',
                         const expectedApplicationProjectDirectory = path.join(currentDirectory, expectedApplicationProjectName)
                         const expectedApplicationProjectPath = path.join(expectedApplicationProjectDirectory, expectedApplicationProjectFileName);
                         const expectedLibraryProjectPath = path.join(currentDirectory, expectedLibraryProjectName, expectedLibraryProjectFileName);
+                        const expectedSolutionPath = path.join(currentDirectory, expectedSolutionFileName);
 
 
                         beforeEach(function() {
@@ -90,7 +93,7 @@ describe('ApplicationProjectGenerator',
                             function () {
                                 applicationProjectGenerator.generate();
 
-                                dotnetCliStub.addProjectToSolution.should.have.been.calledOnceWithExactly(currentDirectory, expectedApplicationProjectPath);
+                                dotnetCliStub.addProjectToSolution.should.have.been.calledOnceWithExactly(expectedSolutionPath, expectedApplicationProjectPath);
                             });
                     });
             });

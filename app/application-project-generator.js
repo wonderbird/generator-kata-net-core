@@ -13,7 +13,7 @@ module.exports = class ApplicationProjectGenerator {
     }
 
     _addApplicationProjectToSolution() {
-        this.dotnetCli.addProjectToSolution(this.configuration.solutionDirectory, this.configuration.applicationProjectPath);
+        this.dotnetCli.addProjectToSolution(this.configuration.solutionPath, this.configuration.applicationProjectPath);
     }
 
     generate() {
