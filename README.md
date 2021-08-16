@@ -92,6 +92,16 @@ npm run test
 npm run lint
 ```
 
+### Debugging
+
+For Visual Studio Code, debugger launch configurations allow connecting to the yeoman generator and to the mocha unit tests, respectively.
+
+To launch the Node.js debugger from a console window, enter
+
+```sh
+npm run debug
+```
+
 ### Analyzing the Code Complexity
 
 ```sh
@@ -105,8 +115,11 @@ The command above uses the [complexity-report-html](https://github.com/igneel64/
 
 ## References
 
-- Yeoman: "Homepage", https://yeoman.io, last visited on Aug. 24, 2020.
-- Yeoman: "Writing your own yeoman generator", https://yeoman.io/authoring/index.html, last visited on Aug. 24, 2020.
-- Yeoman: "Yeoman Github repository", https://github.com/yeoman, last visited on Aug. 24, 2020.
-- xUnit.net: "xUnit Github repository", https://xunit.github.io, last visited on Aug. 24, 2020.
-- Microsoft Corporation: "Unit testing C# in .NET Core using dotnet test and xUnit", https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-dotnet-test, last visited on Aug. 24, 2020.
+- Yeoman: [Yeoman Homepage](https://yeoman.io)
+- Yeoman: [Writing your own yeoman generator](https://yeoman.io/authoring/index.html)
+- Yeoman: [API documentation](https://yeoman.github.io/generator/)
+- Yeoman: [Debugging Generators](https://yeoman.io/authoring/debugging.html)
+- Yeoman: [Yeoman Github repository](https://github.com/yeoman)
+- Microsoft: [Node.js debugging in VS Code](https://code.visualstudio.com/docs/nodejs/nodejs-debugging)
+- Microsoft: [Unit testing C# in .NET Core using dotnet test and xUnit](https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-dotnet-test)
+- xUnit.net: [xUnit](https://xunit.net/)

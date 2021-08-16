@@ -2,13 +2,10 @@ const chai = require('chai');
 const fs = require('fs');
 const path = require('path');
 const spawnSync = require('child_process').spawnSync;
-const assert = require('yeoman-assert');
 const helpers = require('yeoman-test');
 const ExpectedFilesBuilder = require('../helpers/expected-files-builder');
 
 chai.should();
-
-const TemporaryDirectory = require('./temporary-directory');
 
 describe('yo kata-net-core',
     function () {
@@ -41,11 +38,6 @@ describe('yo kata-net-core',
             }
         }
 
-        function cleanupTestExecutionDirectory(testExecutionDirectoryPath) {
-            const testExecutionDirectory = new TemporaryDirectory(testExecutionDirectoryPath);
-            testExecutionDirectory.delete();
-        }
-
         function assertReplacementInFile(testExecutionDirectory, solutionDirectory, relativeFilePath, replacement, numberOfOccurrences) {
             const fullPath = path.join(testExecutionDirectory, solutionDirectory, relativeFilePath);
             const fileContents = fs.readFileSync(fullPath, "utf8");
@@ -65,7 +57,7 @@ describe('yo kata-net-core',
         ].forEach(generatorPromptsConfiguration =>
             describe('GIVEN generator has been executed with prompts',
                 function () {
-                    let savedTestExecutionDirectoryPath;
+                    let runResult;
 
                     before(function () {
                         configureTestExecutionTimeout(this);
@@ -77,8 +69,8 @@ describe('yo kata-net-core',
                                 isMitLicenseSelected: generatorPromptsConfiguration.isMitLicenseSelected,
                                 authorName: authorName,
                             })
-                            .then(function (testExecutionDirectoryPath) {
-                                savedTestExecutionDirectoryPath = testExecutionDirectoryPath;
+                            .then(function (theRunResult) {
+                                runResult = theRunResult;
 
                                 compileGeneratedSolution(generatorPromptsConfiguration.expectedSolutionDirectory);
 
@@ -87,7 +79,7 @@ describe('yo kata-net-core',
                     });
 
                     after(function () {
-                        cleanupTestExecutionDirectory(savedTestExecutionDirectoryPath);
+                        runResult.cleanup();
                     });
 
                     describe(`when solution directory is ${generatorPromptsConfiguration.expectedSolutionDirectory} `
@@ -101,7 +93,7 @@ describe('yo kata-net-core',
                                         .withMitLicense(generatorPromptsConfiguration.isMitLicenseSelected)
                                         .build();
 
-                                    assert.file(expectedFiles);
+                                    runResult.assertFile(expectedFiles);
                                 });
 
                             [
@@ -109,7 +101,7 @@ describe('yo kata-net-core',
                                 { replacement: solutionName, expectedNumberOfOccurrences: 1, relativePath: path.join('tools', 'dupfinder.bat') },
                             ].forEach(testCaseData =>
                                 it(`then insert "${testCaseData.replacement}" ${testCaseData.expectedNumberOfOccurrences} time(s) in copied file ${testCaseData.relativePath}`,
-                                    () => assertReplacementInFile(savedTestExecutionDirectoryPath,
+                                    () => assertReplacementInFile(runResult.cwd,
                                                                   generatorPromptsConfiguration.expectedSolutionDirectory,
                                                                   testCaseData.relativePath,
                                                                   testCaseData.replacement,
@@ -121,7 +113,7 @@ describe('yo kata-net-core',
                         function () {
                             if (generatorPromptsConfiguration.isMitLicenseSelected) {
                                 it(`then insert ${authorName} into LICENSE file`,
-                                    () => assertReplacementInFile(savedTestExecutionDirectoryPath,
+                                    () => assertReplacementInFile(runResult.cwd,
                                                                   generatorPromptsConfiguration.expectedSolutionDirectory,
                                                                   'LICENSE',
                                                                   authorName,
@@ -131,7 +123,7 @@ describe('yo kata-net-core',
                                     function () {
                                         const currentYear = new Date().getFullYear();
                                         const currentYearString = '' + currentYear;
-                                        assertReplacementInFile(savedTestExecutionDirectoryPath,
+                                        assertReplacementInFile(runResult.cwd,
                                                                 generatorPromptsConfiguration.expectedSolutionDirectory,
                                                                 'LICENSE',
                                                                 currentYearString,

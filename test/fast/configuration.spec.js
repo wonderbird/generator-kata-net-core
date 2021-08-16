@@ -17,11 +17,11 @@ describe('Configuration',
         function assertCorrectConfigurationProperties(actualConfiguration, solutionName) {
             const expectedSolutionName = solutionName;
             const expectedLibraryProjectName = solutionName + '.Lib';
-            const expectedLibraryProjectPath = path.join(solutionName + '.Lib', solutionName + '.Lib.csproj');
+            const expectedLibraryProjectPath = path.join(solutionName, solutionName + '.Lib', solutionName + '.Lib.csproj');
             const expectedTestProjectName = solutionName + '.Lib.Tests';
-            const expectedTestProjectPath = path.join(solutionName + '.Lib.Tests', solutionName + '.Lib.Tests.csproj');
+            const expectedTestProjectPath = path.join(solutionName, solutionName + '.Lib.Tests', solutionName + '.Lib.Tests.csproj');
             const expectedApplicationProjectName = solutionName + '.App';
-            const expectedApplicationProjectPath = path.join(solutionName + '.App', solutionName + '.App.csproj');
+            const expectedApplicationProjectPath = path.join(solutionName, solutionName + '.App', solutionName + '.App.csproj');
 
             actualConfiguration.librarySuffix.should.equal('.Lib');
             actualConfiguration.projectExtension.should.equal('.csproj');

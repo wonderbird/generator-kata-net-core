@@ -14,12 +14,11 @@ describe('ApplicationProjectGenerator',
     function () {
         const configuredSolutionName = "SampleKata";
         const expectedSolutionName = configuredSolutionName;
+        const expectedSolutionFileName = configuredSolutionName + '.sln';
         const expectedLibraryProjectName = expectedSolutionName + ".Lib";
         const expectedLibraryProjectFileName = expectedLibraryProjectName + ".csproj";
-        const expectedLibraryProjectPath = path.join(expectedLibraryProjectName, expectedLibraryProjectFileName);
         const expectedApplicationProjectName = expectedSolutionName + ".App";
         const expectedApplicationProjectFileName = expectedApplicationProjectName + ".csproj";
-        const expectedApplicationProjectPath = path.join(expectedApplicationProjectName, expectedApplicationProjectFileName);
 
         let dotnetCliStub;
         let configuration;
@@ -36,33 +35,41 @@ describe('ApplicationProjectGenerator',
             function () {
                 describe('when separate solution directory is enabled',
                     function() {
+                        const expectedApplicationProjectDirectory = path.join(expectedSolutionName, expectedApplicationProjectName)
+                        const expectedApplicationProjectPath = path.join(expectedApplicationProjectDirectory, expectedApplicationProjectFileName);
+                        const expectedLibraryProjectPath = path.join(expectedSolutionName, expectedLibraryProjectName, expectedLibraryProjectFileName);
+                        const expectedSolutionPath = path.join(expectedSolutionName, expectedSolutionFileName);
+
                         it('should create the correct application project in solution directory',
                             function () {
                                 applicationProjectGenerator.generate();
 
-                                dotnetCliStub.createNewApplication.should.have.been.calledOnceWithExactly(expectedSolutionName, expectedApplicationProjectName);
+                                dotnetCliStub.createNewApplication.should.have.been.calledOnceWithExactly(expectedApplicationProjectDirectory, expectedApplicationProjectName);
                             });
 
                         it('should add the correct class library reference to the test project in solution directory',
                             function () {
                                 applicationProjectGenerator.generate();
 
-                                dotnetCliStub.addProjectReference.should.have.been.calledOnceWithExactly(expectedSolutionName,
-                                    expectedApplicationProjectPath,
-                                    expectedLibraryProjectPath);
+                                dotnetCliStub.addProjectReference.should.have.been.calledOnceWithExactly(expectedApplicationProjectPath, expectedLibraryProjectPath);
                             });
 
                         it('should add the correct application project to the correct solution in solution directory',
                             function () {
                                 applicationProjectGenerator.generate();
 
-                                dotnetCliStub.addProjectToSolution.should.have.been.calledOnceWithExactly(expectedSolutionName, expectedApplicationProjectPath);
+                                dotnetCliStub.addProjectToSolution.should.have.been.calledOnceWithExactly(expectedSolutionPath, expectedApplicationProjectPath);
                             });
                     });
 
                 describe('when separate solution directory is disabled',
                     function() {
                         const currentDirectory = '.';
+                        const expectedApplicationProjectDirectory = path.join(currentDirectory, expectedApplicationProjectName)
+                        const expectedApplicationProjectPath = path.join(expectedApplicationProjectDirectory, expectedApplicationProjectFileName);
+                        const expectedLibraryProjectPath = path.join(currentDirectory, expectedLibraryProjectName, expectedLibraryProjectFileName);
+                        const expectedSolutionPath = path.join(currentDirectory, expectedSolutionFileName);
+
 
                         beforeEach(function() {
                             configuration.disableSeparateSolutionDir();
@@ -72,23 +79,21 @@ describe('ApplicationProjectGenerator',
                             function () {
                                 applicationProjectGenerator.generate();
 
-                                dotnetCliStub.createNewApplication.should.have.been.calledOnceWithExactly(currentDirectory, expectedApplicationProjectName);
+                                dotnetCliStub.createNewApplication.should.have.been.calledOnceWithExactly(expectedApplicationProjectDirectory, expectedApplicationProjectName);
                             });
 
                         it('should add the correct class library reference to the test project in current directory',
                             function () {
                                 applicationProjectGenerator.generate();
 
-                                dotnetCliStub.addProjectReference.should.have.been.calledOnceWithExactly(currentDirectory,
-                                    expectedApplicationProjectPath,
-                                    expectedLibraryProjectPath);
+                                dotnetCliStub.addProjectReference.should.have.been.calledOnceWithExactly(expectedApplicationProjectPath, expectedLibraryProjectPath);
                             });
 
                         it('should add the correct application project to the correct solution in current directory',
                             function () {
                                 applicationProjectGenerator.generate();
 
-                                dotnetCliStub.addProjectToSolution.should.have.been.calledOnceWithExactly(currentDirectory, expectedApplicationProjectPath);
+                                dotnetCliStub.addProjectToSolution.should.have.been.calledOnceWithExactly(expectedSolutionPath, expectedApplicationProjectPath);
                             });
                     });
             });
