@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="394e7643-a7da-43c7-a12a-4c61c17db5ac" name="Changes" comment="build: add WebStorm config files" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="update-yeoman-5" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
+  </component>
+  <component name="ProjectId" id="1wZ1hN5yUiXAO7QXAagTAUiWW2a" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="javascript.nodejs.core.library.configured.version" value="16.6.0" />
+    <property name="javascript.nodejs.core.library.typings.version" value="16.6.0" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs.mocha.mocha_node_package_dir" value="$PROJECT_DIR$/node_modules/mocha" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RunManager" selected="Mocha.All Tests">
+    <configuration name="All Tests" type="mocha-javascript-test-runner">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <mocha-package>$PROJECT_DIR$/node_modules/mocha</mocha-package>
+      <working-directory>$PROJECT_DIR$</working-directory>
+      <pass-parent-env>true</pass-parent-env>
+      <ui>bdd</ui>
+      <extra-mocha-options />
+      <test-kind>DIRECTORY</test-kind>
+      <test-directory>$PROJECT_DIR$/test</test-directory>
+      <recursive>true</recursive>
+      <method v="2" />
+    </configuration>
+    <configuration name="ApplicationProjectGenerator.generate.when separate solution directory is disabled.should create the correct application project in current directory" type="mocha-javascript-test-runner" temporary="true" nameIsGenerated="true">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <mocha-package>$PROJECT_DIR$/node_modules/mocha</mocha-package>
+      <working-directory>$PROJECT_DIR$</working-directory>
+      <pass-parent-env>true</pass-parent-env>
+      <ui>bdd</ui>
+      <extra-mocha-options />
+      <test-kind>TEST</test-kind>
+      <test-file>$PROJECT_DIR$/test/fast/application-generator.spec.js</test-file>
+      <test-names>
+        <name value="ApplicationProjectGenerator" />
+        <name value="generate" />
+        <name value="when separate solution directory is disabled" />
+        <name value="should create the correct application project in current directory" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="ApplicationProjectGenerator.generate.when separate solution directory is enabled" type="mocha-javascript-test-runner" temporary="true" nameIsGenerated="true">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <mocha-package>$PROJECT_DIR$/node_modules/mocha</mocha-package>
+      <working-directory>$PROJECT_DIR$</working-directory>
+      <pass-parent-env>true</pass-parent-env>
+      <ui>bdd</ui>
+      <extra-mocha-options />
+      <test-kind>SUITE</test-kind>
+      <test-file>$PROJECT_DIR$/test/fast/application-generator.spec.js</test-file>
+      <test-names>
+        <name value="ApplicationProjectGenerator" />
+        <name value="generate" />
+        <name value="when separate solution directory is enabled" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="DotnetCli.createNewApplication" type="mocha-javascript-test-runner" temporary="true" nameIsGenerated="true">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <mocha-package>$PROJECT_DIR$/node_modules/mocha</mocha-package>
+      <working-directory>$PROJECT_DIR$</working-directory>
+      <pass-parent-env>true</pass-parent-env>
+      <ui>bdd</ui>
+      <extra-mocha-options />
+      <test-kind>SUITE</test-kind>
+      <test-file>$PROJECT_DIR$/test/fast/dotnet-cli.spec.js</test-file>
+      <test-names>
+        <name value="DotnetCli" />
+        <name value="createNewApplication" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="Fast Tests" type="mocha-javascript-test-runner">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <mocha-package>$PROJECT_DIR$/node_modules/mocha</mocha-package>
+      <working-directory>$PROJECT_DIR$</working-directory>
+      <pass-parent-env>true</pass-parent-env>
+      <ui>bdd</ui>
+      <extra-mocha-options />
+      <test-kind>DIRECTORY</test-kind>
+      <test-directory>$PROJECT_DIR$/test/fast</test-directory>
+      <recursive>false</recursive>
+      <method v="2" />
+    </configuration>
+    <configuration name="GeneratorKataNetCore.install" type="mocha-javascript-test-runner" temporary="true" nameIsGenerated="true">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <mocha-package>$PROJECT_DIR$/node_modules/mocha</mocha-package>
+      <working-directory>$PROJECT_DIR$</working-directory>
+      <pass-parent-env>true</pass-parent-env>
+      <ui>bdd</ui>
+      <extra-mocha-options />
+      <test-kind>SUITE</test-kind>
+      <test-file>$PROJECT_DIR$/test/fast/index.spec.js</test-file>
+      <test-names>
+        <name value="GeneratorKataNetCore" />
+        <name value="install" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="yo kata-net-core" type="mocha-javascript-test-runner" temporary="true" nameIsGenerated="true">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <mocha-package>$PROJECT_DIR$/node_modules/mocha</mocha-package>
+      <working-directory>$PROJECT_DIR$</working-directory>
+      <pass-parent-env>true</pass-parent-env>
+      <ui>bdd</ui>
+      <extra-mocha-options />
+      <test-kind>SUITE</test-kind>
+      <test-file>$PROJECT_DIR$/test/slow/generate-kata-net-core.spec.js</test-file>
+      <test-names>
+        <name value="yo kata-net-core" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Mocha.All Tests" />
+      <item itemvalue="Mocha.ApplicationProjectGenerator.generate.when separate solution directory is disabled.should create the correct application project in current directory" />
+      <item itemvalue="Mocha.ApplicationProjectGenerator.generate.when separate solution directory is enabled" />
+      <item itemvalue="Mocha.DotnetCli.createNewApplication" />
+      <item itemvalue="Mocha.Fast Tests" />
+      <item itemvalue="Mocha.GeneratorKataNetCore.install" />
+      <item itemvalue="Mocha.yo kata-net-core" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Mocha.yo kata-net-core" />
+        <item itemvalue="Mocha.DotnetCli.createNewApplication" />
+        <item itemvalue="Mocha.ApplicationProjectGenerator.generate.when separate solution directory is disabled.should create the correct application project in current directory" />
+        <item itemvalue="Mocha.ApplicationProjectGenerator.generate.when separate solution directory is enabled" />
+        <item itemvalue="Mocha.GeneratorKataNetCore.install" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="394e7643-a7da-43c7-a12a-4c61c17db5ac" name="Changes" comment="" />
+      <created>1628651417840</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1628651417840</updated>
+      <workItem from="1628651421493" duration="4595000" />
+      <workItem from="1628824528201" duration="3287000" />
+      <workItem from="1629082512724" duration="1989000" />
+      <workItem from="1629084617728" duration="1134000" />
+      <workItem from="1631847422466" duration="63000" />
+      <workItem from="1631847534019" duration="94000" />
+      <workItem from="1631847646859" duration="327000" />
+    </task>
+    <task id="LOCAL-00001" summary="chore: extend gitignore and add IntelliJ WebStorm support">
+      <created>1628651857569</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1628651857569</updated>
+    </task>
+    <task id="LOCAL-00002" summary="chore: extend gitignore and add IntelliJ WebStorm support">
+      <created>1628652486788</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1628652486788</updated>
+    </task>
+    <task id="LOCAL-00003" summary="test: adapt library path to changed expectations">
+      <created>1628652751483</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1628652751483</updated>
+    </task>
+    <task id="LOCAL-00004" summary="test: pass environment to yeoman generator constructor&#10;&#10;The latest yeoman version has introduced a breaking change for generator constructor methods. They now require an environment to be specified. This fix uses the createEnv method provided by yeoman-test in order to create an environment.">
+      <created>1628655806903</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1628655806903</updated>
+    </task>
+    <task id="LOCAL-00005" summary="fix(application-project-generator): dotnet cli does not change directory correctly">
+      <created>1628826140849</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1628826140849</updated>
+    </task>
+    <task id="LOCAL-00006" summary="fix(test-project-generator): dotnet cli does not change directory correctly">
+      <created>1628827487351</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1628827487351</updated>
+    </task>
+    <task id="LOCAL-00007" summary="fix(application-project-generator): pass solutionPath to addProjectToSolution instead of solutionDirectory">
+      <created>1628827662481</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1628827662481</updated>
+    </task>
+    <task id="LOCAL-00008" summary="test(slow-tests): adapt to changed promise returned by yeoman-test.run">
+      <created>1629084854776</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1629084854776</updated>
+    </task>
+    <task id="LOCAL-00009" summary="test(slow-tests): delete temporary-directory.js - replaced by yeoman-test runResult.cleanup">
+      <created>1629085727409</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1629085727409</updated>
+    </task>
+    <task id="LOCAL-00010" summary="build: add WebStorm config files">
+      <created>1631847831779</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1631847831779</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="chore: extend gitignore and add IntelliJ WebStorm support" />
+    <MESSAGE value="test: adapt library path to changed expectations" />
+    <MESSAGE value="test: pass environment to yeoman generator constructor&#10;&#10;The latest yeoman version has introduced a breaking change for generator constructor methods. They now require an environment to be specified. This fix uses the createEnv method provided by yeoman-test in order to create an environment." />
+    <MESSAGE value="fix(application-project-generator): dotnet cli does not change directory correctly" />
+    <MESSAGE value="fix(test-project-generator): dotnet cli does not change directory correctly" />
+    <MESSAGE value="fix(application-project-generator): pass solutionPath to addProjectToSolution instead of solutionDirectory" />
+    <MESSAGE value="test(slow-tests): adapt to changed promise returned by yeoman-test.run" />
+    <MESSAGE value="test(slow-tests): delete temporary-directory.js - replaced by yeoman-test runResult.cleanup" />
+    <MESSAGE value="build: add WebStorm config files" />
+    <option name="LAST_COMMIT_MESSAGE" value="build: add WebStorm config files" />
+  </component>
+</project>
