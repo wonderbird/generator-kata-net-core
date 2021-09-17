@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="394e7643-a7da-43c7-a12a-4c61c17db5ac" name="Changes" comment="build: add WebStorm config files" />
+    <list default="true" id="394e7643-a7da-43c7-a12a-4c61c17db5ac" name="Changes" comment="build: add WebStorm config files">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -37,7 +39,7 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs.mocha.mocha_node_package_dir" value="$PROJECT_DIR$/node_modules/mocha" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager" selected="Mocha.All Tests">
@@ -151,11 +153,11 @@
     </configuration>
     <list>
       <item itemvalue="Mocha.All Tests" />
-      <item itemvalue="Mocha.ApplicationProjectGenerator.generate.when separate solution directory is disabled.should create the correct application project in current directory" />
-      <item itemvalue="Mocha.ApplicationProjectGenerator.generate.when separate solution directory is enabled" />
-      <item itemvalue="Mocha.DotnetCli.createNewApplication" />
       <item itemvalue="Mocha.Fast Tests" />
       <item itemvalue="Mocha.GeneratorKataNetCore.install" />
+      <item itemvalue="Mocha.ApplicationProjectGenerator.generate.when separate solution directory is enabled" />
+      <item itemvalue="Mocha.ApplicationProjectGenerator.generate.when separate solution directory is disabled.should create the correct application project in current directory" />
+      <item itemvalue="Mocha.DotnetCli.createNewApplication" />
       <item itemvalue="Mocha.yo kata-net-core" />
     </list>
     <recent_temporary>
@@ -182,7 +184,8 @@
       <workItem from="1629084617728" duration="1134000" />
       <workItem from="1631847422466" duration="63000" />
       <workItem from="1631847534019" duration="94000" />
-      <workItem from="1631847646859" duration="327000" />
+      <workItem from="1631847646859" duration="369000" />
+      <workItem from="1631851058668" duration="190000" />
     </task>
     <task id="LOCAL-00001" summary="chore: extend gitignore and add IntelliJ WebStorm support">
       <created>1628651857569</created>
@@ -254,7 +257,14 @@
       <option name="project" value="LOCAL" />
       <updated>1631847831779</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="build: add WebStorm config files">
+      <created>1631847991687</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1631847991687</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
