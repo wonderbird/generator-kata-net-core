@@ -37,7 +37,7 @@
     "yeoman-generator": "^5.4.2"
   },
   "devDependencies": {
-    "chai": "^4.3.4",
+    "chai": "^4.3.5",
     "complexity-report-html": "0.0.3",
     "eslint": "^7.32.0",
     "eslint-plugin-node": "^11.1.0",
